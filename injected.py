@@ -1087,16 +1087,9 @@ elif alertState == "quali" or alertState == "race":
     checkMail(subreddit, private_subreddit, formula1exp, forecast)
     checkSessionFinished(subreddit, alertState)
     prevTime = currentTime
-    checkMail(subreddit, private_subreddit, formula1exp, forecast)
-    checkSessionFinished(subreddit, alertState)
-    checkMail(subreddit, private_subreddit, formula1exp, forecast)
-    checkSessionFinished(subreddit, alertState)
-    checkMail(subreddit, private_subreddit, formula1exp, forecast)
-    checkSessionFinished(subreddit, alertState)
-    checkMail(subreddit, private_subreddit, formula1exp, forecast)
-    checkSessionFinished(subreddit, alertState)
-    checkMail(subreddit, private_subreddit, formula1exp, forecast)
-    checkSessionFinished(subreddit, alertState)
+    for i in range(4):
+        checkMail(subreddit, private_subreddit, formula1exp, forecast)
+        checkSessionFinished(subreddit, alertState)
     
 #Old code that may be VERY useful some day
 #
