@@ -17,12 +17,17 @@ import time
 import weekends
 import webscraper as ws
 import templates as tp
+import commentTracker as ct
+from nltk.corpus import stopwords
+from sklearn.metrics.pairwise import linear_kernel
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 #Reload modules
 reload(sys)
 reload(weekends)
 reload(ws)
 reload(tp)
+reload(ct)
 sys.setdefaultencoding('utf-8')
 
 #Define important stuff
@@ -63,9 +68,12 @@ def weatherChange(string):
         return string
 
 def abbrevName(string):
-    initial = string.split(' ')[0][0]
-    lastname = string.split(' ', 1)[1]
-    return "{0}. {1}".format(initial, lastname)
+    if string == "N/A":
+        return string
+    else:
+        initial = string.split(' ')[0][0]
+        lastname = string.split(' ', 1)[1]
+        return "{0}. {1}".format(initial, lastname)
 
 def nextDate():
     #Finds the weekend object of the upcoming race
@@ -178,10 +186,10 @@ def postToSubreddit(subreddit, w, thread, fc=False, live=False):
                 grid = ""
             title = "{0} {1} Grand Prix - {2} {3}".format(currentYear, w.namean, thread, type)
             if settings["newFormat"]:
-                #                                        0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
+                #                                          0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
                 content = tp.new_session_template.format(w.round, w.country, w.flag, w.fullTitle, weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, monthToWord(w.fp1Time.month), weekdayToWord(w.raceTime.weekday()), w.raceTime.day, monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC, grid)
             else:
-                #                                        0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
+                #                                          0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
                 content = tp.old_session_template.format(w.round, w.country, w.flag, w.fullTitle, weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, monthToWord(w.fp1Time.month), weekdayToWord(w.raceTime.weekday()), w.raceTime.day, monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC, grid)
         post = subreddit.submit(title, content, send_replies=False)
         if settings["replaceSticky"] and not settings["testingMode"]:
@@ -324,7 +332,7 @@ def scheduleChecker(subreddit, fc):
             except Exception as e:
                 print("Error in scheduleChecker (flag 2.5): {}".format(e))
                 
-        else:
+        else: #Old format
             try:
                 if fp1Time < currentTime and (prevTime < fp1Time or prevTime == fp1Time):
                     print("Posting a FP1 discussion")
@@ -469,6 +477,10 @@ def updateSidebarInfo(subreddit):
         endMarkerDriver = "[](/endDriverStand)"
         beginMarkerTeam = "[](/beginTeamStand)"
         endMarkerTeam = "[](/endTeamStand)"
+        beginMarkerDriverSide = "[](/beginDriverSide)"
+        endMarkerDriverSide = "[](/endDriverSide)"
+        beginMarkerTeamSide = "[](/beginTeamSide)"
+        endMarkerTeamSide = "[](/endTeamSide)"
         oldSidebar = subreddit.mod.settings()["description"]
         startIndexHead = oldSidebar.find(beginMarkerHead)+len(beginMarkerHead)
         endIndexHead = oldSidebar.find(endMarkerHead)
@@ -512,8 +524,10 @@ def updateSidebarInfo(subreddit):
             except Exception as e:
                 print("Failed to update stylesheet: {}".format(e))
             try:
-                driverStand = ws.driverStandings()
-                teamStand = ws.teamStandings()
+                driverStand = ws.driverStandings(type=0)
+                teamStand = ws.teamStandings(type=0)
+                driverStandSide = ws.driverStandings(type=1)
+                teamStandSide = ws.teamStandings(type=1)
                 if driverStand and teamStand:
                     startIndexDriver = newSidebar.find(beginMarkerDriver)+len(beginMarkerDriver)
                     endIndexDriver = newSidebar.find(endMarkerDriver)
@@ -521,6 +535,13 @@ def updateSidebarInfo(subreddit):
                     endIndexTeam = newSidebar.find(endMarkerTeam)
                     if startIndexDriver != -1 and endIndexDriver != -1 and startIndexTeam != -1 and endIndexTeam != -1:
                         newSidebar = newSidebar[:startIndexDriver]+driverStand+newSidebar[endIndexDriver:startIndexTeam]+teamStand+newSidebar[endIndexTeam:]
+                if driverStandSide and teamStandSide:
+                    startIndexDriverSide = newSidebar.find(beginMarkerDriverSide)+len(beginMarkerDriverSide)
+                    endIndexDriverSide = newSidebar.find(endMarkerDriverSide)
+                    startIndexTeamSide = newSidebar.find(beginMarkerTeamSide)+len(beginMarkerTeamSide)
+                    endIndexTeamSide = newSidebar.find(endMarkerTeamSide)
+                    if startIndexDriverSide != -1 and endIndexDriverSide != -1 and startIndexTeamSide != -1 and endIndexTeamSide != -1:
+                        newSidebar = newSidebar[:startIndexDriverSide]+driverStandSide+newSidebar[endIndexDriverSide:startIndexTeamSide]+teamStandSide+newSidebar[endIndexTeamSide:]
             except Exception as e:
                 print("Failed to update driver and team standings: {}".format(e))
             subreddit.mod.update(description=newSidebar)
@@ -528,6 +549,7 @@ def updateSidebarInfo(subreddit):
             return "{} Grand Prix".format(w.namean)
     except Exception as e:
         print("Error in updateSidebarInfo: {}".format(e))
+        return False
 
 def checkMail(subreddit, private_subreddit, formula1exp, forecast):
     #Checks mailbox
@@ -730,7 +752,7 @@ def checkSessionFinished(subreddit, session):
             weekends = [prevDate(), nextDate()]
         for weekend in weekends:
             if weekend.qualiTime < currentTime and currentTime < weekend.raceTime and lastCommand != [weekend.country, session]:
-                if ws.sessionFinished(session) and settings["autoPost"] and lastQ2Time+datetime.timedelta(minutes=2) < currentTime:
+                if ws.sessionFinished(session) and settings["autoPost"] and lastQ2Time+datetime.timedelta(minutes=10) < currentTime and weekend.qualiTime+datetime.timedelta(minutes=55) < currentTime:
                     print("Posting a post-quali discussion")
                     if not settings["testingMode"]:
                         post = postToSubreddit(subreddit, weekend, "Post Qualifying")
@@ -880,32 +902,38 @@ def postResults(session):
         if session == "qualifying":
             weekend = nextDate()
             for oldPost in r.user.me().new(limit=5):
-                if oldPost.title == "{0} {1} Grand Prix - Post Qualifying Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                    content = oldPost.selftext
-                    marker = "[](/results)"
-                    results = ws.qualiResults(weekend)
-                    if results:
-                        newContent = content.replace(marker, "---\n\n"+results)
-                        oldPost.edit(newContent)
-                        print("Successfully posted qualifying results")
-                        return True
-                    else:
-                        return False
+                try:
+                    if oldPost.title == "{0} {1} Grand Prix - Post Qualifying Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
+                        content = oldPost.selftext
+                        marker = "[](/results)"
+                        results = ws.qualiResults(weekend)
+                        if results:
+                            newContent = content.replace(marker, "---\n\n"+results)
+                            oldPost.edit(newContent)
+                            print("Successfully posted qualifying results")
+                            return True
+                        else:
+                            return False
+                except Exception as e:
+                    print("Ran into a comment")
         if session == "race":
             weekend = prevDate()
             for oldPost in r.user.me().new(limit=5):
-                if oldPost.title == "{0} {1} Grand Prix - Post Race Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                    content = oldPost.selftext
-                    marker = "[](/results)"
-                    indexMarker = content.find(marker)
-                    results = ws.raceResults(weekend)
-                    if results:
-                        newContent = content.replace(marker, "---\n\n"+results)
-                        oldPost.edit(newContent)
-                        print("Successfully posted race results")
-                        return True
-                    else:
-                        return False
+                try:
+                    if oldPost.title == "{0} {1} Grand Prix - Post Race Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
+                        content = oldPost.selftext
+                        marker = "[](/results)"
+                        indexMarker = content.find(marker)
+                        results = ws.raceResults(weekend)
+                        if results:
+                            newContent = content.replace(marker, "---\n\n"+results)
+                            oldPost.edit(newContent)
+                            print("Successfully posted race results")
+                            return True
+                        else:
+                            return False
+                except Exception as e:
+                    print("Ran into a comment")
     except Exception as e:
         print("Error in postResults: {}".format(e))
         
@@ -915,19 +943,22 @@ def addToHub(post, weekend):
     try:
         print("Adding post to Weekend Hub")
         for oldPost in r.user.me().new(limit=15):
-            if oldPost.title == "{0} {1} Grand Prix - Weekend Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                content = oldPost.selftext
-                beginIndex = content.find(beginMarker)+len(beginMarker)
-                endIndex = content.find(endMarker)
-                if beginIndex == -1 or endIndex == -1:
-                    return False
-                elif post.title == "{0} {1} Grand Prix - Free Practice 1 Discussion".format(currentYear, weekend.namean):
-                    newContent = content[:beginIndex]+"\n\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
-                else:
-                    newContent = content[:endIndex]+"\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
-                oldPost.edit(newContent)
-                print("Successfully added post to Weekend Hub")
-                return True
+            try:
+                if oldPost.title == "{0} {1} Grand Prix - Weekend Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
+                    content = oldPost.selftext
+                    beginIndex = content.find(beginMarker)+len(beginMarker)
+                    endIndex = content.find(endMarker)
+                    if beginIndex == -1 or endIndex == -1:
+                        return False
+                    elif post.title == "{0} {1} Grand Prix - Free Practice 1 Discussion".format(currentYear, weekend.namean):
+                        newContent = content[:beginIndex]+"\n\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
+                    else:
+                        newContent = content[:endIndex]+"\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
+                    oldPost.edit(newContent)
+                    print("Successfully added post to Weekend Hub")
+                    return True
+            except Exception as e:
+                print("Ran into a comment")
     except Exception as e:
         print("Error in addToHub: {}".format(e))
         return False
@@ -957,7 +988,7 @@ def setSuggestedSort(session, sorting):
 def getSettings(subreddit):
     try:
         settings = {}
-        defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": True, "suggestedNew": False, "newFormat": True, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True}
+        defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": True, "suggestedNew": False, "newFormat": True, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True, "trackComments": False}
         print("Pulling bot settings from the wiki")
         wikiContent = subreddit.wiki['botsettings'].content_md
         wikiRows = wikiContent.split("\r\n")
@@ -973,6 +1004,7 @@ def getSettings(subreddit):
         if sorted(settings.keys()) == sorted(defaultSettings.keys()):
             return settings
         else:
+            print("Using default settings.")
             return defaultSettings
     except Exception as e:
         print("Error in pullSettings: {}".format(e))
@@ -1040,11 +1072,57 @@ def getTrafficReport(subreddit):
             dateString = "{0} {1}".format(date.year, monthToWord(date.month))
             if pageviews != 0:
                 report += "\n|{0}|{1}|{2}|".format(dateString, uniques, pageviews)
-        report += "\n\nRaw dictionary:\n\n    {}".format(traffic_dict)
+        #report += "\n\nRaw dictionary:\n\n    {}".format(traffic_dict)
         return report
     except Exception as e:
         print("Error in getTrafficReport: {}".format(e))
         return False
+
+def storePostTitles(subreddit):
+    try:
+        #Load previous post data
+        data = np.loadtxt("data/postTitles.tsv", delimiter="\t", comments="#", dtype="str")
+        IDs, titles = data.T
+        
+        data_file = open("data/postTitles.tsv", "a")
+        for submission in subreddit.new(limit=100):
+            if submission.id not in IDs:
+                if submission.domain != "self.formula1":
+                    data_file.write("\n{0}\t{1}".format(submission.id, submission.title))
+            else:
+                break
+        data_file.close()
+    except Exception as e:
+        print("Error in storePostTitles: {}".format(e))
+
+def checkReposts(subreddit):
+    try:
+        #Set amount of posts to look back in
+        OCdistance = 200
+        
+        #Load previous post data
+        data = np.loadtxt("data/postTitles.tsv", delimiter="\t", comments="#", dtype="str")
+        IDs, titles = data.T
+        
+        #Create tf.idf matrix of old titles
+        tf = TfidfVectorizer(stop_words='english', ngram_range=(1, 1))
+        X = tf.fit_transform(titles)
+        
+        for submission in subreddit.new(limit=100):
+            if submission.id not in IDs:
+                if submission.domain != "self.formula1":
+                    testingString = submission.title
+                    search_query =  tf.transform([testingString])
+                    cosine_similarities = linear_kernel(X, search_query).flatten()[-OCdistance:]
+                    most_related_docs = cosine_similarities.argsort()[-10:][::-1]
+                    if cosine_similarities[most_related_docs[0]] > 0.5:
+                        OrigPost = r.submission(id=IDs[-OCdistance:][most_related_docs[0]])
+                        if not OrigPost.removed and not OrigPost.selftext == "[deleted]":
+                            redbiertje.message("Possible repost", "Hi there,\n\nI've found the following post:\n\n[{0}]({1})\n\nwhich looks a lot like\n\n[{2}](https://redd.it/{3})\n\nPlease check if it's a repost.\n\n(Similarity: {4:4f})".format(submission.title, submission.permalink, OrigPost.title, OrigPost.id, cosine_similarities[most_related_docs[0]]))
+            else:
+                break
+    except Exception as e:
+        print("Error in checkReposts: {}".format(e))
     
 alertState = botState()
 settings = getSettings(subreddit)
@@ -1069,6 +1147,16 @@ if qualiResultTime < currentTime and (prevTime < qualiResultTime or prevTime == 
     success = postResults("qualifying")
     if not success and weekend.raceTime < qualiResultTime + datetime.timedelta(days=2):
         qualiResultTime += datetime.timedelta(minutes=1)
+print("Checking for reposts")
+checkReposts(subreddit)
+storePostTitles(subreddit)
+
+#if int(currentTime.hour/6) != int(prevTime.hour/6):
+#    old_mins = str(subreddit.mod.settings()["comment_score_hide_mins"])
+#    new_mins = ct.switchHidingTime(subreddit)
+#    print("Switching the comment hiding time from {0} minutes to {1} minutes".format(old_mins, new_mins))
+
+#Alert state-dependent schedule
 if alertState == "normal":
     updateCountdown(subreddit)
     if settings["testingMode"]:
@@ -1076,7 +1164,11 @@ if alertState == "normal":
     else:
         scheduleChecker(subreddit, forecast)
     checkMail(subreddit, private_subreddit, formula1exp, forecast)
+    #if settings["trackComments"]:
+    #    print("Tracking comments...")
+    #    trackedComments = ct.trackComments(r, subreddit, trackedComments, currentTime, prevTime)
     prevTime = currentTime
+    print("Waiting for 30 seconds...")
     time.sleep(30)
 elif alertState == "quali" or alertState == "race":
     updateCountdown(subreddit)
@@ -1086,11 +1178,14 @@ elif alertState == "quali" or alertState == "race":
         scheduleChecker(subreddit, forecast)
     checkMail(subreddit, private_subreddit, formula1exp, forecast)
     checkSessionFinished(subreddit, alertState)
+    #if settings["trackComments"]:
+    #    print("Tracking comments...")
+    #    trackedComments = ct.trackComments(r, subreddit, trackedComments, currentTime, prevTime)
     prevTime = currentTime
-    for i in range(4):
+    for i in range(3):
         checkMail(subreddit, private_subreddit, formula1exp, forecast)
         checkSessionFinished(subreddit, alertState)
-    
+       
 #Old code that may be VERY useful some day
 #
 #Old session template

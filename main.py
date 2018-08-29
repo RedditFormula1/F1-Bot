@@ -11,6 +11,7 @@ Written by /u/Redbiertje
 from __future__ import division
 import datetime
 import botData as bd
+import numpy as np
 import time
 import praw
 import pyowm
@@ -46,6 +47,7 @@ boot = True
 qualiResultTime = prevTime-datetime.timedelta(minutes=1)
 raceResultTime = prevTime-datetime.timedelta(minutes=1)
 lastQ2Time = prevTime-datetime.timedelta(minutes=10)
+trackedComments = np.array([["Blank", None, None, None, None, None, None, None, None, None, None, None]])
 
 #Keep the bot alive
 while True:

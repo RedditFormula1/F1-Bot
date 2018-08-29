@@ -71,6 +71,17 @@ flagTeamDictNat = {"Mercedes": "de",
     "Haas Ferrari": "us",
     "McLaren Renault": "gb",
     "Sauber Ferrari": "ch"}
+    
+barTeamDict = {"Mercedes": "merc",
+    "Ferrari": "fer",
+    "Red Bull Racing TAG Heuer": "rbr",
+    "Force India Mercedes": "sfi",
+    "Williams Mercedes": "wil",
+    "Scuderia Toro Rosso Honda": "str",
+    "Renault": "ren",
+    "Haas Ferrari": "has",
+    "McLaren Renault": "mcl",
+    "Sauber Ferrari": "sau"}
 
 teamShortNameDict = {"Mercedes": "Mercedes",
     "Ferrari": "Ferrari",
@@ -82,6 +93,46 @@ teamShortNameDict = {"Mercedes": "Mercedes",
     "Haas Ferrari": "Haas",
     "McLaren Renault": "McLaren",
     "Sauber Ferrari": "Sauber"}
+    
+teamSubredditDict = {"Mercedes": "[Mercedes](/r/MercedesAMGF1)",
+    "Ferrari": "[Ferrari](/r/scuderiaferrari)",
+    "Red Bull Racing TAG Heuer": "Red Bull",
+    "Force India Mercedes": "[Force India](/r/SaharaForceIndia)",
+    "Williams Mercedes": "[Williams](/r/WilliamsF1)",
+    "Scuderia Toro Rosso Honda": "[Toro Rosso](/r/ScuderiaToroRosso)",
+    "Renault": "Renault",
+    "Haas Ferrari": "Haas",
+    "McLaren Renault": "McLaren",
+    "Sauber Ferrari": "Sauber"}
+    
+driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
+    "Vettel": "[Vettel](/r/The_Seb)",
+    "Bottas": "Bottas",
+    "Ricciardo": "Ricciardo",
+    "Räikkönen": "[Räikkönen](/r/KimiRaikkonen)",
+    "Verstappen": "[Verstappen](/r/maxv)",
+    "Perez": "Pérez",
+    "Ocon": "[Ocon](/r/EstebanOcon31)",
+    "Sainz": "[Sainz](/r/Carlo55ainz)",
+    "Hulkenberg": "[Hülkenberg](/r/Hulkenberg)",
+    "Massa": "Massa",
+    "Stroll": "[Stroll](/r/Lance_Stroll)",
+    "Grosjean": "Grosjean",
+    "Magnussen": "[Magnussen](/r/KMag20)",
+    "Alonso": "[Alonso](/r/The_Fernando)",
+    "Palmer": "Palmer",
+    "Vandoorne": "[Vandoorne](/r/StoffelWaffle)",
+    "Wehrlein": "Wehrlein",
+    "Kvyat": "Kvyat",
+    "Ericsson": "[Ericsson](/r/MarcusEricsson)",
+    "Button": "Button",
+    "Giovinazzi": "Giovinazzi",
+    "Gasly": "[Gasly](/r/TheGreatGasly)",
+    "Kubica": "Kubica",
+    "Leclerc": "[Leclerc](/r/CharlesLeclerc)",
+    "Buemi": "Buemi",
+    "Hartley": "Hartley",
+    "Sirotkin": "Sirotkin"}
 
 def raceResults(weekend):
     try:
@@ -207,7 +258,7 @@ def startingGrid(weekend):
         print("Error in startingGrid: {}".format(e))
         return False
 
-def driverStandings():
+def driverStandings(type=0):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/drivers.html".format(currentYear)
         page = urllib2.urlopen(address)
@@ -226,16 +277,20 @@ def driverStandings():
             team.append(str(data[7].find("a").string))
             points.append(str(data[8].string))
         
-        resultTable = "\n>|#|Driver • Team|Pts|\n|-|-|-"
-        for i in range(10):
-            resultTable += "\n|{0:02d}|[](#{1}) {2} • {3}|{4}".format(i+1, flagDriverDict[driverFull[i]], driver[i], teamShortNameDict[team[i]], points[i])
-            
+        if type == 0:
+            resultTable = "\n>|#|Driver • Team|Pts|\n|-|-|-"
+            for i in range(10):
+                resultTable += "\n|{0:02d}|[](#{1}) {2} • {3}|{4}".format(i+1, flagDriverDict[driverFull[i]], driver[i], teamShortNameDict[team[i]], points[i])
+        else:
+            resultTable = "\n> \n> |#|Driver|Team|Pts|\n> |:-:|:--|:--|:-:|"
+            for i in range(20):
+                resultTable += "\n> |{0} [](#{1})|[](#{2}) {3}|{4}|{5}|".format(i+1, barTeamDict[team[i]], flagDriverDict[driverFull[i]], driverSubredditDict[driver[i]], teamSubredditDict[team[i]], points[i])
         return resultTable
         
     except Exception as e:
         print("Error in driverStandings: {}".format(e))
 
-def teamStandings():
+def teamStandings(type=0):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/team.html".format(currentYear)
         page = urllib2.urlopen(address)
@@ -250,10 +305,14 @@ def teamStandings():
             team.append(str(data[2].find("a").string))
             points.append(str(data[3].string))
         
-        resultTable = "\n>|#|Team|Pts|\n|-|-|-"
-        for i in range(10):
-            resultTable += "\n|{0:02d}|[](#{1}) {2}|{3}".format(i+1, flagTeamDictNat[team[i]], team[i], points[i])
-            
+        if type == 0:
+            resultTable = "\n>|#|Team|Pts|\n|-|-|-"
+            for i in range(10):
+                resultTable += "\n|{0:02d}|[](#{1}) {2}|{3}".format(i+1, flagTeamDictNat[team[i]], team[i], points[i])
+        else:
+            resultTable = "\n> \n> |#|Team|Pts|\n> |:-:|:--|:-:|"
+            for i in range(10):
+                resultTable += "\n> |{0} [](#{1})|[](#{2}) {3}|{4}".format(i+1, barTeamDict[team[i]], flagTeamDictNat[team[i]], teamSubredditDict[team[i]], points[i])
         return resultTable
         
     except Exception as e:

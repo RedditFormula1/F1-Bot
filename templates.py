@@ -26,7 +26,7 @@ hub_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "**Sessions**[](/sessionsBegin)\n"\
 "\n"\
-" - No links yet[](\sessionsEnd)\n"\
+" - No links yet[](/sessionsEnd)\n"\
 "\n"\
 "**Extras**\n"\
 "\n"\
@@ -34,9 +34,11 @@ hub_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "####IRC Chat\n"\
 "\n"\
+"Join our own subreddit chatroom here: **[web link](https://s.reddit.com/channel/1064884_86cd0fcf5bcd8a3d74cc0858ece3836e522478d4)** / **[mobile link](https://www.reddit.com/chat/r/formula1/channel/sendbird_group_channel_1064884_86cd0fcf5bcd8a3d74cc0858ece3836e522478d4/invited)**\n"\
+"\n"\
 "Join us on /r/formula1's IRC chat: **[#f1 on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1/)**\n"\
 "\n"\
-"Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**"\
+"Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**\n"\
 "\n"\
 "Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well."
 
@@ -94,6 +96,8 @@ old_session_template = "### ROUND {0}: {1} []({2})\n"\
 "---\n"\
 "\n"\
 "#### Race Discussion\n"\
+"\n"\
+"Join our own subreddit chatroom here: **[web link](https://s.reddit.com/channel/1064884_d5a5f6daa641c9750c8533a713ab43489a419b61)** / **[mobile link](https://www.reddit.com/chat/r/formula1/channel/sendbird_group_channel_1064884_d5a5f6daa641c9750c8533a713ab43489a419b61/invited)**\n"\
 "\n"\
 "Join us on /r/formula1's IRC chat: **[#f1 on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1/)**\n"\
 "\n"\
