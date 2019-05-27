@@ -30,17 +30,21 @@ hub_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "**Extras**\n"\
 "\n"\
-" - [/u/Kelly_Johnson's Prediction Competition](https://docs.google.com/forms/d/e/1FAIpQLSfeGdJci-7h5FwDwPr044s400BzqsOJa1tOV8cGBQ3OH6zReg/viewform?usp=sf_link)\n"\
+" - No links yet\n"\
 "\n"\
 "####IRC Chat\n"\
-"\n"\
-"Join our own subreddit chatroom here: **[web link](https://s.reddit.com/channel/1064884_86cd0fcf5bcd8a3d74cc0858ece3836e522478d4)** / **[mobile link](https://www.reddit.com/chat/r/formula1/channel/sendbird_group_channel_1064884_86cd0fcf5bcd8a3d74cc0858ece3836e522478d4/invited)**\n"\
 "\n"\
 "Join us on /r/formula1's IRC chat: **[#f1 on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1/)**\n"\
 "\n"\
 "Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**\n"\
 "\n"\
-"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well."
+"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well.\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####F1 Fantasy League\n"\
+"\n"\
+"Remember to update your F1 Fantasy team. Join the [official subreddit league here](https://fantasy.formula1.com/join/?=a3b1ff4e8b), or use invite code `a3b1ff4e8b`."
 
 old_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
@@ -97,13 +101,17 @@ old_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "#### Race Discussion\n"\
 "\n"\
-"Join our own subreddit chatroom here: **[web link](https://s.reddit.com/channel/1064884_d5a5f6daa641c9750c8533a713ab43489a419b61)** / **[mobile link](https://www.reddit.com/chat/r/formula1/channel/sendbird_group_channel_1064884_d5a5f6daa641c9750c8533a713ab43489a419b61/invited)**\n"\
-"\n"\
 "Join us on /r/formula1's IRC chat: **[#f1 on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1/)**\n"\
 "\n"\
 "Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**\n"\
 "\n"\
-"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well."
+"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well.\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####F1 Fantasy League\n"\
+"\n"\
+"Remember to update your F1 Fantasy team. Join the [official subreddit league here](https://fantasy.formula1.com/join/?=a3b1ff4e8b), or use invite code `a3b1ff4e8b`."
 
 new_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
@@ -164,7 +172,13 @@ new_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**\n"\
 "\n"\
-"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well."
+"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well.\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####F1 Fantasy League\n"\
+"\n"\
+"Remember to update your F1 Fantasy team. Join the [official subreddit league here](https://fantasy.formula1.com/join/?=a3b1ff4e8b), or use invite code `a3b1ff4e8b`."
 
 post_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\

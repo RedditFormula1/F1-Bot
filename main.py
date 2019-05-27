@@ -17,13 +17,14 @@ import praw
 import pyowm
 import os
 import tweepy
+import sys
 
 #Set correct filepath
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 #Login
 r = praw.Reddit(client_id=bd.app_id, client_secret=bd.app_secret, password=bd.password, user_agent=bd.app_user_agent, username=bd.username)
-if(r.user.me()=="F1-Bot"):
+if(r.user.me()==bd.username):
     print("Successfully logged in")
 subreddit = r.subreddit("formula1")
 private_subreddit = r.subreddit("formula1bot")
@@ -39,7 +40,10 @@ auth.set_access_token(bd.access_token, bd.access_token_secret)
 twitter = tweepy.API(auth)
 
 #Set start states
+global prevTime
+global currentTime
 prevTime = datetime.datetime.utcnow()
+currentTime = datetime.datetime.utcnow()
 lastAlert = prevTime-datetime.timedelta(minutes=11)
 lastCommand = [1, 2]
 alertState = "normal"

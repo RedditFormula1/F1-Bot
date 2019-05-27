@@ -16,46 +16,47 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-prevYear = 2017
-currYear = 2018
+prevYear = 2018
+currYear = 2019
 
 #Define list of Tech Talk Threads
-techTalks = [datetime.datetime(currYear, 3, 23, 8, 00),
-            datetime.datetime(currYear, 3, 30, 14, 00),
-            datetime.datetime(currYear, 4, 5, 20, 00),
-            datetime.datetime(currYear, 4, 12, 2, 00),
-            datetime.datetime(currYear, 4, 19, 8, 00),
-            datetime.datetime(currYear, 4, 26, 14, 00),
-            datetime.datetime(currYear, 5, 3, 20, 00),
-            datetime.datetime(currYear, 5, 10, 2, 00),
-            datetime.datetime(currYear, 5, 17, 21, 45),
-            datetime.datetime(currYear, 5, 23, 14, 00),
-            datetime.datetime(currYear, 5, 31, 20, 00),
-            datetime.datetime(currYear, 6, 7, 2, 00),
-            datetime.datetime(currYear, 6, 14, 8, 00),
-            datetime.datetime(currYear, 6, 21, 14, 00),
-            datetime.datetime(currYear, 6, 28, 20, 00),
-            datetime.datetime(currYear, 7, 5, 2, 00),
-            datetime.datetime(currYear, 7, 12, 8, 00),
-            datetime.datetime(currYear, 7, 19, 14, 00),
-            datetime.datetime(currYear, 7, 26, 20, 00),
-            datetime.datetime(currYear, 8, 2, 2, 00),
-            datetime.datetime(currYear, 8, 9, 8, 00),
-            datetime.datetime(currYear, 8, 16, 14, 00),
-            datetime.datetime(currYear, 8, 23, 20, 00),
-            datetime.datetime(currYear, 8, 30, 2, 00),
-            datetime.datetime(currYear, 9, 6, 8, 00),
-            datetime.datetime(currYear, 9, 13, 14, 00),
-            datetime.datetime(currYear, 9, 20, 20, 00),
-            datetime.datetime(currYear, 9, 27, 2, 00),
-            datetime.datetime(currYear, 10, 4, 8, 00),
-            datetime.datetime(currYear, 10, 11, 14, 00),
-            datetime.datetime(currYear, 10, 18, 20, 00),
-            datetime.datetime(currYear, 10, 25, 2, 00),
-            datetime.datetime(currYear, 11, 1, 8, 00),
-            datetime.datetime(currYear, 11, 8, 14, 00),
-            datetime.datetime(currYear, 11, 15, 20, 00),
-            datetime.datetime(currYear, 11, 22, 8, 00)]
+techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
+            datetime.datetime(currYear, 3, 21, 8, 00),
+            datetime.datetime(currYear, 3, 28, 14, 00),
+            datetime.datetime(currYear, 4, 4, 20, 00),
+            datetime.datetime(currYear, 4, 11, 2, 00),
+            datetime.datetime(currYear, 4, 18, 8, 00),
+            datetime.datetime(currYear, 4, 25, 14, 00),
+            datetime.datetime(currYear, 5, 2, 20, 00),
+            datetime.datetime(currYear, 5, 9, 2, 00),
+            datetime.datetime(currYear, 5, 16, 21, 45),
+            datetime.datetime(currYear, 5, 22, 14, 00),
+            datetime.datetime(currYear, 5, 30, 20, 00),
+            datetime.datetime(currYear, 6, 6, 2, 00),
+            datetime.datetime(currYear, 6, 13, 8, 00),
+            datetime.datetime(currYear, 6, 20, 14, 00),
+            datetime.datetime(currYear, 6, 27, 20, 00),
+            datetime.datetime(currYear, 7, 4, 2, 00),
+            datetime.datetime(currYear, 7, 11, 8, 00),
+            datetime.datetime(currYear, 7, 18, 14, 00),
+            datetime.datetime(currYear, 7, 25, 20, 00),
+            datetime.datetime(currYear, 8, 1, 2, 00),
+            datetime.datetime(currYear, 8, 8, 8, 00),
+            datetime.datetime(currYear, 8, 15, 14, 00),
+            datetime.datetime(currYear, 8, 22, 20, 00),
+            datetime.datetime(currYear, 8, 29, 2, 00),
+            datetime.datetime(currYear, 9, 5, 8, 00),
+            datetime.datetime(currYear, 9, 12, 14, 00),
+            datetime.datetime(currYear, 9, 19, 20, 00),
+            datetime.datetime(currYear, 9, 26, 2, 00),
+            datetime.datetime(currYear, 10, 3, 8, 00),
+            datetime.datetime(currYear, 10, 10, 14, 00),
+            datetime.datetime(currYear, 10, 17, 20, 00),
+            datetime.datetime(currYear, 10, 24, 2, 00),
+            datetime.datetime(currYear, 10, 31, 8, 00),
+            datetime.datetime(currYear, 11, 7, 14, 00),
+            datetime.datetime(currYear, 11, 14, 20, 00),
+            datetime.datetime(currYear, 11, 21, 8, 00)]
 
 #Define a nice object
 class Weekend:
@@ -66,16 +67,16 @@ class Weekend:
 
 #Add properties to the Australia weekend
 Australia = Weekend("Australia")
-Australia.fullTitle = "2018 FORMULA 1 ROLEX AUSTRALIAN GRAND PRIX"
+Australia.fullTitle = "FORMULA 1 ROLEX AUSTRALIAN GRAND PRIX 2019"
 Australia.round = 1
-Australia.racenr = 979
-Australia.hubTime = datetime.datetime(currYear, 3, 22, 8, 00)
-Australia.fp1Time = datetime.datetime(currYear, 3, 23, 1, 00)
-Australia.fp2Time = datetime.datetime(currYear, 3, 23, 5, 00)
-Australia.fp3Time = datetime.datetime(currYear, 3, 24, 3, 00)
-Australia.qualiTime = datetime.datetime(currYear, 3, 24, 6, 00)
-Australia.raceTime = datetime.datetime(currYear, 3, 25, 5, 10)
-Australia.dadTime = datetime.datetime(currYear, 3, 26, 5, 00)
+Australia.racenr = 1000
+Australia.hubTime = datetime.datetime(currYear, 3, 14, 9, 00)
+Australia.fp1Time = datetime.datetime(currYear, 3, 15, 1, 00)
+Australia.fp2Time = datetime.datetime(currYear, 3, 15, 5, 00)
+Australia.fp3Time = datetime.datetime(currYear, 3, 16, 3, 00)
+Australia.qualiTime = datetime.datetime(currYear, 3, 16, 6, 00)
+Australia.raceTime = datetime.datetime(currYear, 3, 17, 5, 10)
+Australia.dadTime = datetime.datetime(currYear, 3, 18, 5, 00)
 Australia.namean = "Australian"
 Australia.flag = "#au"
 Australia.circuit = "Melbourne Grand Prix Circuit"
@@ -101,7 +102,7 @@ Australia.prevYearFastestHolder = "Daniel Ricciardo"
 Australia.prevYearFastestTeam = "Red Bull Racing-TAG Heuer"
 Australia.prevYearFastestTime = "1:25.945"
 Australia.prevYearWinnerFlag = "#de"
-Australia.prevYearWinner = "Sebastial Vettel"
+Australia.prevYearWinner = "Sebastian Vettel"
 Australia.prevYearWinnerTeam = "Ferrari"
 Australia.prevYearSecondFlag = "#gb"
 Australia.prevYearSecond = "Lewis Hamilton"
@@ -111,22 +112,22 @@ Australia.prevYearThirdFlag = "#fi"
 Australia.prevYearThird = "Kimi Räikkönen"
 Australia.prevYearThirdTeam = "Ferrari"
 Australia.prevYearThirdDelta = "+6.309"
-Australia.linkF1 = "https://www.formula1.com/en/championship/races/2019/Australia"
+Australia.linkF1 = "https://www.formula1.com/en/racing/2019/Australia.html#circuit"
 Australia.linkWikiCircuit = "https://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
 Australia.linkWikiRace = "https://en.wikipedia.org/wiki/Australian_Grand_Prix"
 
 #Add properties to the Bahrain weekend
 Bahrain = Weekend("Bahrain")
-Bahrain.fullTitle = "2018 FORMULA 1 GULF AIR BAHRAIN GRAND PRIX"
+Bahrain.fullTitle = "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2019"
 Bahrain.round = 2
-Bahrain.racenr = 980
-Bahrain.hubTime = datetime.datetime(currYear, 4, 5, 20, 00)
-Bahrain.fp1Time = datetime.datetime(currYear, 4, 6, 11, 00)
-Bahrain.fp2Time = datetime.datetime(currYear, 4, 6, 15, 00)
-Bahrain.fp3Time = datetime.datetime(currYear, 4, 7, 12, 00)
-Bahrain.qualiTime = datetime.datetime(currYear, 4, 7, 15, 00)
-Bahrain.raceTime = datetime.datetime(currYear, 4, 8, 15, 10)
-Bahrain.dadTime = datetime.datetime(currYear, 4, 9, 15, 00)
+Bahrain.racenr = 1001
+Bahrain.hubTime = datetime.datetime(currYear, 3, 28, 20, 00)
+Bahrain.fp1Time = datetime.datetime(currYear, 3, 29, 11, 00)
+Bahrain.fp2Time = datetime.datetime(currYear, 3, 29, 15, 00)
+Bahrain.fp3Time = datetime.datetime(currYear, 3, 30, 12, 00)
+Bahrain.qualiTime = datetime.datetime(currYear, 3, 30, 15, 00)
+Bahrain.raceTime = datetime.datetime(currYear, 3, 31, 15, 10)
+Bahrain.dadTime = datetime.datetime(currYear, 4, 1, 15, 00)
 Bahrain.namean = "Bahrain"
 Bahrain.flag = "#bh"
 Bahrain.circuit = "Bahrain International Circuit"
@@ -162,22 +163,22 @@ Bahrain.prevYearThirdFlag = "#gb"
 Bahrain.prevYearThird = "Lewis Hamilton"
 Bahrain.prevYearThirdTeam = "Mercedes"
 Bahrain.prevYearThirdDelta = "+6.512"
-Bahrain.linkF1 = "https://www.formula1.com/en/championship/races/2019/Bahrain"
+Bahrain.linkF1 = "https://www.formula1.com/en/racing/2019/Bahrain.html#circuit"
 Bahrain.linkWikiCircuit = "https://en.wikipedia.org/wiki/Bahrain_International_Circuit"
 Bahrain.linkWikiRace = "https://en.wikipedia.org/wiki/Bahrain_Grand_Prix"
 
 #Add properties to the China weekend
 China = Weekend("China")
-China.fullTitle = "2018 FORMULA 1 HEINEKEN CHINESE GRAND PRIX"
+China.fullTitle = "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2019"
 China.round = 3
-China.racenr = 981
-China.hubTime = datetime.datetime(currYear, 4, 12, 14, 00)
-China.fp1Time = datetime.datetime(currYear, 4, 13, 2, 00)
-China.fp2Time = datetime.datetime(currYear, 4, 13, 6, 00)
-China.fp3Time = datetime.datetime(currYear, 4, 14, 3, 00)
-China.qualiTime = datetime.datetime(currYear, 4, 14, 6, 00)
-China.raceTime = datetime.datetime(currYear, 4, 15, 6, 10)
-China.dadTime = datetime.datetime(currYear, 4, 16, 6, 00)
+China.racenr = 1002
+China.hubTime = datetime.datetime(currYear, 4, 11, 14, 00)
+China.fp1Time = datetime.datetime(currYear, 4, 12, 2, 00)
+China.fp2Time = datetime.datetime(currYear, 4, 12, 6, 00)
+China.fp3Time = datetime.datetime(currYear, 4, 13, 3, 00)
+China.qualiTime = datetime.datetime(currYear, 4, 13, 6, 00)
+China.raceTime = datetime.datetime(currYear, 4, 14, 6, 10)
+China.dadTime = datetime.datetime(currYear, 4, 15, 6, 00)
 China.namean = "Chinese"
 China.flag = "#cn"
 China.circuit = "Shanghai International Circuit"
@@ -213,22 +214,22 @@ China.prevYearThirdFlag = "#fi"
 China.prevYearThird = "Kimi Räikkönen"
 China.prevYearThirdTeam = "Ferrari"
 China.prevYearThirdDelta = "+9.637"
-China.linkF1 = "https://www.formula1.com/en/championship/races/2019/China"
+China.linkF1 = "https://www.formula1.com/en/racing/2019/China.html#circuit"
 China.linkWikiCircuit = "https://en.wikipedia.org/wiki/Shanghai_International_Circuit"
 China.linkWikiRace = "https://en.wikipedia.org/wiki/Chinese_Grand_Prix"
 
 #Add properties to the Azerbaijan weekend
 Azerbaijan = Weekend("Azerbaijan")
-Azerbaijan.fullTitle = "2018 FORMULA 1 AZERBAIJAN GRAND PRIX"
+Azerbaijan.fullTitle = "FORMULA 1 AZERBAIJAN GRAND PRIX 2019"
 Azerbaijan.round = 4
-Azerbaijan.racenr = 982
-Azerbaijan.hubTime = datetime.datetime(currYear, 4, 26, 2, 00)
-Azerbaijan.fp1Time = datetime.datetime(currYear, 4, 27, 9, 00)
-Azerbaijan.fp2Time = datetime.datetime(currYear, 4, 27, 13, 00)
-Azerbaijan.fp3Time = datetime.datetime(currYear, 4, 28, 10, 00)
-Azerbaijan.qualiTime = datetime.datetime(currYear, 4, 28, 13, 00)
-Azerbaijan.raceTime = datetime.datetime(currYear, 4, 29, 12, 10)
-Azerbaijan.dadTime = datetime.datetime(currYear, 4, 30, 12, 10)
+Azerbaijan.racenr = 1003
+Azerbaijan.hubTime = datetime.datetime(currYear, 4, 25, 2, 00)
+Azerbaijan.fp1Time = datetime.datetime(currYear, 4, 26, 9, 00)
+Azerbaijan.fp2Time = datetime.datetime(currYear, 4, 26, 13, 00)
+Azerbaijan.fp3Time = datetime.datetime(currYear, 4, 27, 10, 00)
+Azerbaijan.qualiTime = datetime.datetime(currYear, 4, 27, 13, 00)
+Azerbaijan.raceTime = datetime.datetime(currYear, 4, 28, 12, 10)
+Azerbaijan.dadTime = datetime.datetime(currYear, 4, 29, 12, 10)
 Azerbaijan.namean = "Azerbaijan"
 Azerbaijan.flag = "#az"
 Azerbaijan.circuit = "Baku City Circuit"
@@ -264,22 +265,22 @@ Azerbaijan.prevYearThirdFlag = "#mx"
 Azerbaijan.prevYearThird = "Sergio Pérez"
 Azerbaijan.prevYearThirdTeam = "Force India-Mercedes"
 Azerbaijan.prevYearThirdDelta = "+4.024"
-Azerbaijan.linkF1 = "https://www.formula1.com/en/championship/races/2019/Azerbaijan"
+Azerbaijan.linkF1 = "https://www.formula1.com/en/racing/2019/Azerbaijan.html#circuit"
 Azerbaijan.linkWikiCircuit = "https://en.wikipedia.org/wiki/Baku_City_Circuit"
 Azerbaijan.linkWikiRace = "https://en.wikipedia.org/wiki/Azerbaijan_Grand_Prix"
 
 #Add properties to the Spain weekend
 Spain = Weekend("Spain")
-Spain.fullTitle = "FORMULA 1 GRAN PREMIO DE ESPAÑA PIRELLI 2018"
+Spain.fullTitle = "FORMULA 1 EMIRATES GRAN PREMIO DE ESPAÑA 2019"
 Spain.round = 5
-Spain.racenr = 983
-Spain.hubTime = datetime.datetime(currYear, 5, 10, 8, 00)
-Spain.fp1Time = datetime.datetime(currYear, 5, 11, 9, 00)
-Spain.fp2Time = datetime.datetime(currYear, 5, 11, 13, 00)
-Spain.fp3Time = datetime.datetime(currYear, 5, 12, 10, 00)
-Spain.qualiTime = datetime.datetime(currYear, 5, 12, 13, 00)
-Spain.raceTime = datetime.datetime(currYear, 5, 13, 13, 10)
-Spain.dadTime = datetime.datetime(currYear, 5, 14, 13, 00)
+Spain.racenr = 1004
+Spain.hubTime = datetime.datetime(currYear, 5, 9, 8, 00)
+Spain.fp1Time = datetime.datetime(currYear, 5, 10, 9, 00)
+Spain.fp2Time = datetime.datetime(currYear, 5, 10, 13, 00)
+Spain.fp3Time = datetime.datetime(currYear, 5, 11, 10, 00)
+Spain.qualiTime = datetime.datetime(currYear, 5, 11, 13, 00)
+Spain.raceTime = datetime.datetime(currYear, 5, 12, 13, 10)
+Spain.dadTime = datetime.datetime(currYear, 5, 13, 13, 00)
 Spain.namean = "Spanish"
 Spain.flag = "#es"
 Spain.circuit = "Circuit de Barcelona-Catalunya"
@@ -315,22 +316,22 @@ Spain.prevYearThirdFlag = "#nl"
 Spain.prevYearThird = "Max Verstappen"
 Spain.prevYearThirdTeam = "Red Bull-TAG Heuer"
 Spain.prevYearThirdDelta = "+26.873"
-Spain.linkF1 = "https://www.formula1.com/en/championship/races/2019/Spain"
+Spain.linkF1 = "https://www.formula1.com/en/racing/2019/Spain.html#circuit"
 Spain.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya"
 Spain.linkWikiRace = "https://en.wikipedia.org/wiki/Spanish_Grand_Prix"
 
 #Add properties to the Monaco weekend
 Monaco = Weekend("Monaco")
-Monaco.fullTitle = "FORMULA 1 GRAND PRIX DE MONACO 2018"
+Monaco.fullTitle = "FORMULA 1 GRAND PRIX DE MONACO 2019"
 Monaco.round = 6
-Monaco.racenr = 984
-Monaco.hubTime = datetime.datetime(currYear, 5, 23, 14, 00)
-Monaco.fp1Time = datetime.datetime(currYear, 5, 24, 9, 00)
-Monaco.fp2Time = datetime.datetime(currYear, 5, 24, 13, 00)
-Monaco.fp3Time = datetime.datetime(currYear, 5, 26, 10, 00)
-Monaco.qualiTime = datetime.datetime(currYear, 5, 26, 13, 00)
-Monaco.raceTime = datetime.datetime(currYear, 5, 27, 13, 10)
-Monaco.dadTime = datetime.datetime(currYear, 5, 28, 13, 00)
+Monaco.racenr = 1005
+Monaco.hubTime = datetime.datetime(currYear, 5, 22, 14, 00)
+Monaco.fp1Time = datetime.datetime(currYear, 5, 23, 9, 00)
+Monaco.fp2Time = datetime.datetime(currYear, 5, 23, 13, 00)
+Monaco.fp3Time = datetime.datetime(currYear, 5, 25, 10, 00)
+Monaco.qualiTime = datetime.datetime(currYear, 5, 25, 13, 00)
+Monaco.raceTime = datetime.datetime(currYear, 5, 26, 13, 10)
+Monaco.dadTime = datetime.datetime(currYear, 5, 27, 13, 00)
 Monaco.namean = "Monaco"
 Monaco.flag = "#mc"
 Monaco.circuit = "Circuit de Monaco"
@@ -366,22 +367,22 @@ Monaco.prevYearThirdFlag = "#gb"
 Monaco.prevYearThird = "Lewis Hamilton"
 Monaco.prevYearThirdTeam = "Mercedes"
 Monaco.prevYearThirdDelta = "+17.013"
-Monaco.linkF1 = "https://www.formula1.com/en/championship/races/2019/Monaco"
+Monaco.linkF1 = "https://www.formula1.com/en/racing/2019/Monaco.html#circuit"
 Monaco.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_de_Monaco"
 Monaco.linkWikiRace = "https://en.wikipedia.org/wiki/Monaco_Grand_Prix"
 
 #Add properties to the Canada weekend
 Canada = Weekend("Canada")
-Canada.fullTitle = "FORMULA 1 GRAND PRIX DU CANADA 2018"
+Canada.fullTitle = "FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2019"
 Canada.round = 7
-Canada.racenr = 985
-Canada.hubTime = datetime.datetime(currYear, 6, 7, 20, 00)
-Canada.fp1Time = datetime.datetime(currYear, 6, 8, 14, 00)
-Canada.fp2Time = datetime.datetime(currYear, 6, 8, 18, 00)
-Canada.fp3Time = datetime.datetime(currYear, 6, 9, 15, 00)
-Canada.qualiTime = datetime.datetime(currYear, 6, 9, 18, 00)
-Canada.raceTime = datetime.datetime(currYear, 6, 10, 18, 10)
-Canada.dadTime = datetime.datetime(currYear, 6, 11, 18, 00)
+Canada.racenr = 1006
+Canada.hubTime = datetime.datetime(currYear, 6, 6, 20, 00)
+Canada.fp1Time = datetime.datetime(currYear, 6, 7, 15, 00)
+Canada.fp2Time = datetime.datetime(currYear, 6, 7, 19, 00)
+Canada.fp3Time = datetime.datetime(currYear, 6, 8, 16, 00)
+Canada.qualiTime = datetime.datetime(currYear, 6, 8, 19, 00)
+Canada.raceTime = datetime.datetime(currYear, 6, 9, 19, 10)
+Canada.dadTime = datetime.datetime(currYear, 6, 10, 19, 00)
 Canada.namean = "Canadian"
 Canada.flag = "#ca"
 Canada.circuit = "Circuit Gilles Villeneuve"
@@ -417,22 +418,22 @@ Canada.prevYearThirdFlag = "#nl"
 Canada.prevYearThird = "Max Verstappen"
 Canada.prevYearThirdTeam = "Red Bull-TAG Heuer"
 Canada.prevYearThirdDelta = "+8.360"
-Canada.linkF1 = "https://www.formula1.com/en/championship/races/2019/Canada"
+Canada.linkF1 = "https://www.formula1.com/en/racing/2019/Canada.html#circuit"
 Canada.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_Gilles_Villeneuve"
 Canada.linkWikiRace = "https://en.wikipedia.org/wiki/Canadian_Grand_Prix"
 
 #Add properties to the France weekend
 France = Weekend("France")
-France.fullTitle = "FORMULA 1 GRAND PRIX DE FRANCE 2018"
+France.fullTitle = "FORMULA 1 GRAND PRIX DE FRANCE 2019"
 France.round = 8
-France.racenr = 986
-France.hubTime = datetime.datetime(currYear, 6, 21, 20, 00)
-France.fp1Time = datetime.datetime(currYear, 6, 22, 10, 00)
-France.fp2Time = datetime.datetime(currYear, 6, 22, 14, 00)
-France.fp3Time = datetime.datetime(currYear, 6, 23, 11, 00)
-France.qualiTime = datetime.datetime(currYear, 6, 23, 14, 00)
-France.raceTime = datetime.datetime(currYear, 6, 24, 14, 10)
-France.dadTime = datetime.datetime(currYear, 6, 25, 14, 00)
+France.racenr = 1007
+France.hubTime = datetime.datetime(currYear, 6, 20, 20, 00)
+France.fp1Time = datetime.datetime(currYear, 6, 21, 9, 00)
+France.fp2Time = datetime.datetime(currYear, 6, 21, 13, 00)
+France.fp3Time = datetime.datetime(currYear, 6, 22, 10, 00)
+France.qualiTime = datetime.datetime(currYear, 6, 22, 13, 00)
+France.raceTime = datetime.datetime(currYear, 6, 23, 13, 10)
+France.dadTime = datetime.datetime(currYear, 6, 24, 13, 00)
 France.namean = "French"
 France.flag = "#fr"
 France.circuit = "Circuit Paul Ricard"
@@ -443,7 +444,7 @@ France.length = 5.842
 France.laps = 53
 France.distance = 309.626
 France.poleLeft = True
-France.lastYear = "2008"
+France.lastYear = prevYear
 France.lapRecordTime = "1:34.225"
 France.lapRecordFlag = "#fi"
 France.lapRecordHolder = "Valtteri Bottas"
@@ -468,22 +469,22 @@ France.prevYearThirdFlag = "#fi"
 France.prevYearThird = "Kimi Räikkonen"
 France.prevYearThirdTeam = "Ferrari"
 France.prevYearThirdDelta = "+28.880"
-France.linkF1 = "https://www.formula1.com/en/championship/races/2019/France"
+France.linkF1 = "https://www.formula1.com/en/racing/2019/France.html#circuit"
 France.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_Paul_Ricard"
 France.linkWikiRace = "https://en.wikipedia.org/wiki/French_Grand_Prix"
 
 #Add properties to the Austria weekend
 Austria = Weekend("Austria")
-Austria.fullTitle = "FORMULA 1 GROSSER PREIS VON ÖSTERREICH 2018"
+Austria.fullTitle = "FORMULA 1 MYWORLD GROSSER PREIS VON ÖSTERREICH 2019"
 Austria.round = 9
-Austria.racenr = 987
-Austria.hubTime = datetime.datetime(currYear, 6, 28, 8, 00)
-Austria.fp1Time = datetime.datetime(currYear, 6, 29, 9, 00)
-Austria.fp2Time = datetime.datetime(currYear, 6, 29, 13, 00)
-Austria.fp3Time = datetime.datetime(currYear, 6, 30, 10, 00)
-Austria.qualiTime = datetime.datetime(currYear, 6, 30, 13, 00)
-Austria.raceTime = datetime.datetime(currYear, 7, 1, 13, 10)
-Austria.dadTime = datetime.datetime(currYear, 7, 2, 13, 00)
+Austria.racenr = 1008
+Austria.hubTime = datetime.datetime(currYear, 6, 27, 8, 00)
+Austria.fp1Time = datetime.datetime(currYear, 6, 28, 9, 00)
+Austria.fp2Time = datetime.datetime(currYear, 6, 28, 13, 00)
+Austria.fp3Time = datetime.datetime(currYear, 6, 29, 10, 00)
+Austria.qualiTime = datetime.datetime(currYear, 6, 29, 13, 00)
+Austria.raceTime = datetime.datetime(currYear, 6, 30, 13, 10)
+Austria.dadTime = datetime.datetime(currYear, 7, 1, 13, 00)
 Austria.namean = "Austrian"
 Austria.flag = "#at"
 Austria.circuit = "Red Bull Ring"
@@ -519,22 +520,22 @@ Austria.prevYearThirdFlag = "#de"
 Austria.prevYearThird = "Sebastian Vettel"
 Austria.prevYearThirdTeam = "Ferrari"
 Austria.prevYearThirdDelta = "+3.181"
-Austria.linkF1 = "https://www.formula1.com/en/championship/races/2019/Austria"
+Austria.linkF1 = "https://www.formula1.com/en/racing/2019/Austria.html#circuit"
 Austria.linkWikiCircuit = "https://en.wikipedia.org/wiki/Red_Bull_Ring"
 Austria.linkWikiRace = "https://en.wikipedia.org/wiki/Austrian_Grand_Prix"
 
 #Add properties to the Britain weekend
 Britain = Weekend("Great Britain")
-Britain.fullTitle = "2018 FORMULA 1 ROLEX BRITISH GRAND PRIX"
+Britain.fullTitle = "FORMULA 1 ROLEX BRITISH GRAND PRIX 2019"
 Britain.round = 10
-Britain.racenr = 988
-Britain.hubTime = datetime.datetime(currYear, 7, 5, 22, 00)
-Britain.fp1Time = datetime.datetime(currYear, 7, 6, 9, 00)
-Britain.fp2Time = datetime.datetime(currYear, 7, 6, 13, 00)
-Britain.fp3Time = datetime.datetime(currYear, 7, 7, 10, 00)
-Britain.qualiTime = datetime.datetime(currYear, 7, 7, 13, 00)
-Britain.raceTime = datetime.datetime(currYear, 7, 8, 13, 10)
-Britain.dadTime = datetime.datetime(currYear, 7, 9, 13, 00)
+Britain.racenr = 1009
+Britain.hubTime = datetime.datetime(currYear, 7, 11, 22, 00)
+Britain.fp1Time = datetime.datetime(currYear, 7, 12, 9, 00)
+Britain.fp2Time = datetime.datetime(currYear, 7, 12, 13, 00)
+Britain.fp3Time = datetime.datetime(currYear, 7, 13, 10, 00)
+Britain.qualiTime = datetime.datetime(currYear, 7, 13, 13, 00)
+Britain.raceTime = datetime.datetime(currYear, 7, 14, 13, 10)
+Britain.dadTime = datetime.datetime(currYear, 7, 15, 13, 00)
 Britain.namean = "British"
 Britain.flag = "#gb"
 Britain.circuit = "Silverstone Circuit"
@@ -570,22 +571,22 @@ Britain.prevYearThirdFlag = "#fi"
 Britain.prevYearThird = "Kimi Räikkönen"
 Britain.prevYearThirdTeam = "Ferrari"
 Britain.prevYearThirdDelta = "+3.652"
-Britain.linkF1 = "https://www.formula1.com/en/championship/races/2019/Great_Britain"
+Britain.linkF1 = "https://www.formula1.com/en/racing/2019/Great_Britain.html#circuit"
 Britain.linkWikiCircuit = "https://en.wikipedia.org/wiki/Silverstone_Circuit"
 Britain.linkWikiRace = "https://en.wikipedia.org/wiki/British_Grand_Prix"
 
 #Add properties to the Germany weekend
 Germany = Weekend("Germany")
-Germany.fullTitle = "FORMULA 1 GROSSER PREIS VON DEUTSCHLAND 2018"
+Germany.fullTitle = "FORMULA 1 MERCEDES-BENZ GROSSER PREIS VON DEUTSCHLAND 2019"
 Germany.round = 11
-Germany.racenr = 989
-Germany.hubTime = datetime.datetime(currYear, 7, 19, 22, 00)
-Germany.fp1Time = datetime.datetime(currYear, 7, 20, 9, 00)
-Germany.fp2Time = datetime.datetime(currYear, 7, 20, 13, 00)
-Germany.fp3Time = datetime.datetime(currYear, 7, 21, 10, 00)
-Germany.qualiTime = datetime.datetime(currYear, 7, 21, 13, 00)
-Germany.raceTime = datetime.datetime(currYear, 7, 22, 13, 10)
-Germany.dadTime = datetime.datetime(currYear, 7, 23, 13, 00)
+Germany.racenr = 1010
+Germany.hubTime = datetime.datetime(currYear, 7, 25, 22, 00)
+Germany.fp1Time = datetime.datetime(currYear, 7, 26, 9, 00)
+Germany.fp2Time = datetime.datetime(currYear, 7, 26, 13, 00)
+Germany.fp3Time = datetime.datetime(currYear, 7, 27, 10, 00)
+Germany.qualiTime = datetime.datetime(currYear, 7, 27, 13, 00)
+Germany.raceTime = datetime.datetime(currYear, 7, 28, 13, 10)
+Germany.dadTime = datetime.datetime(currYear, 7, 29, 13, 00)
 Germany.namean = "German"
 Germany.flag = "#de"
 Germany.circuit = "Hockenheimring"
@@ -596,7 +597,7 @@ Germany.length = 4.574
 Germany.laps = 67
 Germany.distance = 306.442
 Germany.poleLeft = True
-Germany.lastYear = 2016
+Germany.lastYear = prevYear
 Germany.lapRecordTime = "1:13.780"
 Germany.lapRecordFlag = "#fi"
 Germany.lapRecordHolder = "Kimi Räikkönen"
@@ -621,22 +622,22 @@ Germany.prevYearThirdFlag = "#fi"
 Germany.prevYearThird = "Kimi Räikkönen"
 Germany.prevYearThirdTeam = "Ferrari"
 Germany.prevYearThirdDelta = "+6.732"
-Germany.linkF1 = "https://www.formula1.com/en/championship/races/2019/Germany"
+Germany.linkF1 = "https://www.formula1.com/en/racing/2019/Germany.html#circuit"
 Germany.linkWikiCircuit = "https://en.wikipedia.org/wiki/Hockenheimring"
 Germany.linkWikiRace = "https://en.wikipedia.org/wiki/German_Grand_Prix"
 
 #Add properties to the Hungary weekend
 Hungary = Weekend("Hungary")
-Hungary.fullTitle = "FORMULA 1 PIRELLI MAGYAR NAGYDÍJ 2018"
+Hungary.fullTitle = "FORMULA 1 PIRELLI MAGYAR NAGYDÍJ 2019"
 Hungary.round = 12
-Hungary.racenr = 990
-Hungary.hubTime = datetime.datetime(currYear, 7, 26, 20, 00)
-Hungary.fp1Time = datetime.datetime(currYear, 7, 27, 9, 00)
-Hungary.fp2Time = datetime.datetime(currYear, 7, 27, 13, 00)
-Hungary.fp3Time = datetime.datetime(currYear, 7, 28, 10, 00)
-Hungary.qualiTime = datetime.datetime(currYear, 7, 28, 13, 00)
-Hungary.raceTime = datetime.datetime(currYear, 7, 29, 13, 10)
-Hungary.dadTime = datetime.datetime(currYear, 7, 30, 13, 00)
+Hungary.racenr = 1011
+Hungary.hubTime = datetime.datetime(currYear, 8, 1, 20, 00)
+Hungary.fp1Time = datetime.datetime(currYear, 8, 2, 9, 00)
+Hungary.fp2Time = datetime.datetime(currYear, 8, 2, 13, 00)
+Hungary.fp3Time = datetime.datetime(currYear, 8, 3, 10, 00)
+Hungary.qualiTime = datetime.datetime(currYear, 8, 3, 13, 00)
+Hungary.raceTime = datetime.datetime(currYear, 8, 4, 13, 10)
+Hungary.dadTime = datetime.datetime(currYear, 8, 5, 13, 00)
 Hungary.namean = "Hungarian"
 Hungary.flag = "#hu"
 Hungary.circuit = "Hungaroring"
@@ -653,41 +654,41 @@ Hungary.lapRecordFlag = "#de"
 Hungary.lapRecordHolder = "Michael Schumacher"
 Hungary.lapRecordTeam = "Ferrari"
 Hungary.lapRecordYear = 2004
-Hungary.prevYearPoleFlag = "#de"
-Hungary.prevYearPoleHolder = "Sebastian Vettel"
-Hungary.prevYearPoleTeam = "Ferrari"
-Hungary.prevYearPoleTime = "1:16.276"
-Hungary.prevYearFastestFlag = "#es"
-Hungary.prevYearFastestHolder = "Fernando Alonso"
-Hungary.prevYearFastestTeam = "McLaren-Honda"
-Hungary.prevYearFastestTime = "1:20.182"
-Hungary.prevYearWinnerFlag = "#de"
-Hungary.prevYearWinner = "Sebastian Vettel"
-Hungary.prevYearWinnerTeam = "Ferrari"
-Hungary.prevYearSecondFlag = "#fi"
-Hungary.prevYearSecond = "Kimi Räikkönen"
+Hungary.prevYearPoleFlag = "#gb"
+Hungary.prevYearPoleHolder = "Lewis Hamilton"
+Hungary.prevYearPoleTeam = "Mercedes"
+Hungary.prevYearPoleTime = "1:35.658"
+Hungary.prevYearFastestFlag = "#au"
+Hungary.prevYearFastestHolder = "Daniel Ricciardo"
+Hungary.prevYearFastestTeam = "Red Bull Racing-TAG Heuer"
+Hungary.prevYearFastestTime = "1:20.012"
+Hungary.prevYearWinnerFlag = "#gb"
+Hungary.prevYearWinner = "Lewis Hamilton"
+Hungary.prevYearWinnerTeam = "Mercedes"
+Hungary.prevYearSecondFlag = "#de"
+Hungary.prevYearSecond = "Sebastian Vettel"
 Hungary.prevYearSecondTeam = "Ferrari"
-Hungary.prevYearSecondDelta = "+0.908"
+Hungary.prevYearSecondDelta = "+17.123"
 Hungary.prevYearThirdFlag = "#fi"
-Hungary.prevYearThird = "Valtteri Bottas"
-Hungary.prevYearThirdTeam = "Mercedes"
-Hungary.prevYearThirdDelta = "+12.462"
-Hungary.linkF1 = "https://www.formula1.com/en/championship/races/2018/Hungary"
+Hungary.prevYearThird = "Kimi  Räikkönen"
+Hungary.prevYearThirdTeam = "Ferrari"
+Hungary.prevYearThirdDelta = "+20.101"
+Hungary.linkF1 = "https://www.formula1.com/en/racing/2019/Hungary.html#circuit"
 Hungary.linkWikiCircuit = "https://en.wikipedia.org/wiki/Hungaroring"
 Hungary.linkWikiRace = "https://en.wikipedia.org/wiki/Hungarian_Grand_Prix"
 
 #Add properties to the Belgium weekend
 Belgium = Weekend("Belgium")
-Belgium.fullTitle = "2018 FORMULA 1 BELGIAN GRAND PRIX"
+Belgium.fullTitle = "FORMULA 1 JOHNNIE WALKER BELGIAN GRAND PRIX 2019"
 Belgium.round = 13
-Belgium.racenr = 991
-Belgium.hubTime = datetime.datetime(currYear, 8, 23, 2, 00)
-Belgium.fp1Time = datetime.datetime(currYear, 8, 24, 9, 00)
-Belgium.fp2Time = datetime.datetime(currYear, 8, 24, 13, 00)
-Belgium.fp3Time = datetime.datetime(currYear, 8, 25, 10, 00)
-Belgium.qualiTime = datetime.datetime(currYear, 8, 25, 13, 00)
-Belgium.raceTime = datetime.datetime(currYear, 8, 26, 13, 10)
-Belgium.dadTime = datetime.datetime(currYear, 8, 27, 13, 00)
+Belgium.racenr = 1012
+Belgium.hubTime = datetime.datetime(currYear, 8, 29, 2, 00)
+Belgium.fp1Time = datetime.datetime(currYear, 8, 30, 9, 00)
+Belgium.fp2Time = datetime.datetime(currYear, 8, 30, 13, 00)
+Belgium.fp3Time = datetime.datetime(currYear, 8, 31, 10, 00)
+Belgium.qualiTime = datetime.datetime(currYear, 8, 31, 13, 00)
+Belgium.raceTime = datetime.datetime(currYear, 9, 1, 13, 10)
+Belgium.dadTime = datetime.datetime(currYear, 9, 2, 13, 00)
 Belgium.namean = "Belgian"
 Belgium.flag = "#be"
 Belgium.circuit = "Circuit de Spa-Francorchamps"
@@ -699,46 +700,46 @@ Belgium.laps = 44
 Belgium.distance = 308.052
 Belgium.poleLeft = False
 Belgium.lastYear = prevYear
-Belgium.lapRecordTime = "1:46.577"
-Belgium.lapRecordFlag = "#de"
-Belgium.lapRecordHolder = "Sebastial Vettel"
-Belgium.lapRecordTeam = "Ferrari"
-Belgium.lapRecordYear = 2017
+Belgium.lapRecordTime = "1:46.286"
+Belgium.lapRecordFlag = "#fi"
+Belgium.lapRecordHolder = "Valtteri Bottass"
+Belgium.lapRecordTeam = "Mercedes"
+Belgium.lapRecordYear = 2018
 Belgium.prevYearPoleFlag = "#gb"
 Belgium.prevYearPoleHolder = "Lewis Hamilton"
 Belgium.prevYearPoleTeam = "Mercedes"
-Belgium.prevYearPoleTime = "1:42.553"
-Belgium.prevYearFastestFlag = "#de"
-Belgium.prevYearFastestHolder = "Sebastian Vettel"
-Belgium.prevYearFastestTeam = "Ferraro"
-Belgium.prevYearFastestTime = "1:46.577"
-Belgium.prevYearWinnerFlag = "#gb"
-Belgium.prevYearWinner = "Lewis Hamilton"
-Belgium.prevYearWinnerTeam = "Mercedes"
-Belgium.prevYearSecondFlag = "#de"
-Belgium.prevYearSecond = "Sebastian Vettel"
-Belgium.prevYearSecondTeam = "Ferrari"
-Belgium.prevYearSecondDelta = "+2.358"
-Belgium.prevYearThirdFlag = "#au"
-Belgium.prevYearThird = "Daniel Ricciardo"
+Belgium.prevYearPoleTime = "1:58.179"
+Belgium.prevYearFastestFlag = "#fi"
+Belgium.prevYearFastestHolder = "Valtteri Bottas"
+Belgium.prevYearFastestTeam = "Mercedes"
+Belgium.prevYearFastestTime = "1:46.286"
+Belgium.prevYearWinnerFlag = "#de"
+Belgium.prevYearWinner = "Sebastian Vettel"
+Belgium.prevYearWinnerTeam = "Ferrari"
+Belgium.prevYearSecondFlag = "#gb"
+Belgium.prevYearSecond = "Lewis Hamilton"
+Belgium.prevYearSecondTeam = "Mercedes"
+Belgium.prevYearSecondDelta = "+11.061"
+Belgium.prevYearThirdFlag = "#nl"
+Belgium.prevYearThird = "Max Verstappen"
 Belgium.prevYearThirdTeam = "Red Bull-TAG Heuer"
-Belgium.prevYearThirdDelta = "+10.791"
-Belgium.linkF1 = "https://www.formula1.com/en/championship/races/2018/Belgium"
+Belgium.prevYearThirdDelta = "+31.372"
+Belgium.linkF1 = "https://www.formula1.com/en/racing/2019/Belgium.html#circuit"
 Belgium.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps"
 Belgium.linkWikiRace = "https://en.wikipedia.org/wiki/Belgian_Grand_Prix"
 
 #Add properties to the Italy weekend
 Italy = Weekend("Italy")
-Italy.fullTitle = "FORMULA 1 GRAN PREMIO HEINEKEN D'ITALIA 2018"
+Italy.fullTitle = "FORMULA 1 GRAN PREMIO HEINEKEN D'ITALIA 2019"
 Italy.round = 14
-Italy.racenr = 992
-Italy.hubTime = datetime.datetime(currYear, 8, 30, 8, 00)
-Italy.fp1Time = datetime.datetime(currYear, 8, 31, 9, 00)
-Italy.fp2Time = datetime.datetime(currYear, 8, 31, 13, 00)
-Italy.fp3Time = datetime.datetime(currYear, 9, 1, 10, 00)
-Italy.qualiTime = datetime.datetime(currYear, 9, 1, 13, 00)
-Italy.raceTime = datetime.datetime(currYear, 9, 2, 13, 10)
-Italy.dadTime = datetime.datetime(currYear, 9, 3, 13, 00)
+Italy.racenr = 1013
+Italy.hubTime = datetime.datetime(currYear, 9, 5, 8, 00)
+Italy.fp1Time = datetime.datetime(currYear, 9, 6, 9, 00)
+Italy.fp2Time = datetime.datetime(currYear, 9, 6, 13, 00)
+Italy.fp3Time = datetime.datetime(currYear, 9, 7, 10, 00)
+Italy.qualiTime = datetime.datetime(currYear, 9, 7, 13, 00)
+Italy.raceTime = datetime.datetime(currYear, 9, 8, 13, 10)
+Italy.dadTime = datetime.datetime(currYear, 9, 9, 13, 00)
 Italy.namean = "Italian"
 Italy.flag = "#it"
 Italy.circuit = "Autodromo Nazionale Monza"
@@ -755,41 +756,41 @@ Italy.lapRecordFlag = "#br"
 Italy.lapRecordHolder = "Rubens Barrichello"
 Italy.lapRecordTeam = "Ferrari"
 Italy.lapRecordYear = 2004
-Italy.prevYearPoleFlag = "#gb"
-Italy.prevYearPoleHolder = "Lewis Hamilton"
-Italy.prevYearPoleTeam = "Mercedes"
-Italy.prevYearPoleTime = "1:35.554"
-Italy.prevYearFastestFlag = "#au"
-Italy.prevYearFastestHolder = "Daniel Ricciardo"
-Italy.prevYearFastestTeam = "Red Bull-TAG Heuer"
-Italy.prevYearFastestTime = "1:23.361"
+Italy.prevYearPoleFlag = "#fi"
+Italy.prevYearPoleHolder = "Kimi Räikkönen"
+Italy.prevYearPoleTeam = "Ferrari"
+Italy.prevYearPoleTime = "1:19.119"
+Italy.prevYearFastestFlag = "#gb"
+Italy.prevYearFastestHolder = "Lewis Hamilton"
+Italy.prevYearFastestTeam = "Mercedes"
+Italy.prevYearFastestTime = "1:22.497"
 Italy.prevYearWinnerFlag = "#gb"
 Italy.prevYearWinner = "Lewis Hamilton"
 Italy.prevYearWinnerTeam = "Mercedes"
 Italy.prevYearSecondFlag = "#fi"
-Italy.prevYearSecond = "Valtteri Bottas"
-Italy.prevYearSecondTeam = "Mercedes"
-Italy.prevYearSecondDelta = "+4.471"
-Italy.prevYearThirdFlag = "#de"
-Italy.prevYearThird = "Sebastian Vettel"
-Italy.prevYearThirdTeam = "Ferrari"
-Italy.prevYearThirdDelta = "+36.317"
-Italy.linkF1 = "https://www.formula1.com/en/championship/races/2018/Italy"
+Italy.prevYearSecond = "Kimi Räikkönen"
+Italy.prevYearSecondTeam = "Ferrari"
+Italy.prevYearSecondDelta = "+8.705"
+Italy.prevYearThirdFlag = "#fi"
+Italy.prevYearThird = "Valtteri Bottas"
+Italy.prevYearThirdTeam = "Mercedes"
+Italy.prevYearThirdDelta = "+14.066"
+Italy.linkF1 = "https://www.formula1.com/en/racing/2019/Italy.html#circuit"
 Italy.linkWikiCircuit = "https://en.wikipedia.org/wiki/Autodromo_Nazionale_Monza"
 Italy.linkWikiRace = "https://en.wikipedia.org/wiki/Italian_Grand_Prix"
 
 #Add properties to the Singapore weekend
 Singapore = Weekend("Singapore")
-Singapore.fullTitle = "2018 FORMULA 1 SINGAPORE GRAND PRIX"
+Singapore.fullTitle = "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2019"
 Singapore.round = 15
-Singapore.racenr = 993
-Singapore.hubTime = datetime.datetime(currYear, 9, 13, 14, 00)
-Singapore.fp1Time = datetime.datetime(currYear, 9, 14, 8, 30)
-Singapore.fp2Time = datetime.datetime(currYear, 9, 14, 12, 30)
-Singapore.fp3Time = datetime.datetime(currYear, 9, 15, 10, 00)
-Singapore.qualiTime = datetime.datetime(currYear, 9, 15, 13, 00)
-Singapore.raceTime = datetime.datetime(currYear, 9, 16, 12, 10)
-Singapore.dadTime = datetime.datetime(currYear, 9, 17, 12, 00)
+Singapore.racenr = 1014
+Singapore.hubTime = datetime.datetime(currYear, 9, 19, 14, 00)
+Singapore.fp1Time = datetime.datetime(currYear, 9, 20, 8, 30)
+Singapore.fp2Time = datetime.datetime(currYear, 9, 20, 12, 30)
+Singapore.fp3Time = datetime.datetime(currYear, 9, 21, 10, 00)
+Singapore.qualiTime = datetime.datetime(currYear, 9, 21, 13, 00)
+Singapore.raceTime = datetime.datetime(currYear, 9, 22, 12, 10)
+Singapore.dadTime = datetime.datetime(currYear, 9, 23, 12, 00)
 Singapore.namean = "Singapore"
 Singapore.flag = "#sg"
 Singapore.circuit = "Marina Bay Street Circuit"
@@ -801,46 +802,46 @@ Singapore.laps = 61
 Singapore.distance = 308.828
 Singapore.poleLeft = False
 Singapore.lastYear = prevYear
-Singapore.lapRecordTime = "1:45.008"
-Singapore.lapRecordFlag = "#gb"
-Singapore.lapRecordHolder = "Lewis Hamilton"
-Singapore.lapRecordTeam = "Mercedes"
-Singapore.lapRecordYear = 2017
-Singapore.prevYearPoleFlag = "#de"
-Singapore.prevYearPoleHolder = "Sebastian Vettel"
-Singapore.prevYearPoleTeam = "Ferrari"
-Singapore.prevYearPoleTime = "1:39.491"
-Singapore.prevYearFastestFlag = "#gb"
-Singapore.prevYearFastestHolder = "Lewis Hamilton"
-Singapore.prevYearFastestTeam = "Mercedes"
-Singapore.prevYearFastestTime = "1:45.008"
+Singapore.lapRecordTime = "1:41.905"
+Singapore.lapRecordFlag = "#dk"
+Singapore.lapRecordHolder = "Kevin Magnussen"
+Singapore.lapRecordTeam = "Haas-Ferrari"
+Singapore.lapRecordYear = 2018
+Singapore.prevYearPoleFlag = "#gb"
+Singapore.prevYearPoleHolder = "Lewis Hamilton"
+Singapore.prevYearPoleTeam = "Mercedes"
+Singapore.prevYearPoleTime = "1:36.015"
+Singapore.prevYearFastestFlag = "#dk"
+Singapore.prevYearFastestHolder = "Kevin Magnussen"
+Singapore.prevYearFastestTeam = "Haas-Ferrari"
+Singapore.prevYearFastestTime = "1:41.905"
 Singapore.prevYearWinnerFlag = "#gb"
 Singapore.prevYearWinner = "Lewis Hamilton"
 Singapore.prevYearWinnerTeam = "Mercedes"
-Singapore.prevYearSecondFlag = "#au"
-Singapore.prevYearSecond = "Daniel Ricciardo"
+Singapore.prevYearSecondFlag = "#nl"
+Singapore.prevYearSecond = "Max Verstappen"
 Singapore.prevYearSecondTeam = "Red Bull-TAG Heuer"
-Singapore.prevYearSecondDelta = "+4.507"
-Singapore.prevYearThirdFlag = "#fi"
-Singapore.prevYearThird = "Valtteri Bottas"
-Singapore.prevYearThirdTeam = "Mercedes"
-Singapore.prevYearThirdDelta = "+8.800"
-Singapore.linkF1 = "https://www.formula1.com/en/championship/races/2018/Singapore"
+Singapore.prevYearSecondDelta = "+8.961"
+Singapore.prevYearThirdFlag = "#de"
+Singapore.prevYearThird = "Sebastian Vettel"
+Singapore.prevYearThirdTeam = "Ferrari"
+Singapore.prevYearThirdDelta = "+39.945"
+Singapore.linkF1 = "https://www.formula1.com/en/racing/2019/Singapore.html#circuit"
 Singapore.linkWikiCircuit = "https://en.wikipedia.org/wiki/Marina_Bay_Street_Circuit"
 Singapore.linkWikiRace = "https://en.wikipedia.org/wiki/Singapore_Grand_Prix"
 
 #Add properties to the Russia weekend
 Russia = Weekend("Russia")
-Russia.fullTitle = "2018 FORMULA 1 VTB RUSSIAN GRAND PRIX"
+Russia.fullTitle = "FORMULA 1 VTB RUSSIAN GRAND PRIX 2019"
 Russia.round = 16
-Russia.racenr = 994
-Russia.hubTime = datetime.datetime(currYear, 9, 27, 20, 00)
-Russia.fp1Time = datetime.datetime(currYear, 9, 28, 8, 00)
-Russia.fp2Time = datetime.datetime(currYear, 9, 28, 12, 00)
-Russia.fp3Time = datetime.datetime(currYear, 9, 29, 9, 00)
-Russia.qualiTime = datetime.datetime(currYear, 9, 29, 12, 00)
-Russia.raceTime = datetime.datetime(currYear, 9, 30, 12, 00)
-Russia.dadTime = datetime.datetime(currYear, 10, 1, 12, 00)
+Russia.racenr = 1015
+Russia.hubTime = datetime.datetime(currYear, 9, 26, 20, 00)
+Russia.fp1Time = datetime.datetime(currYear, 9, 27, 8, 00)
+Russia.fp2Time = datetime.datetime(currYear, 9, 27, 12, 00)
+Russia.fp3Time = datetime.datetime(currYear, 9, 28, 9, 00)
+Russia.qualiTime = datetime.datetime(currYear, 9, 28, 12, 00)
+Russia.raceTime = datetime.datetime(currYear, 9, 29, 11, 10)
+Russia.dadTime = datetime.datetime(currYear, 9, 30, 11, 00)
 Russia.namean = "Russian"
 Russia.flag = "#ru"
 Russia.circuit = "Sochi Autodrom"
@@ -852,46 +853,46 @@ Russia.laps = 53
 Russia.distance = 309.732
 Russia.poleLeft = True
 Russia.lastYear = prevYear
-Russia.lapRecordTime = "1:36.844"
+Russia.lapRecordTime = "1:35.861"
 Russia.lapRecordFlag = "#fi"
-Russia.lapRecordHolder = "Kimi Räikkonen"
-Russia.lapRecordTeam = "Ferrari"
-Russia.lapRecordYear = 2017
-Russia.prevYearPoleFlag = "#de"
-Russia.prevYearPoleHolder = "Sebastian Vettel"
-Russia.prevYearPoleTeam = "Ferrari"
-Russia.prevYearPoleTime = "1:33.194"
+Russia.lapRecordHolder = "Valtteri Bottas"
+Russia.lapRecordTeam = "Mercedes"
+Russia.lapRecordYear = 2018
+Russia.prevYearPoleFlag = "#fi"
+Russia.prevYearPoleHolder = "Valtteri Bottas"
+Russia.prevYearPoleTeam = "Mercedes"
+Russia.prevYearPoleTime = "1:31.387"
 Russia.prevYearFastestFlag = "#fi"
-Russia.prevYearFastestHolder = "Kimi Räikkönen"
-Russia.prevYearFastestTeam = "Ferrari"
-Russia.prevYearFastestTime = "1:36.844"
-Russia.prevYearWinnerFlag = "#fi"
-Russia.prevYearWinner = "Valtteri Bottas"
+Russia.prevYearFastestHolder = "Valtteri Bottas"
+Russia.prevYearFastestTeam = "Mercedes"
+Russia.prevYearFastestTime = "1:35.861"
+Russia.prevYearWinnerFlag = "#gb"
+Russia.prevYearWinner = "Lewis Hamilton"
 Russia.prevYearWinnerTeam = "Mercedes"
-Russia.prevYearSecondFlag = "#de"
-Russia.prevYearSecond = "Sebastian Vettel"
-Russia.prevYearSecondTeam = "Ferrari"
-Russia.prevYearSecondDelta = "+0.617"
-Russia.prevYearThirdFlag = "#fi"
-Russia.prevYearThird = "Kimi Räikkönen"
+Russia.prevYearSecondFlag = "#fi"
+Russia.prevYearSecond = "Valtteri Bottas"
+Russia.prevYearSecondTeam = "Mercedes"
+Russia.prevYearSecondDelta = "+2.545"
+Russia.prevYearThirdFlag = "#de"
+Russia.prevYearThird = "Sebastian Vettel"
 Russia.prevYearThirdTeam = "Ferrari"
-Russia.prevYearThirdDelta = "+11.000"
-Russia.linkF1 = "https://www.formula1.com/en/championship/races/2018/Russia"
+Russia.prevYearThirdDelta = "+7.847"
+Russia.linkF1 = "https://www.formula1.com/en/racing/2019/Russia.html#circuit"
 Russia.linkWikiCircuit = "https://en.wikipedia.org/wiki/Sochi_Autodrom"
 Russia.linkWikiRace = "https://en.wikipedia.org/wiki/Russian_Grand_Prix"
 
 #Add properties to the Japan weekend
 Japan = Weekend("Japan")
-Japan.fullTitle = "2018 FORMULA 1 JAPANESE GRAND PRIX"
+Japan.fullTitle = "FORMULA 1 JAPANESE GRAND PRIX 2019"
 Japan.round = 17
-Japan.racenr = 995
-Japan.hubTime = datetime.datetime(currYear, 10, 4, 8, 00)
-Japan.fp1Time = datetime.datetime(currYear, 10, 5, 1, 00)
-Japan.fp2Time = datetime.datetime(currYear, 10, 5, 5, 00)
-Japan.fp3Time = datetime.datetime(currYear, 10, 6, 3, 00)
-Japan.qualiTime = datetime.datetime(currYear, 10, 6, 6, 00)
-Japan.raceTime = datetime.datetime(currYear, 10, 7, 5, 10)
-Japan.dadTime = datetime.datetime(currYear, 10, 8, 5, 00)
+Japan.racenr = 1016
+Japan.hubTime = datetime.datetime(currYear, 10, 10, 8, 00)
+Japan.fp1Time = datetime.datetime(currYear, 10, 11, 1, 00)
+Japan.fp2Time = datetime.datetime(currYear, 10, 11, 5, 00)
+Japan.fp3Time = datetime.datetime(currYear, 10, 12, 3, 00)
+Japan.qualiTime = datetime.datetime(currYear, 10, 12, 6, 00)
+Japan.raceTime = datetime.datetime(currYear, 10, 13, 5, 10)
+Japan.dadTime = datetime.datetime(currYear, 10, 14, 5, 00)
 Japan.namean = "Japanese"
 Japan.flag = "#jp"
 Japan.circuit = "Suzuka International Racing Course"
@@ -911,89 +912,38 @@ Japan.lapRecordYear = 2017
 Japan.prevYearPoleFlag = "#gb"
 Japan.prevYearPoleHolder = "Lewis Hamilton"
 Japan.prevYearPoleTeam = "Mercedes"
-Japan.prevYearPoleTime = "1:27.319"
-Japan.prevYearFastestFlag = "#fi"
-Japan.prevYearFastestHolder = "Valtteri Bottas"
-Japan.prevYearFastestTeam = "Mercedes"
-Japan.prevYearFastestTime = "1:33.144"
+Japan.prevYearPoleTime = "1:27.760"
+Japan.prevYearFastestFlag = "#de"
+Japan.prevYearFastestHolder = "Sebastian Vettel"
+Japan.prevYearFastestTeam = "Ferrari"
+Japan.prevYearFastestTime = "1:32.318"
 Japan.prevYearWinnerFlag = "#gb"
 Japan.prevYearWinner = "Lewis Hamilton"
 Japan.prevYearWinnerTeam = "Mercedes"
-Japan.prevYearSecondFlag = "#nl"
-Japan.prevYearSecond = "Max Verstappen"
-Japan.prevYearSecondTeam = "Red Bull-TAG Heuer"
-Japan.prevYearSecondDelta = "+1.211"
-Japan.prevYearThirdFlag = "#au"
-Japan.prevYearThird = "Daniel Ricciardo"
+Japan.prevYearSecondFlag = "#fi"
+Japan.prevYearSecond = "Valtteri Bottas"
+Japan.prevYearSecondTeam = "Mercedes"
+Japan.prevYearSecondDelta = "+12.919"
+Japan.prevYearThirdFlag = "#nl"
+Japan.prevYearThird = "Max Verstappen"
 Japan.prevYearThirdTeam = "Red Bull-TAG Heuer"
-Japan.prevYearThirdDelta = "+9.679"
-Japan.linkF1 = "https://www.formula1.com/en/championship/races/2018/Japan"
+Japan.prevYearThirdDelta = "+14.295"
+Japan.linkF1 = "https://www.formula1.com/en/racing/2019/Japan.html#circuit"
 Japan.linkWikiCircuit = "https://en.wikipedia.org/wiki/Suzuka_Circuit"
 Japan.linkWikiRace = "https://en.wikipedia.org/wiki/Japanese_Grand_Prix"
 
-#Add properties to the United States weekend
-US = Weekend("United States")
-US.fullTitle = "2018 FORMULA 1 UNITED STATES GRAND PRIX"
-US.round = 18
-US.racenr = 996
-US.hubTime = datetime.datetime(currYear, 10, 18, 14, 00)
-US.fp1Time = datetime.datetime(currYear, 10, 19, 15, 00)
-US.fp2Time = datetime.datetime(currYear, 10, 19, 19, 00)
-US.fp3Time = datetime.datetime(currYear, 10, 20, 18, 00)
-US.qualiTime = datetime.datetime(currYear, 10, 20, 21, 00)
-US.raceTime = datetime.datetime(currYear, 10, 21, 19, 00)
-US.dadTime = datetime.datetime(currYear, 10, 22, 19, 00)
-US.namean = "United States"
-US.flag = "#us"
-US.circuit = "Circuit of the Americas"
-US.city = "Austin"
-US.weatherID = 5016884
-US.firstHeld = 1908
-US.length = 5.513
-US.laps = 56
-US.distance = 308.896
-US.poleLeft = False
-US.lastYear = prevYear
-US.lapRecordTime = "1:37.766"
-US.lapRecordFlag = "#de"
-US.lapRecordHolder = "Sebastian Vettel"
-US.lapRecordTeam = "Ferrari"
-US.lapRecordYear = 2017
-US.prevYearPoleFlag = "#gb"
-US.prevYearPoleHolder = "Lewis Hamilton"
-US.prevYearPoleTeam = "Mercedes"
-US.prevYearPoleTime = "1:33.108"
-US.prevYearFastestFlag = "#de"
-US.prevYearFastestHolder = "Sebastial Vettel"
-US.prevYearFastestTeam = "Ferrari"
-US.prevYearFastestTime = "1:37.766"
-US.prevYearWinnerFlag = "#gb"
-US.prevYearWinner = "Lewis Hamilton"
-US.prevYearWinnerTeam = "Mercedes"
-US.prevYearSecondFlag = "#de"
-US.prevYearSecond = "Sebastian Vettel"
-US.prevYearSecondTeam = "Ferrari"
-US.prevYearSecondDelta = "+10.143"
-US.prevYearThirdFlag = "#fi"
-US.prevYearThird = "Kimi Räikkönen"
-US.prevYearThirdTeam = "Ferrari"
-US.prevYearThirdDelta = "+15.779"
-US.linkF1 = "https://www.formula1.com/en/championship/races/2018/United_States"
-US.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_of_the_Americas"
-US.linkWikiRace = "https://en.wikipedia.org/wiki/United_States_Grand_Prix"
-
 #Add properties to the Mexico weekend
 Mexico = Weekend("Mexico")
-Mexico.fullTitle = "FORMULA 1 GRAN PREMIO DE MÉXICO 2018"
-Mexico.round = 19
-Mexico.racenr = 997
-Mexico.hubTime = datetime.datetime(currYear, 10, 25, 20, 00)
-Mexico.fp1Time = datetime.datetime(currYear, 10, 26, 15, 00)
-Mexico.fp2Time = datetime.datetime(currYear, 10, 26, 19, 00)
-Mexico.fp3Time = datetime.datetime(currYear, 10, 27, 15, 00)
-Mexico.qualiTime = datetime.datetime(currYear, 10, 27, 18, 00)
-Mexico.raceTime = datetime.datetime(currYear, 10, 28, 19, 10)
-Mexico.dadTime = datetime.datetime(currYear, 10, 29, 15, 00)
+Mexico.fullTitle = "FORMULA 1 GRAN PREMIO DE MÉXICO 2019"
+Mexico.round = 18
+Mexico.racenr = 1017
+Mexico.hubTime = datetime.datetime(currYear, 10, 24, 20, 00)
+Mexico.fp1Time = datetime.datetime(currYear, 10, 25, 15, 00)
+Mexico.fp2Time = datetime.datetime(currYear, 10, 25, 19, 00)
+Mexico.fp3Time = datetime.datetime(currYear, 10, 26, 15, 00)
+Mexico.qualiTime = datetime.datetime(currYear, 10, 26, 18, 00)
+Mexico.raceTime = datetime.datetime(currYear, 10, 27, 19, 10)
+Mexico.dadTime = datetime.datetime(currYear, 10, 28, 19, 00)
 Mexico.namean = "Mexican"
 Mexico.flag = "#mx"
 Mexico.circuit = "Autódromo Hermanos Rodríguez"
@@ -1005,46 +955,97 @@ Mexico.laps = 71
 Mexico.distance = 305.541
 Mexico.poleLeft = True
 Mexico.lastYear = prevYear
-Mexico.lapRecordTime = "1:18.785"
-Mexico.lapRecordFlag = "#de"
-Mexico.lapRecordHolder = "Sebastian Vettel"
-Mexico.lapRecordTeam = "Ferrari"
-Mexico.lapRecordYear = 2017
-Mexico.prevYearPoleFlag = "#de"
-Mexico.prevYearPoleHolder = "Sebastian Vettel"
-Mexico.prevYearPoleTeam = "Ferrari"
-Mexico.prevYearPoleTime = "1:16.488"
-Mexico.prevYearFastestFlag = "#de"
-Mexico.prevYearFastestHolder = "Sebastian Vettel"
-Mexico.prevYearFastestTeam = "Ferrari"
-Mexico.prevYearFastestTime = "1:18.785"
+Mexico.lapRecordTime = "1:18.741"
+Mexico.lapRecordFlag = "#fi"
+Mexico.lapRecordHolder = "Valtteri Bottas"
+Mexico.lapRecordTeam = "Mercedes"
+Mexico.lapRecordYear = 2018
+Mexico.prevYearPoleFlag = "#au"
+Mexico.prevYearPoleHolder = "Daniel Ricciardo"
+Mexico.prevYearPoleTeam = "Red Bull Racing-TAG Heuer"
+Mexico.prevYearPoleTime = "1:14.759"
+Mexico.prevYearFastestFlag = "#fi"
+Mexico.prevYearFastestHolder = "Valtteri Bottas"
+Mexico.prevYearFastestTeam = "Mercedes"
+Mexico.prevYearFastestTime = "1:18.741"
 Mexico.prevYearWinnerFlag = "#nl"
 Mexico.prevYearWinner = "Max Verstappen"
-Mexico.prevYearWinnerTeam = "Red Bull-TAG Heuer"
-Mexico.prevYearSecondFlag = "#fi"
-Mexico.prevYearSecond = "Valtteri Bottas"
-Mexico.prevYearSecondTeam = "Mercedes"
-Mexico.prevYearSecondDelta = "+19.679"
+Mexico.prevYearWinnerTeam = "Red Bull Racing-TAG Heuer"
+Mexico.prevYearSecondFlag = "#de"
+Mexico.prevYearSecond = "Sebastian Vettel"
+Mexico.prevYearSecondTeam = "Ferrari"
+Mexico.prevYearSecondDelta = "+17.316"
 Mexico.prevYearThirdFlag = "#fi"
 Mexico.prevYearThird = "Kimi Räikkönen"
 Mexico.prevYearThirdTeam = "Ferrari"
-Mexico.prevYearThirdDelta = "+54.007"
-Mexico.linkF1 = "https://www.formula1.com/en/championship/races/2018/Mexico"
+Mexico.prevYearThirdDelta = "+49.914"
+Mexico.linkF1 = "https://www.formula1.com/en/racing/2019/Mexico.html#circuit"
 Mexico.linkWikiCircuit = "https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez"
 Mexico.linkWikiRace = "https://en.wikipedia.org/wiki/Mexican_Grand_Prix"
 
+#Add properties to the United States weekend
+US = Weekend("United States")
+US.fullTitle = "FORMULA 1 UNITED STATES GRAND PRIX 2019"
+US.round = 19
+US.racenr = 1018
+US.hubTime = datetime.datetime(currYear, 10, 31, 14, 00)
+US.fp1Time = datetime.datetime(currYear, 11, 1, 16, 00)
+US.fp2Time = datetime.datetime(currYear, 11, 1, 20, 00)
+US.fp3Time = datetime.datetime(currYear, 11, 2, 18, 00)
+US.qualiTime = datetime.datetime(currYear, 11, 2, 21, 00)
+US.raceTime = datetime.datetime(currYear, 11, 3, 19, 10)
+US.dadTime = datetime.datetime(currYear, 11, 4, 19, 00)
+US.namean = "United States"
+US.flag = "#us"
+US.circuit = "Circuit of the Americas"
+US.city = "Austin"
+US.weatherID = 5016884
+US.firstHeld = 1908
+US.length = 5.513
+US.laps = 56
+US.distance = 308.896
+US.poleLeft = False
+US.lastYear = prevYear
+US.lapRecordTime = "1:37.392"
+US.lapRecordFlag = "#gb"
+US.lapRecordHolder = "Lewis Hamilton"
+US.lapRecordTeam = "Mercedes"
+US.lapRecordYear = 2018
+US.prevYearPoleFlag = "#gb"
+US.prevYearPoleHolder = "Lewis Hamilton"
+US.prevYearPoleTeam = "Mercedes"
+US.prevYearPoleTime = "1:32.237"
+US.prevYearFastestFlag = "#gb"
+US.prevYearFastestHolder = "Lewis Hamilton"
+US.prevYearFastestTeam = "Mercedes"
+US.prevYearFastestTime = "1:37.392"
+US.prevYearWinnerFlag = "#fi"
+US.prevYearWinner = "Kimi Räikkönen"
+US.prevYearWinnerTeam = "Ferrari"
+US.prevYearSecondFlag = "#nl"
+US.prevYearSecond = "Max Verstappen"
+US.prevYearSecondTeam = "Red Bull Racing-TAG Heuer"
+US.prevYearSecondDelta = "+1.281"
+US.prevYearThirdFlag = "#gb"
+US.prevYearThird = "Lewis Hamilton"
+US.prevYearThirdTeam = "Mercedes"
+US.prevYearThirdDelta = "+2.342"
+US.linkF1 = "https://www.formula1.com/en/racing/2019/United_States.html#circuit"
+US.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_of_the_Americas"
+US.linkWikiRace = "https://en.wikipedia.org/wiki/United_States_Grand_Prix"
+
 #Add properties to the Brazil weekend
 Brazil = Weekend("Brazil")
-Brazil.fullTitle = "FORMULA 1 GRANDE PRÊMIO DO BRASIL 2018"
+Brazil.fullTitle = "FORMULA 1 GRANDE PRÊMIO DO BRASIL 2019"
 Brazil.round = 20
-Brazil.racenr = 998
-Brazil.hubTime = datetime.datetime(currYear, 11, 8, 2, 00)
-Brazil.fp1Time = datetime.datetime(currYear, 11, 9, 14, 00)
-Brazil.fp2Time = datetime.datetime(currYear, 11, 9, 18, 00)
-Brazil.fp3Time = datetime.datetime(currYear, 11, 10, 15, 00)
-Brazil.qualiTime = datetime.datetime(currYear, 11, 10, 18, 00)
-Brazil.raceTime = datetime.datetime(currYear, 11, 11, 18, 10)
-Brazil.dadTime = datetime.datetime(currYear, 11, 12, 12, 00)
+Brazil.racenr = 1019
+Brazil.hubTime = datetime.datetime(currYear, 11, 14, 2, 00)
+Brazil.fp1Time = datetime.datetime(currYear, 11, 15, 14, 00)
+Brazil.fp2Time = datetime.datetime(currYear, 11, 15, 18, 00)
+Brazil.fp3Time = datetime.datetime(currYear, 11, 16, 15, 00)
+Brazil.qualiTime = datetime.datetime(currYear, 11, 16, 18, 00)
+Brazil.raceTime = datetime.datetime(currYear, 11, 17, 18, 10)
+Brazil.dadTime = datetime.datetime(currYear, 11, 18, 18, 00)
 Brazil.namean = "Brazilian"
 Brazil.flag = "#br"
 Brazil.circuit = "Autódromo José Carlos Pace"
@@ -1056,46 +1057,46 @@ Brazil.laps = 71
 Brazil.distance = 305.909
 Brazil.poleLeft = False
 Brazil.lastYear = prevYear
-Brazil.lapRecordTime = "1:11.044"
-Brazil.lapRecordFlag = "#nl"
-Brazil.lapRecordHolder = "Max Verstappen"
-Brazil.lapRecordTeam = "Red Bull-TAG Heuer"
-Brazil.lapRecordYear = 2017
-Brazil.prevYearPoleFlag = "#fi"
-Brazil.prevYearPoleHolder = "Valtteri Bottas"
+Brazil.lapRecordTime = "1:10.540"
+Brazil.lapRecordFlag = "#fi"
+Brazil.lapRecordHolder = "Valtteri Bottas"
+Brazil.lapRecordTeam = "Mercedes"
+Brazil.lapRecordYear = 2018
+Brazil.prevYearPoleFlag = "#gb"
+Brazil.prevYearPoleHolder = "Lewis Hamilton"
 Brazil.prevYearPoleTeam = "Mercedes"
-Brazil.prevYearPoleTime = "1:08.322"
-Brazil.prevYearFastestFlag = "#nl"
-Brazil.prevYearFastestHolder = "Max Verstappen"
-Brazil.prevYearFastestTeam = "Red Bull-TAG Heuer"
-Brazil.prevYearFastestTime = "1:11.044"
-Brazil.prevYearWinnerFlag = "#de"
-Brazil.prevYearWinner = "Sebastian Vettel"
-Brazil.prevYearWinnerTeam = "Ferrari"
-Brazil.prevYearSecondFlag = "#fi"
-Brazil.prevYearSecond = "Valtteri Bottas"
-Brazil.prevYearSecondTeam = "Mercedes"
-Brazil.prevYearSecondDelta = "+2.762"
+Brazil.prevYearPoleTime = "1:07.281"
+Brazil.prevYearFastestFlag = "#fi"
+Brazil.prevYearFastestHolder = "Valtteri Bottas"
+Brazil.prevYearFastestTeam = "Mercedes"
+Brazil.prevYearFastestTime = "1:10.540"
+Brazil.prevYearWinnerFlag = "#gb"
+Brazil.prevYearWinner = "Lewis Hamilton"
+Brazil.prevYearWinnerTeam = "Mercedes"
+Brazil.prevYearSecondFlag = "#nl"
+Brazil.prevYearSecond = "Max Verstappen"
+Brazil.prevYearSecondTeam = "Red Bull Racing-TAG Heuer"
+Brazil.prevYearSecondDelta = "+1.469"
 Brazil.prevYearThirdFlag = "#fi"
 Brazil.prevYearThird = "Kimi Räikkönen"
 Brazil.prevYearThirdTeam = "Ferrari"
-Brazil.prevYearThirdDelta = "+4.600"
-Brazil.linkF1 = "https://www.formula1.com/en/championship/races/2018/Brazil"
+Brazil.prevYearThirdDelta = "+4.764"
+Brazil.linkF1 = "https://www.formula1.com/en/racing/2019/Brazil.html#circuit"
 Brazil.linkWikiCircuit = "https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Jos%C3%A9_Carlos_Pace"
 Brazil.linkWikiRace = "https://en.wikipedia.org/wiki/Brazilian_Grand_Prix"
 
 #Add properties to the Abu Dhabi weekend
 AbuDhabi = Weekend("United Arab Emirates")
-AbuDhabi.fullTitle = "2018 FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX"
+AbuDhabi.fullTitle = "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019"
 AbuDhabi.round = 21
-AbuDhabi.racenr = 999
-AbuDhabi.hubTime = datetime.datetime(currYear, 11, 22, 8, 00)
-AbuDhabi.fp1Time = datetime.datetime(currYear, 11, 23, 9, 00)
-AbuDhabi.fp2Time = datetime.datetime(currYear, 11, 23, 13, 00)
-AbuDhabi.fp3Time = datetime.datetime(currYear, 11, 24, 10, 00)
-AbuDhabi.qualiTime = datetime.datetime(currYear, 11, 24, 13, 00)
-AbuDhabi.raceTime = datetime.datetime(currYear, 11, 25, 13, 10)
-AbuDhabi.dadTime = datetime.datetime(currYear, 11, 26, 13, 00)
+AbuDhabi.racenr = 1020
+AbuDhabi.hubTime = datetime.datetime(currYear, 11, 28, 8, 00)
+AbuDhabi.fp1Time = datetime.datetime(currYear, 11, 29, 9, 00)
+AbuDhabi.fp2Time = datetime.datetime(currYear, 11, 29, 13, 00)
+AbuDhabi.fp3Time = datetime.datetime(currYear, 11, 30, 10, 00)
+AbuDhabi.qualiTime = datetime.datetime(currYear, 11, 30, 13, 00)
+AbuDhabi.raceTime = datetime.datetime(currYear, 12, 1, 13, 10)
+AbuDhabi.dadTime = datetime.datetime(currYear, 12, 2, 13, 00)
 AbuDhabi.namean = "Abu Dhabi"
 AbuDhabi.flag = "#ae"
 AbuDhabi.circuit = "Yas Marina Circuit"
@@ -1112,26 +1113,26 @@ AbuDhabi.lapRecordFlag = "#de"
 AbuDhabi.lapRecordHolder = "Sebastian Vettel"
 AbuDhabi.lapRecordTeam = "Red Bull Racing"
 AbuDhabi.lapRecordYear = 2009
-AbuDhabi.prevYearPoleFlag = "#fi"
-AbuDhabi.prevYearPoleHolder = "Valtteri Bottas"
+AbuDhabi.prevYearPoleFlag = "#gb"
+AbuDhabi.prevYearPoleHolder = "Lewis Hamilton"
 AbuDhabi.prevYearPoleTeam = "Mercedes"
-AbuDhabi.prevYearPoleTime = "1:36.231"
-AbuDhabi.prevYearFastestFlag = "#fi"
-AbuDhabi.prevYearFastestHolder = "Valtteri Bottas"
-AbuDhabi.prevYearFastestTeam = "Mercedes"
-AbuDhabi.prevYearFastestTime = "1:40.650"
-AbuDhabi.prevYearWinnerFlag = "#fi"
-AbuDhabi.prevYearWinner = "Valtteri Bottas"
+AbuDhabi.prevYearPoleTime = "1:34.794"
+AbuDhabi.prevYearFastestFlag = "#de"
+AbuDhabi.prevYearFastestHolder = "Sebastian Vettel"
+AbuDhabi.prevYearFastestTeam = "Ferrari"
+AbuDhabi.prevYearFastestTime = "1:40.867"
+AbuDhabi.prevYearWinnerFlag = "#gb"
+AbuDhabi.prevYearWinner = "Lewis Hamilton"
 AbuDhabi.prevYearWinnerTeam = "Mercedes"
-AbuDhabi.prevYearSecondFlag = "#gb"
-AbuDhabi.prevYearSecond = "Lewis Hamilton"
-AbuDhabi.prevYearSecondTeam = "Mercedes"
-AbuDhabi.prevYearSecondDelta = "+3.899"
-AbuDhabi.prevYearThirdFlag = "#de"
-AbuDhabi.prevYearThird = "Sebatian Vettel"
-AbuDhabi.prevYearThirdTeam = "Ferrari"
-AbuDhabi.prevYearThirdDelta = "+19.333"
-AbuDhabi.linkF1 = "https://www.formula1.com/en/championship/races/2018/Abu_Dhabi"
+AbuDhabi.prevYearSecondFlag = "#de"
+AbuDhabi.prevYearSecond = "Sebastian Vettel"
+AbuDhabi.prevYearSecondTeam = "Ferrari"
+AbuDhabi.prevYearSecondDelta = "+2.581"
+AbuDhabi.prevYearThirdFlag = "#nl"
+AbuDhabi.prevYearThird = "Max Verstappen"
+AbuDhabi.prevYearThirdTeam = "Red Bull Racing-TAG Heuer"
+AbuDhabi.prevYearThirdDelta = "+12.706"
+AbuDhabi.linkF1 = "https://www.formula1.com/en/racing/2019/Abu_Dhabi.html#circuit"
 AbuDhabi.linkWikiCircuit = "https://en.wikipedia.org/wiki/Yas_Marina_Circuit"
 AbuDhabi.linkWikiRace = "https://en.wikipedia.org/wiki/Abu_Dhabi_Grand_Prix"
 
@@ -1186,5 +1187,5 @@ Malaysia.linkF1 = "https://www.formula1.com/en/championship/races/2017/Malaysia"
 Malaysia.linkWikiCircuit = "https://en.wikipedia.org/wiki/Sepang_International_Circuit"
 Malaysia.linkWikiRace = "https://en.wikipedia.org/wiki/Malaysian_Grand_Prix"
 
-#Add all weekends together
-allWeekends = [Australia, Bahrain, China, Azerbaijan, Spain, Monaco, Canada, France, Austria, Britain, Germany, Hungary, Belgium, Italy, Singapore, Russia, Japan, US, Mexico, Brazil, AbuDhabi]
+#Add all weekends together (N.B.: Weekends must be added in CHRONOLOGICAL order)
+allWeekends = [Australia, Bahrain, China, Azerbaijan, Spain, Monaco, Canada, France, Austria, Britain, Germany, Hungary, Belgium, Italy, Singapore, Russia, Japan, Mexico, US, Brazil, AbuDhabi]

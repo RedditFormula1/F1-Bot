@@ -9,6 +9,7 @@ Written by /u/Redbiertje
 
 #Imports
 from __future__ import division
+import urllib
 import urllib2
 from math import ceil
 from bs4 import BeautifulSoup
@@ -19,7 +20,7 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.firefox.options import Options
 import datetime
 
-currentYear = 2018
+currentYear = 2019
 
 flagDriverDict = {"Lewis Hamilton": "gb",
     "Sebastian Vettel": "de",
@@ -48,62 +49,65 @@ flagDriverDict = {"Lewis Hamilton": "gb",
     "Charles Leclerc": "mc",
     "Sebastian Buemi": "ch",
     "Brendon Hartley": "nz",
-    "Sergey Sirotkin": "ru"}
+    "Sergey Sirotkin": "ru",
+    "George Russell": "gb",
+    "Alexander Albon": "th",
+    "Lando Norris": "gb"}
 
 flagTeamDict = {"Mercedes": "rt_merc",
     "Ferrari": "rt_fer",
-    "Red Bull Racing TAG Heuer": "rt_rb",
-    "Force India Mercedes": "rt_fi",
+    "Red Bull Racing Honda": "rt_rb",
+    "Racing Point BWT Mercedes": "rt_fi",
     "Williams Mercedes": "rt_wil",
     "Scuderia Toro Rosso Honda": "rt_tor",
     "Renault": "rt_ren",
     "Haas Ferrari": "rt_haas",
     "McLaren Renault": "rt_mcl",
-    "Sauber Ferrari": "rt_sau"}
+    "Alfa Romeo Racing Ferrari": "rt_sau"}
 
 flagTeamDictNat = {"Mercedes": "de",
     "Ferrari": "it",
-    "Red Bull Racing TAG Heuer": "at",
-    "Force India Mercedes": "in",
+    "Red Bull Racing Honda": "at",
+    "Racing Point BWT Mercedes": "gb",
     "Williams Mercedes": "gb",
     "Scuderia Toro Rosso Honda": "it",
     "Renault": "fr",
     "Haas Ferrari": "us",
     "McLaren Renault": "gb",
-    "Sauber Ferrari": "ch"}
+    "Alfa Romeo Racing Ferrari": "ch"}
     
 barTeamDict = {"Mercedes": "merc",
     "Ferrari": "fer",
-    "Red Bull Racing TAG Heuer": "rbr",
-    "Force India Mercedes": "sfi",
+    "Red Bull Racing Honda": "rbr",
+    "Racing Point BWT Mercedes": "rpt",
     "Williams Mercedes": "wil",
     "Scuderia Toro Rosso Honda": "str",
     "Renault": "ren",
     "Haas Ferrari": "has",
     "McLaren Renault": "mcl",
-    "Sauber Ferrari": "sau"}
+    "Alfa Romeo Racing Ferrari": "alf"}
 
 teamShortNameDict = {"Mercedes": "Mercedes",
     "Ferrari": "Ferrari",
-    "Red Bull Racing TAG Heuer": "Red Bull Racing",
-    "Force India Mercedes": "Force India",
+    "Red Bull Racing Honda": "Red Bull Racing",
+    "Racing Point BWT Mercedes": "Racing Point",
     "Williams Mercedes": "Williams",
     "Scuderia Toro Rosso Honda": "Toro Rosso",
     "Renault": "Renault",
     "Haas Ferrari": "Haas",
     "McLaren Renault": "McLaren",
-    "Sauber Ferrari": "Sauber"}
+    "Alfa Romeo Racing Ferrari": "Alfa Romeo"}
     
 teamSubredditDict = {"Mercedes": "[Mercedes](/r/MercedesAMGF1)",
     "Ferrari": "[Ferrari](/r/scuderiaferrari)",
-    "Red Bull Racing TAG Heuer": "Red Bull",
-    "Force India Mercedes": "[Force India](/r/SaharaForceIndia)",
+    "Red Bull Racing Honda": "Red Bull",
+    "Racing Point BWT Mercedes": "[Racing Point](/r/SaharaForceIndia)",
     "Williams Mercedes": "[Williams](/r/WilliamsF1)",
     "Scuderia Toro Rosso Honda": "[Toro Rosso](/r/ScuderiaToroRosso)",
     "Renault": "Renault",
     "Haas Ferrari": "Haas",
     "McLaren Renault": "McLaren",
-    "Sauber Ferrari": "Sauber"}
+    "Alfa Romeo Racing Ferrari": "Alfa Romeo"}
     
 driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
     "Vettel": "[Vettel](/r/The_Seb)",
@@ -116,7 +120,7 @@ driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
     "Sainz": "[Sainz](/r/Carlo55ainz)",
     "Hulkenberg": "[Hülkenberg](/r/Hulkenberg)",
     "Massa": "Massa",
-    "Stroll": "[Stroll](/r/Lance_Stroll)",
+    "Stroll": "[Stroll](/r/LANCE_STROLL18)",
     "Grosjean": "Grosjean",
     "Magnussen": "[Magnussen](/r/KMag20)",
     "Alonso": "[Alonso](/r/The_Fernando)",
@@ -132,7 +136,11 @@ driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
     "Leclerc": "[Leclerc](/r/CharlesLeclerc)",
     "Buemi": "Buemi",
     "Hartley": "Hartley",
-    "Sirotkin": "Sirotkin"}
+    "Sirotkin": "Sirotkin",
+    "Norris": "Norris",
+    "Giovinazzi": "Giovinazzi",
+    "Albon": "Albon",
+    "Russell": "Russell"}
 
 def raceResults(weekend):
     try:
@@ -151,7 +159,8 @@ def raceResults(weekend):
         laps = []
         time = []
         points = []
-
+            
+        #Iterate over all rows in the table
         for idx, line in enumerate(HTMLtable[1:]):
             data = line.find_all(["td", "span"])
             position.append(str(data[1].string))
@@ -164,11 +173,34 @@ def raceResults(weekend):
             else:
                 time.append("{0}{1}".format(data[9].contents[0], data[9].contents[1].string))
             points.append(str(data[-2].string))
-
-        resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Points|\n|:-:|:-:|:-|:-|:-:|-:|:-:|"
-        for i in range(len(position)):
-            resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], points[i])
-
+            
+        #Try to obtain fastest lap data
+        flap_data = fastestLaps(weekend)
+        
+        try:
+            if flap_data is not False:
+                rnumber, flap = flap_data
+                resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Fastest Lap|Points|\n|:-:|:-:|:-|:-|:-:|-:|-:|:-:|"
+                for i in range(len(position)):
+                    #Catch errors caused by a driver not having a fastest lap
+                    try:
+                        flap_idx = [j for j in range(len(flap)) if rnumber[j] == racenumber[i]][0]
+                        if flap_idx == 0:
+                            resultTable += "\n|**{0}**|**{1}**|**{2}**|**{3}**|**{4}**|**{5}**|**{6}**|**{7}**|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], flap[flap_idx], points[i])
+                        else:
+                            resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], flap[flap_idx], points[i])
+                    except Exception as e:
+                        resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], "", points[i])
+            else:
+                resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Points|\n|:-:|:-:|:-|:-|:-:|-:|:-:|"
+                for i in range(len(position)):
+                    resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], points[i])
+        except Exception as e:
+            print("Something has gone wrong while implementing the fastest lap times: {e}")
+            resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Points|\n|:-:|:-:|:-|:-|:-:|-:|:-:|"
+            for i in range(len(position)):
+                resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], points[i])
+                
         return resultTable
     except Exception as e:
         print("Error in raceResults: {}".format(e))
@@ -217,6 +249,32 @@ def qualiResults(weekend):
         return resultTable
     except Exception as e:
         print("Error in qualiResults: {}".format(e))
+        return False
+        
+def fastestLaps(weekend):
+    try:
+        address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/fastest-laps.html".format(currentYear, weekend.racenr, weekend.country.lower().replace(" ", "-"))
+        page = urllib2.urlopen(address)
+        soup = BeautifulSoup(page, "html.parser")
+        HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
+        HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
+        if not "FASTEST LAPS" in HTMLtitle:
+            return False
+
+        #Prepare lists
+        racenumber = []
+        time = []
+
+        #Iterate over the rows in the table
+        for idx, line in enumerate(HTMLtable[1:]):
+            data = line.find_all(["td", "span"])
+            racenumber.append(str(data[2].string))
+            time.append(str(data[10].string))
+            
+        #Return the two relevant lists
+        return racenumber, time
+    except Exception as e:
+        print("Error in fastestLaps: {}".format(e))
         return False
 
 def startingGrid(weekend):
@@ -269,6 +327,7 @@ def driverStandings(type=0):
         driverFull = []
         team = []
         points = []
+        tabLength = len(HTMLtable[1:])
         
         for idx, line in enumerate(HTMLtable[1:]):
             data = line.find_all(["td", "span"])
@@ -283,10 +342,9 @@ def driverStandings(type=0):
                 resultTable += "\n|{0:02d}|[](#{1}) {2} • {3}|{4}".format(i+1, flagDriverDict[driverFull[i]], driver[i], teamShortNameDict[team[i]], points[i])
         else:
             resultTable = "\n> \n> |#|Driver|Team|Pts|\n> |:-:|:--|:--|:-:|"
-            for i in range(20):
+            for i in range(tabLength):
                 resultTable += "\n> |{0} [](#{1})|[](#{2}) {3}|{4}|{5}|".format(i+1, barTeamDict[team[i]], flagDriverDict[driverFull[i]], driverSubredditDict[driver[i]], teamSubredditDict[team[i]], points[i])
         return resultTable
-        
     except Exception as e:
         print("Error in driverStandings: {}".format(e))
 
@@ -341,4 +399,30 @@ def sessionFinished(session):
             return False
     except Exception as e:
         print("Error in sessionFinished: {}".format(e))
+        return False
+        
+def downloadImage(address):
+    try:
+        #Initiate webdriver
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+        driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+        driver.get(address)
+        
+        #Locate image and pull data
+        img = driver.find_element_by_xpath('/html/body/img[1]')
+        src = img.get_attribute('src')
+        width = img.get_attribute('width')
+        height = img.get_attribute('height')
+        
+        #Download the image
+        urllib.urlretrieve(src, "img/tribute.{}".format(src[-3:]))
+        
+        #Finalize
+        driver.close()
+        display.stop()
+        
+        return "img/tribute.{}".format(src[-3:])
+    except Exception as e:
+        print("Error in downloadImage: {}".format(e))
         return False
