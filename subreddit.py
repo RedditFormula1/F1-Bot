@@ -120,6 +120,19 @@ class Subreddit():
                 
                 #Format the content of the DaD thread
                 content = tp.dad_template.format(w.round, w.country, w.flag, w.city)
+
+                #Daily Discussion thread
+            elif thread == 'Daily Discussion':
+                #Get the current date
+                currentTime = datetime.datetime.utcnow()
+                date = str(currentTime.day) + ' ' + aux.monthToWord(currentTime.month) + ' ' + str(currentTime.year)
+
+                #Format the title of DD thread
+
+                title = 'Daily Discussion - ' + date
+
+                #Format the content of DD thread
+                content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
                 
             #One of the post-session threads
             elif thread == "Post Qualifying" or thread == "Post Race":

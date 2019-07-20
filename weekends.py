@@ -19,6 +19,9 @@ sys.setdefaultencoding('utf-8')
 prevYear = 2018
 currYear = 2019
 
+#Defines time for DD thread (UTC)
+ddPostTime = 7
+
 #Define list of Tech Talk Threads
 techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
             datetime.datetime(currYear, 3, 21, 8, 00),

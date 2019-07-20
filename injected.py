@@ -55,6 +55,16 @@ def scheduleChecker(subreddit, fc):
         qualiTime = weekend.qualiTime - datetime.timedelta(hours=1)
         preraceTime = weekend.raceTime - datetime.timedelta(hours=3)
         raceTime = weekend.raceTime - datetime.timedelta(minutes=15)
+
+        #Defines the race weekend status, i.e. the day of FP1 to the day of the race
+        raceWeekendBeginTime = weekend.fp1Time - datetime.timedelta(hours=weekend.fp1Time.hour)
+        raceWeekendEndTime = weekend.raceTime + datetime.timedelta(hours=(24 - weekend.raceTime.hour))
+
+        if raceWeekendBeginTime < currentTime and (prevTime < raceWeekendBeginTime or prevTime == raceWeekendBeginTime):
+            raceWeekend = True
+
+        if raceWeekendEndTime < currentTime and (prevTime < raceWeekendEndTime or prevTime == raceWeekendEndTime):
+            raceWeekend = False
         
         #Define at what time the sidebar should be updated
         updateTime = weekend.raceTime + datetime.timedelta(hours=2, minutes=10)
@@ -320,6 +330,22 @@ def scheduleChecker(subreddit, fc):
                 #Set correct flair
                 post.mod.flair(text="Tech Talk", css_class="feature")
         except Exception as e:
+            print("Error in scheduleChecker (flag 7): {}".format(e))
+            
+    #Defines time for Daily Discussion to be posted each day
+    ddTime = datetime.datetime(datetime.datetime.today().year, datetime.datetime.today().month, datetime.datetime.today().day,
+        weekends.ddPostTime, 00)
+
+    #Posts Daily Discussion if race weekend is not ongoing
+    try:
+        if not raceWeekend and (ddTime < currentTime and (prevTime < ddTime or prevTime == ddTime)):
+            print('Posting Daily Discussion')
+            post = subreddit.postToSubreddit(0, "Daily Discussion")
+            print("Successfully posted a daily discussion")
+            post.mod.sticky(bottom=True)
+            print("Successfully stickied a daily discussion")
+            post.mod.flair(text="Daily Discussion", css_class="feature")
+    except Exception as e:
             print("Error in scheduleChecker (flag 7): {}".format(e))
 
 def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
