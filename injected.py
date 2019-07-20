@@ -337,7 +337,9 @@ def scheduleChecker(subreddit, fc):
     try:
         if not isRaceWeekend and  currentTime.hour == weekends.ddPostTime and prevTime.hour != weekends.ddPostTime:
             print('Posting Daily Discussion')
-            post = subreddit.postToSubreddit(0, "Daily Discussion")
+            title = "Daily Discussion - {} {} {}".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year)
+            content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
+            post = subreddit.sub.submit(title, content, send_replies=False)
             print("Successfully posted a daily discussion")
             post.mod.sticky(bottom=True)
             print("Successfully stickied a daily discussion")
