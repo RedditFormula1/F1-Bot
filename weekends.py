@@ -64,7 +64,7 @@ techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
 #Define a nice object
 class Weekend:
     """Contains all the parameters belonging to an F1 weekend"""
-
+    
     def __init__(self, location):
         self.country = location
 
