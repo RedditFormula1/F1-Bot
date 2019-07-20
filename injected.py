@@ -45,7 +45,7 @@ def scheduleChecker(subreddit, fc):
     global currentTime
     global prevTime
     global owm
-    
+
     #Iterate over all weekends
     for weekend in weekends.allWeekends:
         #Define at what time each session thread should be posted
@@ -55,13 +55,23 @@ def scheduleChecker(subreddit, fc):
         qualiTime = weekend.qualiTime - datetime.timedelta(hours=1)
         preraceTime = weekend.raceTime - datetime.timedelta(hours=3)
         raceTime = weekend.raceTime - datetime.timedelta(minutes=15)
-        
+
         #Define at what time the sidebar should be updated
         updateTime = weekend.raceTime + datetime.timedelta(hours=2, minutes=10)
-        
+
+        #Defines the race weekend, i.e. the day of FP1 to the day of the race
+        raceWeekendBeginTime = weekend.fp1Time - datetime.timedelta(hours=weekend.fp1Time.hour)
+        raceWeekendEndTime = weekend.raceTime + datetime.timedelta(hours=(24 - weekend.raceTime.hour))
+
+        if raceWeekendBeginTime < currentTime and (prevTime < raceWeekendBeginTime or prevTime == raceWeekendBeginTime):
+            raceWeekend = True
+
+        if raceWeekendEndTime < currentTime and (prevTime < raceWeekendEndTime or prevTime == raceWeekendEndTime):
+            raceWeekend = False
+
         #Define at which times Tweets should be posted
         twitterTimes = [weekend.fp1Time - datetime.timedelta(hours=1), weekend.fp2Time - datetime.timedelta(hours=1), weekend.fp3Time - datetime.timedelta(hours=1), weekend.qualiTime - datetime.timedelta(hours=1), weekend.raceTime - datetime.timedelta(hours=1)]
-        
+
         #Post the Weekend Hub if required
         try:
             if weekend.hubTime < currentTime and (prevTime < weekend.hubTime or prevTime == weekend.hubTime):
@@ -76,7 +86,7 @@ def scheduleChecker(subreddit, fc):
                 post.mod.flair(text="Weekend Hub", css_class="hub")
         except Exception as e:
             print("Error in scheduleChecker (flag 1): {}".format(e))
-        
+
         #If the new format is requested
         if settings["newFormat"]:
             try:
@@ -176,7 +186,7 @@ def scheduleChecker(subreddit, fc):
                     post.mod.flair(text="Race", css_class="race")
             except Exception as e:
                 print("Error in scheduleChecker (flag 2.5): {}".format(e))
-                
+
         else: #Old format
             try:
                 if fp1Time < currentTime and (prevTime < fp1Time or prevTime == fp1Time):
@@ -277,7 +287,7 @@ def scheduleChecker(subreddit, fc):
                 post.mod.flair(text="Day after Debrief", css_class="feature")
         except Exception as e:
             print("Error in scheduleChecker (flag 5): {}".format(e))
-            
+
         #Iterate over the Tweet times
         events = ["Free Practice 1 for the {} Grand Prix".format(weekend.namean), "Free Practice 2 for the {} Grand Prix".format(weekend.namean), "Free Practice 3 for the {} Grand Prix".format(weekend.namean), "Qualifying for the {} Grand Prix".format(weekend.namean), "The {} Grand Prix".format(weekend.namean)]
         for i in range(len(twitterTimes)):
@@ -285,7 +295,7 @@ def scheduleChecker(subreddit, fc):
                 #Find the relevant Tweet to post
                 if twitterTimes[i] < currentTime and (prevTime < twitterTimes[i] or prevTime == twitterTimes[i]):
                     print("Posting a tweet")
-                    
+
                     #If not testing, proceed with tweeting
                     if not settings["testingMode"]:
                         tweet = twitter.update_status("Reminder: {0} starts in one hour. #{1}GP".format(events[i], weekend.namean.replace(" ", "")))
@@ -298,28 +308,44 @@ def scheduleChecker(subreddit, fc):
             #If a tech talk thread should be posted
             if techDate < currentTime and (prevTime < techDate or prevTime == techDate):
                 print("Posting a Tech Talk thread")
-                
+
                 #Construct title and content
                 title = "Tech Talk {}".format(aux.weekdayToFullWord(techDate.weekday()))
                 content = content = "### Welcome to the Tech Talk {0}!\n\nIn this weekly thread, we'd like to give you all a place to discuss technical aspects of the sport. Discussion topics could include characteristics of the cars; recent or planned aero, chassis, engine, and tyre developments; analysis of images; and model-based or data-based predictions. We hope that this will promote more detailed technical discussions in the subreddit.\n\nLow effort comments, such as memes and jokes will be deleted, as will off-topic content, such as discussions centered on drivers. We also discourage superficial comments that contain no analysis or reasoning in this thread.\n\n#### Interesting links\n\nBe sure to check our /r/F1Technical for more in-depth analysis.".format(aux.weekdayToFullWord(techDate.weekday()))
-                
+
                 #Submit to subreddit
                 post = subreddit.sub.submit(title, content, send_replies=False)
-                
+
                 #Attempts to unsticky other posts
                 try:
                     checkPost = subreddit.sub.sticky(number=2)
                     subreddit.sub.sticky(number=1).mod.sticky(state=False)
                 except Exception as e:
                     print("Error while removing top sticky in scheduleChecker: {}".format(e))
-                
+
                 #Sticky Tech Talk Thread
                 post.mod.sticky()
                 print("Successfully posted a tech talk discussion")
-                
+
                 #Set correct flair
                 post.mod.flair(text="Tech Talk", css_class="feature")
         except Exception as e:
+            print("Error in scheduleChecker (flag 7): {}".format(e))
+
+    #Defines time for Daily Discussion to be posted each day
+    ddTime = datetime.datetime(datetime.datetime.today().year, datetime.datetime.today().month, datetime.datetime.today().day,
+        weekends.ddPostTime, 00)
+
+    #Posts Daily Discussion if race weekend is not ongoing
+    try:
+        if not raceWeekend and (ddTime < currentTime and (prevTime < ddTime or prevTime == ddTime)):
+            print('Posting Daily Discussion')
+            post = subreddit.postToSubreddit(0, "Daily Discussion")
+            print("Successfully posted a daily discussion")
+            post.mod.sticky(bottom=True)
+            print("Successfully stickied a daily discussion")
+            post.mod.flair(text="Daily Discussion", css_class="feature")
+    except Exception as e:
             print("Error in scheduleChecker (flag 7): {}".format(e))
 
 def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
@@ -332,52 +358,52 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
     global raceResultTime
     global currentTime
     global owm
-    
+
     print("Checking mail")
-    
+
     #Obtain new messages
     messages = r.inbox.unread()
-    
+
     #Initiate counter for the amount of messages
     counter = 0
     try:
         #Iterate over messages
         for message in messages:
             print("Reading a message from {0}: {1}".format(message.author, message.body))
-            
+
             #Mark message as read
             message.mark_read()
-            
+
             #Update counter
             counter += 1
-            
+
             #If told to post a post-race or post-quali thread
             if message.author in moderators and message.body.lower() == "post":
-            
+
                 #Iterate over all weekends to find the relevant weekend
                 for weekend in weekends.allWeekends:
                     try:
-                    
+
                         #If it is time for the post-quali thread
                         if weekend.qualiTime < currentTime and currentTime < weekend.raceTime:
-                        
+
                             #If the failsafe allows it
                             if lastCommand != [weekend.country, "quali"]:
                                 print("Posting a post-quali discussion")
-                                
+
                                 #Check if we're not in testing mode
                                 if not settings["testingMode"]:
                                     post = f1_subreddit.postToSubreddit(weekend, "Post Qualifying")
                                 else:
                                     post = f1exp_subreddit.postToSubreddit(weekend, "Post Qualifying")
-                                    
+
                                 #Update failsafe first
                                 lastCommand = [weekend.country, "quali"]
-                                
+
                                 #Schedule a check for the quali results in one minute
                                 qualiResultTime = currentTime+datetime.timedelta(minutes=1)
                                 print("Successfully posted a post-qualifying discussion")
-                                
+
                                 #Update top bar if not in testing mode
                                 print("Updating top bar")
                                 if not settings["testingMode"]:
@@ -385,19 +411,19 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                                 else:
                                     f1exp_subreddit.updateTopBar(post, weekend, "PQ")
                                 print("Successfully updated the top bar")
-                                
+
                                 #Sticky it and add it to the Weekend Hub if not in testing mode
                                 if not settings["testingMode"]:
                                     post.mod.sticky(bottom=True)
                                     addToHub(post, weekend)
-                                    
+
                                 #Inform the moderator of this splendid success
                                 message.reply("Successfully posted a post-qualifying discussion\n\n{}".format(post.shortlink))
-                                
+
                                 #Set suggested sort if required
                                 if settings["suggestedNew"]:
                                     setSuggestedSort("qualifying", "blank")
-                                
+
                                 #Set correct flair
                                 post.mod.flair(text="Post Qualifying", css_class="post-qualifying")
                             else:
@@ -408,24 +434,24 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                     try:
                         #If it is time for the post-race thread
                         if weekend.raceTime < currentTime and currentTime < weekend.dadTime:
-                            
+
                             #If the failsafe allows it
                             if lastCommand != [weekend.country, "race"]:
                                 print("Posting a post-race discussion")
-                                
+
                                 #Check if we're not in testing mode
                                 if not settings["testingMode"]:
                                     post = f1_subreddit.postToSubreddit(weekend, "Post Race")
                                 else:
                                     post = f1exp_subreddit.postToSubreddit(weekend, "Post Race")
-                                
+
                                 #Update failsafe first
                                 lastCommand = [weekend.country, "race"]
-                                
+
                                 #Schedule a check for the race results in one minute
                                 raceResultTime = currentTime+datetime.timedelta(minutes=1)
                                 print("Successfully posted a post-race discussion")
-                                
+
                                 #Update top bar if not in testing mode
                                 print("Updating top bar")
                                 if not settings["testingMode"]:
@@ -433,19 +459,19 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                                 else:
                                     f1exp_subreddit.updateTopBar(post, weekend, "PR")
                                 print("Successfully updated the top bar")
-                                
+
                                 #Sticky it and add it to the Weekend Hub if not in testing mode
                                 if not settings["testingMode"]:
                                     post.mod.sticky(bottom=True)
                                     addToHub(post, weekend)
-                                
+
                                 #Inform the moderator of this splendid success
                                 message.reply("Successfully posted a post-race discussion\n\n{}".format(post.shortlink))
-                                
+
                                 #Set suggested sort if required
                                 if settings["suggestedNew"]:
                                     setSuggestedSort("race", "blank")
-                                
+
                                 #Set correct flair
                                 post.mod.flair(text="Post Race", css_class="post-race")
                             else:
@@ -453,144 +479,144 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                                 message.reply("Somebody else already posted a post-race discussion")
                     except Exception as e:
                         print("Error in checkMail (flag 2): {}".format(e))
-            
+
             #If told to update the weather prediction
             if message.author in moderators and message.body.lower() == "weather":
-            
+
                 #Tell the subreddit to inform its weather prediction
                 fc = f1_subreddit.sidebar.updateWeatherPrediction(owm, forecast)
-                
+
                 #If something went wrong, inform the moderator
                 if fc == False:
                     message.reply("Something went wrong while updating the weather prediction")
-                    
+
                 #Or tell them how great everything went
                 else:
                     message.reply("Successfully updated the weather prediction\n\n/r/formula1")
-                    
+
             #If instructed to clear the failsafe
             if message.author in moderators and message.body.lower() == "clear failsafe":
-            
+
                 #Inform the human that their message has been received
                 message.reply("Successfully cleared the failsafe")
-                
+
                 #Clear the failsafe
                 lastCommand = [1, 1]
-            
+
             #If told to update the sidebar information
             if message.author in moderators and message.body.lower() == "sidebar":
-            
+
                 #Instruct the main subreddit to update its sidebar
                 race = f1_subreddit.sidebar.updateSidebarInfo()
-                
+
                 #If it failed, inform the moderator
                 if race == False:
                     message.reply("The bot failed while updating the information in the sidebar.")
-                    
+
                 #Or tell them how great everything went
                 else:
                     message.reply("Updating the information in the F1 sidebar for the {}".format(race))
-            
+
             #If asked for the current driver standings
             if message.author in moderators and message.body.lower() == "results":
-            
+
                 #Reply with the requested information
                 message.reply(ws.driverStandings())
-            
+
             #If asked for the upcoming starting grid
             if message.author in moderators and message.body.lower() == "grid":
-            
+
                 #Reply with the requested information
                 message.reply(ws.startingGrid(prevDate()))
-                
+
             #If told to post the qualifying results
             if message.author in moderators and message.body.lower() == "qualiresults":
-                
+
                 #Execute the relevant function
                 success = postResults("qualifying")
-                
+
                 #Tell the moderator that everything went fine
                 if success:
                     message.reply("Successfully posted the qualifying results")
-                
+
                 #Or not
                 else:
                     message.reply("Could not post the qualifying results")
-            
+
             #If told to post the race results
             if message.author in moderators and message.body.lower() == "raceresults":
-                
+
                 #Execute the relevant function
                 success = postResults("race")
-                
+
                 #Tell the moderator that everything went fine
                 if success:
                     message.reply("Successfully posted the race results")
-                    
+
                 #Or not
                 else:
                     message.reply("Could not post the race results")
-                    
+
             #If told to check if the session is finished
             if message.author in moderators and message.body.lower() == "finished":
-                
+
                 #Execute the relevant function
                 finished = checkSessionFinished(f1_subreddit, "any")
-                
+
                 #Tell the moderator if not the case
                 if not finished:
                     message.reply("Session has not finished yet.")
-                    
+
             #If told to update the flair counts
             if message.author in moderators and message.body.lower() == "flairs":
-                
+
                 #Check if we're not in a race/quali session because this takes a little while
                 if alertState == "normal":
-                    
+
                     #Update the flair counts
                     f1_subreddit.updateFlairCounts(message.author)
-                    
+
                     #Notify moderator of success
                     message.reply("Successfully updated the flair counts.\n\n/r/{}/wiki/flaircounts".format(f1_subreddit.sub.display_name))
                 else:
                     message.reply("F1-Bot is currently occupied with the current qualifying/race. Please try again later.")
-                    
+
             #It told to retrieve the traffic stats
             if (message.author in moderators or message.author in authorized) and message.body.lower() == "traffic":
-                
+
                 #Obtain traffic stats report
                 trafficReport = f1_subreddit.getTrafficReport()
-                
+
                 #If successful, forward report to human
                 if trafficReport:
                     message.reply(trafficReport)
-                    
+
                 #Else notify human
                 else:
                     message.reply("Something went wrong while generating a traffic report. Please contact /u/Redbiertje.")
-            
+
             #If told to update the tribute
             if (message.author in moderators or message.author in authorized) and message.subject.lower() == "tribute":
-                
+
                 #Use webscraper to download image
                 filename = ws.downloadImage(message.body)
-                
+
                 #If it worked, upload image to subreddit
                 if filename:
                     f1_subreddit.sub.stylesheet.upload("tribute", filename)
                     f1_subreddit.sub.stylesheet.update(f1_subreddit.sub.stylesheet().stylesheet, reason="Updating tribute")
-                    
+
                     #Notify human
                     message.reply("Thank you very much!! It seems your image has been correctly uploaded to the subreddit.")
                 else:
                     message.reply("Something went wrong. Please contact /u/Redbiertje.")
-                    
+
             #If a LOT of new messages are in the mailbox, alert moderators
             if counter == 5+25*(alertState=="normal") and lastAlert + datetime.timedelta(minutes=10) < currentTime:
                 lastAlert = currentTime
                 print("Alerting mod team of inbox overload")
                 f1_subreddit.sub.message("F1-Bot: Overload alert", "This is an automated message to let you know that the bot's inbox is being flooded. Please take the following steps:\n\n1. Make sure that all recent posts by /u/F1-Bot have the inbox replies setting disabled.\n2. Open /u/F1-Bot's inbox, and mark all messages as read.")
-                
+
     except Exception as e:
         print("Error in checkMail: {}".format(e))
     #Not going to comment this bit. It's for if Reddit's mailbox system fails
@@ -664,12 +690,12 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
         except Exception as e:
             print("Error in robust checkMail: {}".format(e))
     print("Finished checking mail")
-    
+
 def checkSessionFinished(subreddit, session):
     """
     Checks if a given session has completed, and submits the post-session thread if required
     """
-    
+
     #Obtain global variables
     global lastCommand
     global lastQ2Time
@@ -677,10 +703,10 @@ def checkSessionFinished(subreddit, session):
     global raceResultTime
     global currentTime
     global owm
-    
+
     try:
         print("Checking if the session is finished")
-        
+
         #Check which session should be finished
         if session == "quali":
             weekends = [aux.nextDate()]
@@ -689,27 +715,27 @@ def checkSessionFinished(subreddit, session):
         else:
             weekends = [aux.prevDate(), aux.nextDate()]
         for weekend in weekends:
-            
+
             #If it is time for a post-quali thread
             if weekend.qualiTime < currentTime and currentTime < weekend.raceTime and lastCommand != [weekend.country, "quali"]:
-                
+
                 #If the webscraper finds that it is indeed finished
                 if ws.sessionFinished(session) and settings["autoPost"] and lastQ2Time+datetime.timedelta(minutes=10) < currentTime and weekend.qualiTime+datetime.timedelta(minutes=55) < currentTime:
-                    
+
                     #Submit post-quali thread
                     print("Posting a post-quali discussion")
                     if not settings["testingMode"]:
                         post = f1_subreddit.postToSubreddit(weekend, "Post Qualifying")
                     else:
                         post = f1exp_subreddit.postToSubreddit(weekend, "Post Qualifying")
-                    
+
                     #Update failsafe
                     lastCommand = [weekend.country, "quali"]
-                    
+
                     #Schedule posting the quali results
                     qualiResultTime = currentTime+datetime.timedelta(minutes=1)
                     print("Successfully posted a post-qualifying discussion")
-                    
+
                     #Update top bar
                     print("Updating top bar")
                     if not settings["testingMode"]:
@@ -717,39 +743,39 @@ def checkSessionFinished(subreddit, session):
                     else:
                         f1exp_subreddit.sidebar.updateTopBar(post, weekend, "PQ")
                     print("Successfully updated the top bar")
-                    
+
                     #Set correct flair
                     post.mod.flair(text="Post Qualifying", css_class="post-qualifying")
-                    
+
                     #Sticky new thread and add it to the hub
                     if not settings["testingMode"]:
                         post.mod.sticky(bottom=True)
                         addToHub(post, weekend)
-                        
+
                     #Set suggested sorting
                     if settings["suggestedNew"]:
                         setSuggestedSort("qualifying", "blank")
-                        
+
                     return True
             #If it is time for a post-race thread
             if weekend.raceTime < currentTime and currentTime < weekend.dadTime and lastCommand != [weekend.country, "race"]:
                 #If the webscraper finds that it is indeed finished
                 if ws.sessionFinished(session) and settings["autoPost"]:
-                    
+
                     #Submit post-race thread
                     print("Posting a post-race discussion")
                     if not settings["testingMode"]:
                         post = f1_subreddit.postToSubreddit(weekend, "Post Race")
                     else:
                         post = f1exp_subreddit.postToSubreddit(weekend, "Post Race")
-                        
+
                     #Update failsafe
                     lastCommand = [weekend.country, "race"]
-                    
+
                     #Schedule posting the race results
                     raceResultTime = currentTime+datetime.timedelta(minutes=1)
                     print("Successfully posted a post-race discussion")
-                    
+
                     #Update top bar
                     print("Updating top bar")
                     if not settings["testingMode"]:
@@ -757,19 +783,19 @@ def checkSessionFinished(subreddit, session):
                     else:
                         f1exp_subreddit.sidebar.updateTopBar(post, weekend, "PR")
                     print("Successfully updated the top bar")
-                    
+
                     #Set correct flair
                     post.mod.flair(text="Post Race", css_class="post-race")
-                    
+
                     #Sticky new thread and add it to the hub
                     if not settings["testingMode"]:
                         post.mod.sticky(bottom=True)
                         addToHub(post, weekend)
-                    
+
                     #Set suggested sorting
                     if settings["suggestedNew"]:
                         setSuggestedSort("race", "blank")
-                        
+
                     return True
         return False
     except Exception as e:
@@ -780,10 +806,10 @@ def botState():
     """
     Checks whether the bot should act normally or if it should adapt to a race/quali mode
     """
-    
+
     #Obtain current time
     global currentTime
-    
+
     #Defines the state of the bot
     for weekend in weekends.allWeekends:
         if weekend.qualiTime < currentTime and currentTime < weekend.qualiTime + datetime.timedelta(hours=1, minutes=30) and lastCommand != [weekend.country, "quali"]:
@@ -791,7 +817,7 @@ def botState():
         elif weekend.raceTime < currentTime and currentTime < weekend.raceTime + datetime.timedelta(hours=2, minutes=30) and lastCommand != [weekend.country, "race"]:
             return "race"
     return "normal"
-        
+
 def protectInbox():
     """
     Currently unused function to protect the inbox from overflowing
@@ -807,116 +833,116 @@ def protectInbox():
 
 def postResults(session):
     """
-    Submits the results of the latest session 
+    Submits the results of the latest session
     """
     try:
         print("Attempting to post results")
-        
+
         #If the quali results should be posted
         if session == "qualifying":
-            
+
             #Obtain relevant weekend object
             weekend = aux.nextDate()
-            
+
             #Iterate over the most recent posts
             for oldPost in r.user.me().submissions.new(limit=15):
                 try:
                     #Check if old post has the correct title
                     if oldPost.title == "{0} {1} Grand Prix - Post Qualifying Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                        
+
                         #Get contents and define marker
                         content = oldPost.selftext
                         marker = "[](/results)"
-                        
+
                         #Obtain results from webscraper
                         results = ws.qualiResults(weekend)
-                        
+
                         #If results could be obtained
                         if results:
-                            
+
                             #Replace marker with results, and save it
                             newContent = content.replace(marker, "---\n\n"+results)
                             oldPost.edit(newContent)
                             print("Successfully posted qualifying results")
                             return True
-                        
+
                         else:
                             return False
                 except Exception as e:
                     print("Ran into a comment")
-                    
+
         #If the race results should be posted
         if session == "race":
-            
+
             #Obtain relevant weekend object
             weekend = aux.prevDate()
-            
+
             #Iterate over the most recent posts
             for oldPost in r.user.me().submissions.new(limit=15):
                 try:
                     #Check if old post has the correct title
                     if oldPost.title == "{0} {1} Grand Prix - Post Race Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                        
+
                         #Get text and define marker
                         content = oldPost.selftext
                         marker = "[](/results)"
-                        
+
                         #Obtain results from webscraper
                         results = ws.raceResults(weekend)
-                        
+
                         #If results could be obtained
                         if results:
-                            
+
                             #Replace marker with results and save it
                             newContent = content.replace(marker, "---\n\n"+results)
                             oldPost.edit(newContent)
                             print("Successfully posted race results")
                             return True
-                        
+
                         else:
                             return False
                 except Exception as e:
                     print("Ran into a comment")
     except Exception as e:
         print("Error in postResults: {}".format(e))
-        
+
 def addToHub(post, weekend):
     """
     Adds a post to the Weekend Hub
     """
-    
+
     #Define the two markers
     beginMarker = "[](/sessionsBegin)"
     endMarker = "[](/sessionsEnd)"
-    
+
     try:
         print("Adding post to Weekend Hub")
-        
+
         #Iterate over old posts to find Weekend Hub
         for oldPost in r.user.me().new(limit=15):
             try:
                 #Check if post has the correct title
                 if oldPost.title == "{0} {1} Grand Prix - Weekend Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                    
+
                     #Get contents and find markers
                     content = oldPost.selftext
                     beginIndex = content.find(beginMarker)+len(beginMarker)
                     endIndex = content.find(endMarker)
-                    
+
                     #Check if any marker failed to be located
                     if beginIndex == -1 or endIndex == -1:
                         return False
-                    
+
                     #In the case of FP1, replace the current text
                     elif post.title == "{0} {1} Grand Prix - Free Practice 1 Discussion".format(currentYear, weekend.namean):
                         #Define new Weekend Hub content
                         newContent = content[:beginIndex]+"\n\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
-                    
+
                     #In other case, just add to the list
                     else:
                         #Define new Weekend Hub content
                         newContent = content[:endIndex]+"\n - [{0}]({1})".format(post.title.split("-")[1].lstrip(), post.permalink)+content[endIndex:]
-                    
+
                     #Update Weekend Hub content
                     oldPost.edit(newContent)
                     print("Successfully added post to Weekend Hub")
@@ -926,7 +952,7 @@ def addToHub(post, weekend):
     except Exception as e:
         print("Error in addToHub: {}".format(e))
         return False
-    
+
 
 def setSuggestedSort(session, sorting):
     """
@@ -938,40 +964,40 @@ def setSuggestedSort(session, sorting):
         if sorting not in ["confidence", "top", "new", "controversial", "old", "random", "qa", "blank"]:
             print("Error in setSuggestedSort: Invalid sorting given.")
             return False
-        
+
         #If it is a qualifying session
         if session == "qualifying":
-            
+
             #Obtain relevant weekend object
             weekend = aux.nextDate()
-            
+
             #Loop over previous posts to find the quali thread
             for oldPost in r.user.me().new(limit=5):
-                
+
                 #Check if previous post has the correct title
                 if oldPost.title == "{0} {1} Grand Prix - Qualifying Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                    
+
                     #Set suggested sorting
                     oldPost.mod.suggested_sort(sort=sorting)
                     return True
         #If it is a race
         if session == "race":
-            
+
             #Obtain relevant weekend object
             weekend = aux.prevDate()
-            
+
             #Loop over previous posts to find the race thread
             for oldPost in r.user.me().new(limit=5):
-                
+
                 #Check if previous post has the correct title
                 if oldPost.title == "{0} {1} Grand Prix - Race Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                    
+
                     #Set suggested sorting
                     oldPost.mod.suggested_sort(sort=sorting)
                     return True
     except Exception as e:
         print("Error in setSuggestedSort: {}".format(e))
-        
+
 def getSettings(subreddit):
     """
     Pulls the bot settings from the wiki
@@ -979,22 +1005,22 @@ def getSettings(subreddit):
     try:
         #Define empty dictionary
         settings = {}
-        
+
         #Define default settings in case things go wrong
         defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": False, "suggestedNew": True, "newFormat": False, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True, "trackComments": False}
-        
+
         #Pull data from the wiki page
         print("Pulling bot settings from the wiki")
         wikiContent = subreddit.wiki['botsettings'].content_md
         wikiRows = wikiContent.split("\r\n")
-        
+
         #Iterate over all lines
         for row in wikiRows:
             if row != "":
-                
+
                 #Take everything before the # (comment), and split out the setting and its value
                 setting, value = tuple(row.replace(" ", "").split("#")[0].split("="))
-                
+
                 #Convert text values to Python values, and insert them into the settings dict
                 if value == "True" or value == "true":
                     settings[setting] = True
@@ -1002,11 +1028,11 @@ def getSettings(subreddit):
                     settings[setting] = False
                 if value.isdigit():
                     settings[setting] = int(value)
-                    
+
         #If all settings have been obtained, return obtained settings
         if sorted(settings.keys()) == sorted(defaultSettings.keys()):
             return settings
-        
+
         #Else return defaults
         else:
             print("Using default settings.")
@@ -1015,7 +1041,7 @@ def getSettings(subreddit):
         print("Error in pullSettings: {}".format(e))
         return False
 
- 
+
 #Setup the loop
 alertState = botState()
 settings = getSettings(subreddit)
@@ -1032,7 +1058,7 @@ print("Failsafe: {}".format(lastCommand))
 if boot == True:
     boot = False
     forecast = aux.getForecast(owm)
-    
+
 #Each hour, update the weather forecast
 if currentTime.hour != prevTime.hour:
     forecast = f1_subreddit.sidebar.updateWeatherPrediction(owm, forecast)
@@ -1067,19 +1093,19 @@ f1_subreddit.storePostTitles()
 if alertState == "normal":
     #Update the countdown
     f1_subreddit.sidebar.updateCountdown(currentTime)
-    
+
     #Update the quote in the header
     f1_subreddit.sidebar.updateHeaderQuote()
-    
+
     #Check the schedule
     if settings["testingMode"]:
         scheduleChecker(f1exp_subreddit, forecast)
     else:
         scheduleChecker(f1_subreddit, forecast)
-        
+
     #Check the inbox
     checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast)
-    
+
     #Finish loop
     prevTime = currentTime
     print("Waiting for 10 seconds...")
@@ -1087,25 +1113,25 @@ if alertState == "normal":
 elif alertState == "quali" or alertState == "race":
     #Update the countdown
     f1_subreddit.sidebar.updateCountdown(currentTime)
-    
+
     #Update the quote in the header
     f1_subreddit.sidebar.updateHeaderQuote()
-    
+
     #Check the schedule
     if settings["testingMode"]:
         scheduleChecker(f1exp_subreddit, forecast)
     else:
         scheduleChecker(f1_subreddit, forecast)
-    
+
     #Check the inbox
     checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast)
-    
+
     #Check if the current session is finished
     checkSessionFinished(f1_subreddit, alertState)
-    
+
     #Store end of this loop
     prevTime = currentTime
-    
+
     #Repeat checking mail and session finish three more times
     for i in range(3):
         checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast)

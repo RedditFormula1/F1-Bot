@@ -19,6 +19,9 @@ sys.setdefaultencoding('utf-8')
 prevYear = 2018
 currYear = 2019
 
+#Defines time for DD thread (UTC)
+ddPostTime = 7
+
 #Define list of Tech Talk Threads
 techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
             datetime.datetime(currYear, 3, 21, 8, 00),
@@ -61,7 +64,7 @@ techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
 #Define a nice object
 class Weekend:
     """Contains all the parameters belonging to an F1 weekend"""
-    
+
     def __init__(self, location):
         self.country = location
 
