@@ -77,7 +77,9 @@ class Sidebar():
                 newSidebar = oldSidebar[:beginIndex] + text + oldSidebar[endIndex:]
             
             #Upload the new sidebar text to the subreddit
-            self.sub.mod.update(description=newSidebar)
+            wikiPage = self.sub.wiki['config/sidebar']
+            wikiPage.edit(newSidebar)
+            
             return True
         except Exception as e:
             print("Error in insertText: {}".format(e))

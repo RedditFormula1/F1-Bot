@@ -213,7 +213,7 @@ post_session_template = "### ROUND {0}: {1} []({2})\n"\
 "\n"\
 "**{34} winner:** []({35}) {36}, {37}\n"\
 "\n"\
-"[](/results)\n"\
+"[](/resultsBegin)[](/resultsEnd)\n"\
 "\n"\
 "---\n"\
 "\n"\

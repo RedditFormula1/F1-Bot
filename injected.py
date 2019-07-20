@@ -35,7 +35,7 @@ sys.setdefaultencoding('utf-8')
 #Define important stuff
 currentYear = 2019
 prevYear = 2018
-moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj"]
+moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "Effulgency", "Blanchimont", "elusive_username"]
 authorized = ["F1-Official", "F1_Research", "Greenbiertje", "sbnufc"]
 
 def scheduleChecker(subreddit, fc):
@@ -46,6 +46,9 @@ def scheduleChecker(subreddit, fc):
     global prevTime
     global owm
     
+    #Define raceweekend boolean
+    isRaceWeekend = False
+    
     #Iterate over all weekends
     for weekend in weekends.allWeekends:
         #Define at what time each session thread should be posted
@@ -55,19 +58,17 @@ def scheduleChecker(subreddit, fc):
         qualiTime = weekend.qualiTime - datetime.timedelta(hours=1)
         preraceTime = weekend.raceTime - datetime.timedelta(hours=3)
         raceTime = weekend.raceTime - datetime.timedelta(minutes=15)
-
+        
         #Defines the race weekend status, i.e. the day of FP1 to the day of the race
         raceWeekendBeginTime = weekend.fp1Time - datetime.timedelta(hours=weekend.fp1Time.hour)
         raceWeekendEndTime = weekend.raceTime + datetime.timedelta(hours=(24 - weekend.raceTime.hour))
 
-        if raceWeekendBeginTime < currentTime and (prevTime < raceWeekendBeginTime or prevTime == raceWeekendBeginTime):
+        if raceWeekendBeginTime < currentTime and currentTime < raceWeekendEndTime:
             raceWeekend = True
-
-        if raceWeekendEndTime < currentTime and (prevTime < raceWeekendEndTime or prevTime == raceWeekendEndTime):
-            raceWeekend = False
         
         #Define at what time the sidebar should be updated
-        updateTime = weekend.raceTime + datetime.timedelta(hours=2, minutes=10)
+        updateTime1 = weekend.raceTime + datetime.timedelta(hours=2, minutes=15)
+        updateTime2 = weekend.raceTime + datetime.timedelta(hours=3)
         
         #Define at which times Tweets should be posted
         twitterTimes = [weekend.fp1Time - datetime.timedelta(hours=1), weekend.fp2Time - datetime.timedelta(hours=1), weekend.fp3Time - datetime.timedelta(hours=1), weekend.qualiTime - datetime.timedelta(hours=1), weekend.raceTime - datetime.timedelta(hours=1)]
@@ -265,7 +266,7 @@ def scheduleChecker(subreddit, fc):
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.6): {}".format(e))
         try:
-            if updateTime < currentTime and (prevTime < updateTime or prevTime == updateTime):
+            if (updateTime1 < currentTime and (prevTime < updateTime1 or prevTime == updateTime1)) or (updateTime2 < currentTime and (prevTime < updateTime2 or prevTime == updateTime2)):
                 print("Updating the sidebar")
                 race = subreddit.sidebar.updateSidebarInfo()
                 if race == False:
@@ -331,14 +332,10 @@ def scheduleChecker(subreddit, fc):
                 post.mod.flair(text="Tech Talk", css_class="feature")
         except Exception as e:
             print("Error in scheduleChecker (flag 7): {}".format(e))
-            
-    #Defines time for Daily Discussion to be posted each day
-    ddTime = datetime.datetime(datetime.datetime.today().year, datetime.datetime.today().month, datetime.datetime.today().day,
-        weekends.ddPostTime, 00)
 
     #Posts Daily Discussion if race weekend is not ongoing
     try:
-        if not raceWeekend and (ddTime < currentTime and (prevTime < ddTime or prevTime == ddTime)):
+        if not isRaceWeekend and  currentTime.hour == weekends.ddPostTime and prevTime.hour != weekends.ddPostTime:
             print('Posting Daily Discussion')
             post = subreddit.postToSubreddit(0, "Daily Discussion")
             print("Successfully posted a daily discussion")
@@ -346,7 +343,7 @@ def scheduleChecker(subreddit, fc):
             print("Successfully stickied a daily discussion")
             post.mod.flair(text="Daily Discussion", css_class="feature")
     except Exception as e:
-            print("Error in scheduleChecker (flag 7): {}".format(e))
+            print("Error in scheduleChecker (flag 8): {}".format(e))
 
 def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
     """
@@ -852,7 +849,13 @@ def postResults(session):
                         
                         #Get contents and define marker
                         content = oldPost.selftext
-                        marker = "[](/results)"
+                        beginMarker = "[](/resultsBegin)"
+                        endMarker = "[](/resultsEnd)"
+                        beginIndex = content.find(beginMarker)+len(beginMarker)
+                        endIndex = content.find(endMarker)
+                        
+                        if beginMarker == -1 or endMarker == -1:
+                            return False
                         
                         #Obtain results from webscraper
                         results = ws.qualiResults(weekend)
@@ -861,7 +864,7 @@ def postResults(session):
                         if results:
                             
                             #Replace marker with results, and save it
-                            newContent = content.replace(marker, "---\n\n"+results)
+                            newContent = content[:beginIndex] + "\n\n---\n\n"+results + content[endIndex:]
                             oldPost.edit(newContent)
                             print("Successfully posted qualifying results")
                             return True
@@ -883,26 +886,32 @@ def postResults(session):
                     #Check if old post has the correct title
                     if oldPost.title == "{0} {1} Grand Prix - Post Race Discussion".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
                         
-                        #Get text and define marker
+                        #Get contents and define marker
                         content = oldPost.selftext
-                        marker = "[](/results)"
+                        beginMarker = "[](/resultsBegin)"
+                        endMarker = "[](/resultsEnd)"
+                        beginIndex = content.find(beginMarker)+len(beginMarker)
+                        endIndex = content.find(endMarker)
+                        
+                        if beginMarker == -1 or endMarker == -1:
+                            return False
                         
                         #Obtain results from webscraper
-                        results = ws.raceResults(weekend)
+                        results, flag = ws.raceResults(weekend)
                         
                         #If results could be obtained
                         if results:
                             
                             #Replace marker with results and save it
-                            newContent = content.replace(marker, "---\n\n"+results)
+                            newContent = content[:beginIndex] + "\n\n---\n\n"+results + content[endIndex:]
                             oldPost.edit(newContent)
                             print("Successfully posted race results")
-                            return True
+                            return flag
                         
                         else:
                             return False
                 except Exception as e:
-                    print("Ran into a comment")
+                    print("Ran into a comment ({})".format(e))
     except Exception as e:
         print("Error in postResults: {}".format(e))
         

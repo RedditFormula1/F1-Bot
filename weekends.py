@@ -20,7 +20,7 @@ prevYear = 2018
 currYear = 2019
 
 #Defines time for DD thread (UTC)
-ddPostTime = 7
+ddPostTime = 18
 
 #Define list of Tech Talk Threads
 techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
@@ -380,12 +380,12 @@ Canada.fullTitle = "FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2019"
 Canada.round = 7
 Canada.racenr = 1006
 Canada.hubTime = datetime.datetime(currYear, 6, 6, 20, 00)
-Canada.fp1Time = datetime.datetime(currYear, 6, 7, 15, 00)
-Canada.fp2Time = datetime.datetime(currYear, 6, 7, 19, 00)
-Canada.fp3Time = datetime.datetime(currYear, 6, 8, 16, 00)
-Canada.qualiTime = datetime.datetime(currYear, 6, 8, 19, 00)
-Canada.raceTime = datetime.datetime(currYear, 6, 9, 19, 10)
-Canada.dadTime = datetime.datetime(currYear, 6, 10, 19, 00)
+Canada.fp1Time = datetime.datetime(currYear, 6, 7, 14, 00)
+Canada.fp2Time = datetime.datetime(currYear, 6, 7, 18, 00)
+Canada.fp3Time = datetime.datetime(currYear, 6, 8, 15, 00)
+Canada.qualiTime = datetime.datetime(currYear, 6, 8, 18, 00)
+Canada.raceTime = datetime.datetime(currYear, 6, 9, 18, 10)
+Canada.dadTime = datetime.datetime(currYear, 6, 10, 12, 45)
 Canada.namean = "Canadian"
 Canada.flag = "#ca"
 Canada.circuit = "Circuit Gilles Villeneuve"

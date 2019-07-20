@@ -120,15 +120,14 @@ class Subreddit():
                 
                 #Format the content of the DaD thread
                 content = tp.dad_template.format(w.round, w.country, w.flag, w.city)
-
-                #Daily Discussion thread
-            elif thread == 'Daily Discussion':
+            
+            #Daily Discussion thread
+            elif thread == "Daily Discussion":
                 #Get the current date
                 currentTime = datetime.datetime.utcnow()
-                date = str(currentTime.day) + ' ' + aux.monthToWord(currentTime.month) + ' ' + str(currentTime.year)
+                date = "{} {} {}".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year)
 
                 #Format the title of DD thread
-
                 title = 'Daily Discussion - ' + date
 
                 #Format the content of DD thread
