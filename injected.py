@@ -343,6 +343,8 @@ def scheduleChecker(subreddit, fc):
             print("Successfully posted a daily discussion")
             post.mod.sticky(bottom=True)
             print("Successfully stickied a daily discussion")
+            post.mod.suggested_sort(sort='new')
+            print("Successfully sorted a daily discussion")
             post.mod.flair(text="Daily Discussion", css_class="feature")
     except Exception as e:
             print("Error in scheduleChecker (flag 8): {}".format(e))
