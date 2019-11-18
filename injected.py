@@ -611,7 +611,17 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                     message.reply("Thank you very much!! It seems your image has been correctly uploaded to the subreddit.")
                 else:
                     message.reply("Something went wrong. Please contact /u/Redbiertje.")
-                    
+
+            #If told to add an interview to the media hub
+            if (message.author in moderators or message.author in authorized) and message.subject.lower() == "post race interview":
+                
+                #Appends message body to post-race interview section of most recent Media Hub
+                for oldPost in r.user.me().new(limit=15):
+                    try:
+                        weekend = aux.prevDate()
+                        if oldPost.title == "{0} {1} Grand Prix - Media Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
+                            oldPost.edit(oldPost.selftext + '\n' + message.body)
+             
             #If a LOT of new messages are in the mailbox, alert moderators
             if counter == 5+25*(alertState=="normal") and lastAlert + datetime.timedelta(minutes=10) < currentTime:
                 lastAlert = currentTime
@@ -796,6 +806,13 @@ def checkSessionFinished(subreddit, session):
                     #Set suggested sorting
                     if settings["suggestedNew"]:
                         setSuggestedSort("race", "blank")
+
+                    #Now let's post a post-race media hub
+                    print("Posting a post-race media hub")
+                    if not settings["testingMode"]:
+                        post = f1_subreddit.postToSubreddit(weekend, "Media Hub")
+                    else:
+                        post = f1exp_subreddit.postToSubreddit(weekend, "Media Hub")
                         
                     return True
         return False
