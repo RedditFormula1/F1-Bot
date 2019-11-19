@@ -239,3 +239,17 @@ dad_template = "### ROUND {0}: {1} []({2})\n"\
 "Low effort comments, such as memes, jokes, and complaints about broadcasters will be deleted. We also discourage superficial comments that contain no analysis or reasoning in this thread (e.g., 'Great race from X!', 'Another terrible weekend for Y!').\n"\
 "\n"\
 "Thanks!"
+
+mh_template = "### ROUND {0}: {1} []({2})\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####Highlights:\n"\
+"\n"\
+"{3}\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####Post-Race Interviews:\n"\
+"\n"\
+"{4}"

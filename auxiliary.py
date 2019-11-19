@@ -84,3 +84,26 @@ def getForecast(owm):
     except Exception as e:
         print("Error in getForecast: {}".format(e))
         return False
+
+def getHighlights(raceTime):
+    #Uses Pushshift search to find race highlights in past 3 hours
+    giffers = ['BottasWMR','Mark4211','pcghx_busch','-acro-','exiledtie', 'buschjp', 'overspeeed']
+    currentTime = int(time.time())
+    api = PushshiftAPI(r)
+    highlights = []
+    bodyText = 'Highlight|Thread\n:--|:--\n'\
+    for giffer in giffers:
+        print('Trying for', giffer)
+        for submission in list(api.search_submissions(after=raceTime.timestamp(),
+                                    before=currentTime,
+                                    subreddit='formula1',
+                                    author=giffer,
+                                    domain='streamable.com',
+                                    filter=['url','author', 'title', 'subreddit'],
+                                    limit=150)):
+            highlights.append((submission.title, submission.url, submission.permalink, submission.created_utc))
+    highlights.sort(key=lambda tup: tup[3])
+    for highlight in highlights:
+        bodyText = bodyText + f'[{highlight[0]}]({highlight[1]}) | [Link]({highlight[2]}) \n'\
+
+    return bodyText

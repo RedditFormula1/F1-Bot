@@ -132,6 +132,14 @@ class Subreddit():
 
                 #Format the content of DD thread
                 content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
+
+            #Media Hub thread
+            elif thread == "Media Hub":
+                #Format the title of the Media Hub thread
+                title = "{0} {1} Grand Prix - {2}".format(currentYear, w.namean, thread)
+                
+                #Format the content of the Media Hub thread
+                content = tp.mh_template.format(w.round, w.country, w.flag, aux.getHighlights(w.raceTime), 'Driver | Network \n :--|:--')
                 
             #One of the post-session threads
             elif thread == "Post Qualifying" or thread == "Post Race":
