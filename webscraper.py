@@ -10,7 +10,6 @@ Written by /u/Redbiertje
 #Imports
 from __future__ import division
 import urllib
-import urllib2
 from math import ceil
 from bs4 import BeautifulSoup
 import warnings
@@ -145,7 +144,7 @@ driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
 def raceResults(weekend):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/race-result.html".format(currentYear, weekend.racenr, weekend.country.lower().replace(" ", "-"))
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
@@ -191,17 +190,18 @@ def raceResults(weekend):
                             resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], flap[flap_idx], points[i])
                     except Exception as e:
                         resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], "", points[i])
+                return resultTable, True
             else:
                 resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Points|\n|:-:|:-:|:-|:-|:-:|-:|:-:|"
                 for i in range(len(position)):
                     resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], points[i])
+                return resultTable, False
         except Exception as e:
             print("Something has gone wrong while implementing the fastest lap times: {e}")
             resultTable = "####Race results\n\n|Pos.|No.|Driver|Team|Laps|Time/Retired|Points|\n|:-:|:-:|:-|:-|:-:|-:|:-:|"
             for i in range(len(position)):
                 resultTable += "\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|".format(position[i], racenumber[i], driver[i], team[i], laps[i], time[i], points[i])
-                
-        return resultTable
+            return resultTable, False
     except Exception as e:
         print("Error in raceResults: {}".format(e))
         return False
@@ -209,7 +209,7 @@ def raceResults(weekend):
 def qualiResults(weekend):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/qualifying.html".format(currentYear, weekend.racenr, weekend.country.lower().replace(" ", "-"))
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
@@ -254,7 +254,7 @@ def qualiResults(weekend):
 def fastestLaps(weekend):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/fastest-laps.html".format(currentYear, weekend.racenr, weekend.country.lower().replace(" ", "-"))
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
@@ -282,7 +282,7 @@ def startingGrid(weekend):
         leftAdd = 0 if weekend.poleLeft else 1
         rightAdd = 1 if weekend.poleLeft else 0
         address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/starting-grid.html".format(currentYear, weekend.racenr, weekend.country.lower().replace(" ", "-"))
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
@@ -319,7 +319,7 @@ def startingGrid(weekend):
 def driverStandings(type=0):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/drivers.html".format(currentYear)
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         
@@ -351,7 +351,7 @@ def driverStandings(type=0):
 def teamStandings(type=0):
     try:
         address = "https://www.formula1.com/en/results.html/{0}/team.html".format(currentYear)
-        page = urllib2.urlopen(address)
+        page = urllib.request.urlopen(address)
         soup = BeautifulSoup(page, "html.parser")
         HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
         
@@ -416,7 +416,7 @@ def downloadImage(address):
         height = img.get_attribute('height')
         
         #Download the image
-        urllib.urlretrieve(src, "img/tribute.{}".format(src[-3:]))
+        urllib.request.urlretrieve(src, "img/tribute.{}".format(src[-3:]))
         
         #Finalize
         driver.close()

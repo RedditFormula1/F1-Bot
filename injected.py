@@ -20,17 +20,10 @@ import commentTracker as ct
 import auxiliary as aux
 import subreddit as sub
 import templates as tp
+from PIL import Image
+import praw
+import botData as bd
 
-
-#Reload modules
-reload(sys)
-reload(weekends)
-reload(ws)
-reload(tp)
-reload(ct)
-reload(sub)
-reload(aux)
-sys.setdefaultencoding('utf-8')
 
 #Define important stuff
 currentYear = 2019
@@ -64,7 +57,7 @@ def scheduleChecker(subreddit, fc):
         raceWeekendEndTime = weekend.raceTime + datetime.timedelta(hours=(24 - weekend.raceTime.hour))
 
         if raceWeekendBeginTime < currentTime and currentTime < raceWeekendEndTime:
-            raceWeekend = True
+            isRaceWeekend = True
         
         #Define at what time the sidebar should be updated
         updateTime1 = weekend.raceTime + datetime.timedelta(hours=2, minutes=15)
@@ -72,6 +65,16 @@ def scheduleChecker(subreddit, fc):
         
         #Define at which times Tweets should be posted
         twitterTimes = [weekend.fp1Time - datetime.timedelta(hours=1), weekend.fp2Time - datetime.timedelta(hours=1), weekend.fp3Time - datetime.timedelta(hours=1), weekend.qualiTime - datetime.timedelta(hours=1), weekend.raceTime - datetime.timedelta(hours=1)]
+        
+        #Define at which times the subreddit should be in "link post only" mode
+        qualiRestrictBegin = weekend.qualiTime - datetime.timedelta(hours=1)
+        qualiRestrictEnd = weekend.qualiTime + datetime.timedelta(hours=1, minutes=30)
+        raceRestrictBegin = weekend.raceTime - datetime.timedelta(hours=1)
+        raceRestrictEnd = weekend.raceTime + datetime.timedelta(hours=3, minutes=00)
+        
+        #Defines the unstickying of threads
+        dailyUnstickyTime = weekend.fp1Time - datetime.timedelta(hours=1)
+        dadUnstickyTime = weekend.dadTime + datetime.timedelta(hours=24)
         
         #Post the Weekend Hub if required
         try:
@@ -214,7 +217,7 @@ def scheduleChecker(subreddit, fc):
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.2): {}".format(e))
             try:
-                if fp3Time < currentTime and (prevTime < fp3Time or prevTime == fp3Time):
+                if fp3Time < currentTime and (prevTime < fp3Time or prevTime == fp3Time) and weekend.round != 17:
                     print("Posting a FP3 discussion")
                     post = subreddit.postToSubreddit(weekend, "Free Practice 3")
                     print("Successfully posted a FP3 discussion")
@@ -303,48 +306,92 @@ def scheduleChecker(subreddit, fc):
                     print("Successfully posted a tweet")
             except Exception as e:
                 print("Error in scheduleChecker (flag 6): {}".format(e))
-    #Iterate over all tech talk threads of the year
-    for techDate in weekends.techTalks:
+                
+        #Set text post restrictions
         try:
-            #If a tech talk thread should be posted
-            if techDate < currentTime and (prevTime < techDate or prevTime == techDate):
-                print("Posting a Tech Talk thread")
-                
-                #Construct title and content
-                title = "Tech Talk {}".format(aux.weekdayToFullWord(techDate.weekday()))
-                content = content = "### Welcome to the Tech Talk {0}!\n\nIn this weekly thread, we'd like to give you all a place to discuss technical aspects of the sport. Discussion topics could include characteristics of the cars; recent or planned aero, chassis, engine, and tyre developments; analysis of images; and model-based or data-based predictions. We hope that this will promote more detailed technical discussions in the subreddit.\n\nLow effort comments, such as memes and jokes will be deleted, as will off-topic content, such as discussions centered on drivers. We also discourage superficial comments that contain no analysis or reasoning in this thread.\n\n#### Interesting links\n\nBe sure to check our /r/F1Technical for more in-depth analysis.".format(aux.weekdayToFullWord(techDate.weekday()))
-                
-                #Submit to subreddit
-                post = subreddit.sub.submit(title, content, send_replies=False)
-                
-                #Attempts to unsticky other posts
-                try:
-                    checkPost = subreddit.sub.sticky(number=2)
-                    subreddit.sub.sticky(number=1).mod.sticky(state=False)
-                except Exception as e:
-                    print("Error while removing top sticky in scheduleChecker: {}".format(e))
-                
-                #Sticky Tech Talk Thread
-                post.mod.sticky()
-                print("Successfully posted a tech talk discussion")
-                
-                #Set correct flair
-                post.mod.flair(text="Tech Talk", css_class="feature")
+            if (qualiRestrictBegin < currentTime and (prevTime < qualiRestrictBegin or prevTime == qualiRestrictBegin)) or (raceRestrictBegin < currentTime and (prevTime < raceRestrictBegin or prevTime == raceRestrictBegin)):
+                subreddit.sub.mod.update(spam_selfposts='all')
+            elif (qualiRestrictEnd < currentTime and (prevTime < qualiRestrictEnd or prevTime == qualiRestrictEnd)) or (raceRestrictEnd < currentTime and (prevTime < raceRestrictEnd or prevTime == raceRestrictEnd)):
+                subreddit.sub.mod.update(spam_selfposts='high')
         except Exception as e:
-            print("Error in scheduleChecker (flag 7): {}".format(e))
+            print("Error in scheduleChecker (txt post): {}".format(e))
+        
+        #Unsticky the DD before FP1
+        try:
+            if dailyUnstickyTime < currentTime and (prevTime < dailyUnstickyTime or prevTime == dailyUnstickyTime):
+                s1 = subreddit.sub.sticky(number=1)
+                if "Daily Discussion" in s1.title:
+                    s1.mod.sticky(state=False)
+                else:
+                    s2 = subreddit.sub.sticky(number=2)
+                    if "Daily Discussion" in s2.title:
+                        s2.mod.sticky(state=False)
+        except Exception as e:
+            print("Error in scheduleChecker (unsticky DD): {}".format(e))
+        
+        #Unsticky the DaD after 24 hours
+        try:
+            if dadUnstickyTime < currentTime and (prevTime < dadUnstickyTime or prevTime == dadUnstickyTime):
+                s1 = subreddit.sub.sticky(number=1)
+                if "Day after Debrief" in s1.title:
+                    s1.mod.sticky(state=False)
+                else:
+                    s2 = subreddit.sub.sticky(number=2)
+                    if "Day after Debrief" in s2.title:
+                        s2.mod.sticky(state=False)
+        except Exception as e:
+            print("Error in scheduleChecker (unsticky DaD): {}".format(e))
+        
+    #Iterate over all tech talk threads of the year
+    if settings['techTalkThread']:
+        for techDate in weekends.techTalks:
+            try:
+                #If a tech talk thread should be posted
+                if techDate < currentTime and (prevTime < techDate or prevTime == techDate):
+                    print("Posting a Tech Talk thread")
+                    
+                    #Construct title and content
+                    title = "Tech Talk {}".format(aux.weekdayToFullWord(techDate.weekday()))
+                    content = content = "### Welcome to the Tech Talk {0}!\n\nIn this weekly thread, we'd like to give you all a place to discuss technical aspects of the sport. Discussion topics could include characteristics of the cars; recent or planned aero, chassis, engine, and tyre developments; analysis of images; and model-based or data-based predictions. We hope that this will promote more detailed technical discussions in the subreddit.\n\nLow effort comments, such as memes and jokes will be deleted, as will off-topic content, such as discussions centered on drivers. We also discourage superficial comments that contain no analysis or reasoning in this thread.\n\n#### Interesting links\n\nBe sure to check our /r/F1Technical for more in-depth analysis.".format(aux.weekdayToFullWord(techDate.weekday()))
+                    
+                    #Submit to subreddit
+                    post = subreddit.sub.submit(title, content, send_replies=False)
+                    
+                    #Attempts to unsticky other posts
+                    try:
+                        checkPost = subreddit.sub.sticky(number=2)
+                        subreddit.sub.sticky(number=1).mod.sticky(state=False)
+                    except Exception as e:
+                        print("Error while removing top sticky in scheduleChecker: {}".format(e))
+                    
+                    #Sticky Tech Talk Thread
+                    post.mod.sticky()
+                    print("Successfully posted a tech talk discussion")
+                    
+                    #Set correct flair
+                    post.mod.flair(text="Tech Talk", css_class="feature")
+            except Exception as e:
+                print("Error in scheduleChecker (flag 7): {}".format(e))
 
     #Posts Daily Discussion if race weekend is not ongoing
     try:
         if not isRaceWeekend and  currentTime.hour == weekends.ddPostTime and prevTime.hour != weekends.ddPostTime:
             print('Posting Daily Discussion')
-            title = "Daily Discussion - {} {} {}".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year)
+            title = "/r/Formula1 Daily Discussion - {} {} {}".format(currentTime.day, aux.monthToFullWord(currentTime.month), currentTime.year)
             content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
             post = subreddit.sub.submit(title, content, send_replies=False)
             print("Successfully posted a daily discussion")
-            post.mod.sticky(bottom=True)
+            try:
+                s1 = subreddit.sub.sticky(number=1)
+                if "Daily Discussion" in s1.title or "Weekend Hub" in s1.title:
+                    post.mod.sticky(bottom=False)
+                else:
+                    post.mod.sticky(bottom=True)
+            except Exception as e:
+                print("No top sticky found: {}".format(e))
+                post.mod.sticky()
             print("Successfully stickied a daily discussion")
-            post.mod.suggested_sort(sort='new')
-            print("Successfully sorted a daily discussion")
+            post.mod.suggested_sort(sort="new")
             post.mod.flair(text="Daily Discussion", css_class="feature")
     except Exception as e:
             print("Error in scheduleChecker (flag 8): {}".format(e))
@@ -602,7 +649,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                 #Use webscraper to download image
                 filename = ws.downloadImage(message.body)
                 
-                #If it worked, upload image to subreddit
+                #If it worked, upload image to classic subreddit
                 if filename:
                     f1_subreddit.sub.stylesheet.upload("tribute", filename)
                     f1_subreddit.sub.stylesheet.update(f1_subreddit.sub.stylesheet().stylesheet, reason="Updating tribute")
@@ -611,17 +658,45 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                     message.reply("Thank you very much!! It seems your image has been correctly uploaded to the subreddit.")
                 else:
                     message.reply("Something went wrong. Please contact /u/Redbiertje.")
-
+                
+                try:
+                    #Contact Nappi
+                    nappi = r.redditor("elusive_username")
+                    PM_header = np.random.choice(["Hi Nappi,", "Hey Nappi,", "Heeeey how you doin'?", "Hi Nappi, me again!", "Hi Nappi, what's up?", "Goodday!", "Hello there!"])
+                    PM_body = np.random.choice(["Here's the new tribute image from the sidebar. Could you please upload it?", "I've got yet another tribute image from the sidebar. Could you upload it to the new Reddit?", "Sorry to bother you, but could you upload the following image to new Reddit?", "Woohoo! That was an exciting one! Oh and I've got a new tribute image:", "Snubfc, or whatever his name is, sent me a new tribute image. As I'm still incapable of uploading it on my own, would you be so kind to do it for me?", "I'm going to have to ask for a favor again. Could you please upload this one to the new Reddit for me?"])
+                    PM_end = np.random.choice(["Cheers,\n\nF1-Bot", "xoxo,\n\nF1-Bot", "Love,\n\nF1-Bot", "Seeya,\n\nF1-Bot", "Till next time,\n\nF1-Bot", "Lots of love,\n\nF1-Bot"])
+                    nappi.message("Tribute image for sidebar", "{}\n\n{}\n\n{}\n\n{}".format(PM_header, PM_body, message.body, PM_end))
+                except Exception as e:
+                    print("Error in checkMail (PMing Nappi): {}".format(e))
+                    
+                #Try to upload to new subreddit
+                #try:
+                #    widgets = f1_subreddit.sub.widgets
+                #    for widget in widgets.sidebar:
+                #        if widget.shortName == 'Driver of the Day':
+                #            image_url = f1_subreddit.sub.widgets.mod.upload_image(filename)
+                #            im = Image.open(filename)
+                #            width, height = im.size
+                #            im.close()
+                #            print("Image: {}x{}".format(width, height))
+                #            image_data = [{'width': width, 'height': height, 'linkUrl': '', 'url': image_url}]
+                #            updated = widget.mod.update(data=image_data)
+                #            print("Successfully updated new Reddit tribute image")
+                #except Exception as e:
+                #    print("Error in checkmail (uploading tribute to new reddit): {}".format(e))
+                
             #If told to add an interview to the media hub
             if (message.author in moderators or message.author in authorized) and message.subject.lower() == "post race interview":
-                
+
                 #Appends message body to post-race interview section of most recent Media Hub
                 for oldPost in r.user.me().new(limit=15):
                     try:
                         weekend = aux.prevDate()
                         if oldPost.title == "{0} {1} Grand Prix - Media Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
                             oldPost.edit(oldPost.selftext + '\n' + message.body)
-             
+                    except Exception as e:
+                        print("Error editing Media Hub: {}".format(e))
+            
             #If a LOT of new messages are in the mailbox, alert moderators
             if counter == 5+25*(alertState=="normal") and lastAlert + datetime.timedelta(minutes=10) < currentTime:
                 lastAlert = currentTime
@@ -806,7 +881,7 @@ def checkSessionFinished(subreddit, session):
                     #Set suggested sorting
                     if settings["suggestedNew"]:
                         setSuggestedSort("race", "blank")
-
+                        
                     #Now let's post a post-race media hub
                     print("Posting a post-race media hub")
                     if not settings["testingMode"]:
@@ -1037,7 +1112,7 @@ def getSettings(subreddit):
         settings = {}
         
         #Define default settings in case things go wrong
-        defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": False, "suggestedNew": True, "newFormat": False, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True, "trackComments": False}
+        defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": False, "suggestedNew": True, "newFormat": False, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True, "trackComments": False, "techTalkThread": False}
         
         #Pull data from the wiki page
         print("Pulling bot settings from the wiki")

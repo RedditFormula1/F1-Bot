@@ -58,7 +58,7 @@ while True:
     try:
         currentTime = datetime.datetime.utcnow()
         print("----------[{0:02d}:{1:02d}:{2:02d}]-----------".format(currentTime.hour, currentTime.minute, currentTime.second))
-        execfile("injected.py", globals(), locals())
+        exec(open("injected.py").read())
     except Exception as e:
         print("Major error in loop: {}".format(e))
         time.sleep(5)

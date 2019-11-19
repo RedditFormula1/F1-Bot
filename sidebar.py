@@ -20,9 +20,6 @@ import auxiliary as aux
 import templates as tp
 
 
-#Reload modules
-reload(aux)
-
 currentYear = 2019
 prevYear = 2018
 
@@ -121,7 +118,7 @@ class Sidebar():
             else:
                 print("Encountered a problem while updating the countdown")
         except Exception as e:
-            print "Error in updateCountdown: {}".format(e)
+            print("Error in updateCountdown: {}".format(e))
             
     def updateSidebarInfo(self):
         """
@@ -346,7 +343,7 @@ class Sidebar():
         old_drivers_list = ["Jim Clark", "Juan Manuel Fangio", "Jackie Stewart", "Alberto Ascari", "Guiseppe Farina", "Stirling Moss", "John Surtees", "Emerson Fittipaldi", "Nelson Piquet", "Ayrton Senna", "Alain Prost", "Niki Lauda", "Graham Hill", "Mika Häkkinen",  "Michael Schumacher", "Nigel Mansell", "Jochen Rindt", "Jack Brabham", "Ronnie Peterson", "Gilles Villeneuve", "Bruce Mclaren", "Mario Andretti", "Fernando Alonso"]
         shitty_old_drivers_list = ["Tarso Marques", "Chanoch Nissany", "Yuji Ide", "Taki Inoue", "Andrea de Cesaris", "Marco Apicella", "Alex Yoong", "Rikky Von Opel", "Satoru Nakajima", "Andrea Montermini", "Ricardo Rosset", "Philippe Alliot", "Philippe Streiff", "Manfred Winkelhock", "Johathan Palmer", "Eliseo Salazar", "Ivan Capelli", "Johnny Dumfries", "Stefano Modena", "Gabriele Tarquini", "Pierre-Henry Raphanel", "Maurício Gugelmin", "Bruno Giacomelli", "Olivier Beretta", "Jos Verstappen", "Andrea Montermini", "Aguri Suzuki", "Gastón Mazzacane"]
         teams_list = ["Mercedes", "Ferrari", "Red Bull", "Renault", "Haas", "McLaren", "Force India", "Toro Rosso", "Sauber", "Williams"]
-        mods_list = ["Mulsanne", "HeikkiKovalainen", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj"]
+        mods_list = ["Mulsanne", "HeikkiKovalainen", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "elusive_username", "Effulgency", "Blanchimont"]
         
         try:
             #Retrieve templates from subreddit wiki
