@@ -21,6 +21,7 @@ import auxiliary as aux
 import sidebar
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
+from psaw import PushshiftAPI
 
 
 currentYear = 2019
@@ -135,7 +136,7 @@ class Subreddit():
                 title = "{0} {1} Grand Prix - {2}".format(currentYear, w.namean, thread)
 
                 #Format the content of the Media Hub thread
-                content = tp.mh_template.format(w.round, w.country, w.flag, aux.getHighlights(w.raceTime), 'Driver | Network \n :--|:--')
+                content = tp.mh_template.format(w.round, w.country, w.flag, self.getHighlights(w.raceTime), 'Driver | Network \n :--|:--')
                 
             #One of the post-session threads
             elif thread == "Post Qualifying" or thread == "Post Race":
@@ -367,3 +368,26 @@ class Subreddit():
                     break
         except Exception as e:
             print("Error in checkReposts: {}".format(e))
+            
+    def getHighlights(self, raceTime):
+        """
+        Uses Pushshift search to find race highlights in past 3 hours
+        Written by: BottasWMR
+        """
+        giffers = ['BottasWMR','Mark4211','exiledtie', 'buschjp', 'overspeeed']
+        highlights = []
+        race_timestamp = datetime.datetime.timestamp(raceTime)
+        bodyText = 'Highlight|Thread\n:--|:--\n'
+        for giffer_name in giffers:
+            try:
+                giffer = self.r.redditor(giffer_name)
+                for submission in giffer.submissions.new(limit=100):
+                    if submission.created_utc > race_timestamp and submission.domain == "streamable.com" and submission.subreddit.display_name == "formula1":
+                        highlights.append((submission.title, submission.url, submission.permalink, submission.created_utc))
+            except Exception as e:
+                print("Error in getHighlights: {}".format(e))
+        highlights.sort(key=lambda tup: tup[3])
+        for highlight in highlights:
+            bodyText = bodyText + f'[{highlight[0]}]({highlight[1]}) | [Link]({highlight[2]}) \n'\
+
+        return bodyText
