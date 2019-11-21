@@ -701,7 +701,8 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                     try:
                         weekend = aux.prevDate()
                         if oldPost.title == "{0} {1} Grand Prix - Media Hub".format(currentYear, weekend.namean) and oldPost.subreddit == "formula1":
-                            oldPost.edit(oldPost.selftext + '\n' + message.body)
+                            messageBody = message.body.split(' ', 3)
+                            oldPost.edit(oldPost.selftext + '\n' + '[' + messageBody[0] + ' ' + messageBody[1] + '](' + messageBody[2] + ') | ' + messageBody[3])
                             message.reply("Thanks! Added that one to the Media Hub.\n\nxoxo,\n\nF1-Bot")
                     except Exception as e:
                         print("Error editing Media Hub: {}".format(e))
