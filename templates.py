@@ -253,3 +253,42 @@ mh_template = "### ROUND {0}: {1} []({2})\n"\
 "####Post-Race Interviews:\n"\
 "\n"\
 "{4}"
+
+testing_template = "|{0}|\n"\
+"|:-:|\n"\
+"|{1} - {2}|\n"\
+"|{3}|\n"\
+"\n"\
+"---\n"\
+"\n"\
+"#### {4}\n"\
+"\n"\
+"**Length:** {5} km ({6:.3f} mi)\n"\
+"\n"\
+"**Lap record:** []({7}) {8}, {9}, {10}, {11}\n"\
+"\n"\
+"**{12} pole:** []({13}) {14}, {15}, {16}\n"\
+"\n"\
+"**{17} fastest lap:** []({18}) {19}, {20}, {21}\n"\
+"\n"\
+"---\n"\
+"\n"\
+"####Useful links\n"\
+"\n"\
+"- Wiki: [{22}]({23})\n"\
+"\n"\
+"---\n"\
+"\n"\
+"#### Streaming & Downloads\n"\
+"\n"\
+"For information on streams, please visit /r/MotorSportsStreams. Please do not post information about streams in this thread. Thank you.\n"\
+"\n"\
+"---\n"\
+"\n"\
+"#### Discussion\n"\
+"\n"\
+"Join us on /r/formula1's IRC chat: **[#f1 on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1/)**\n"\
+"\n"\
+"Stream talk has a channel of it's own: **[#f1streams on irc.snoonet.org](https://kiwiirc.com/client/irc.snoonet.org/f1streams)**\n"\
+"\n"\
+"Be sure to check out the **[Discord](https://discordapp.com/invite/WcJsaqf)** as well.\n"

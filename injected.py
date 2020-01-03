@@ -34,8 +34,8 @@ reload(ws)
 reload(weekends)
 
 #Define important stuff
-currentYear = 2019
-prevYear = 2018
+currentYear = 2020
+prevYear = 2019
 moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "Effulgency", "Blanchimont", "elusive_username"]
 authorized = ["F1-Official", "F1_Research", "Greenbiertje", "sbnufc"]
 
@@ -402,7 +402,25 @@ def scheduleChecker(subreddit, fc):
             post.mod.suggested_sort(sort="new")
             post.mod.flair(text="Daily Discussion", css_class="feature")
     except Exception as e:
-            print("Error in scheduleChecker (flag 8): {}".format(e))
+        print("Error in scheduleChecker (flag 8): {}".format(e))
+    
+    #Posts testing threads
+    try:
+        for test in weekends.tests:
+            post_time = test.postTime
+            if post_time < currentTime and (prevTime < post_time or prevTime == post_time):
+                print("Posting a testing discussion thread")
+                title = test.postTitle + " Discussion Thread"
+                content = tp.testing_template.format(test.fullTitle, test.startDate, test.endDate, test.base.city, test.base.circuit, test.base.length, test.base.length*0.62137, test.base.lapRecordFlag, test.base.lapRecordHolder, test.base.lapRecordTeam, test.base.lapRecordYear, test.base.lapRecordTime, test.base.lastYear, test.base.prevYearPoleFlag, test.base.prevYearPoleHolder, test.base.prevYearPoleTeam, test.base.prevYearPoleTime, test.base.lastYear, test.base.prevYearFastestFlag, test.base.prevYearFastestHolder, test.base.prevYearFastestTeam, test.base.prevYearFastestTime, test.base.circuit, test.base.linkWikiCircuit)
+                post = subreddit.sub.submit(title, content, send_replies=False)
+                print("Successfully posted a testing discussion thread")
+                post.mod.flair(text="Pre-season Testing", css_class="feature")
+                if settings["suggestedNew"]:
+                    post.mod.suggested_sort(sort="new")
+                if not settings["testingMode"]:
+                    post.mod.sticky()
+    except Exception as e:
+        print("Error in scheduleChecker (flag 9): {}".format(e))
 
 def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
     """
@@ -898,11 +916,11 @@ def checkSessionFinished(subreddit, session):
                         setSuggestedSort("race", "blank")
                         
                     #Now let's post a post-race media hub
-                    #print("Posting a post-race media hub")
-                    #if not settings["testingMode"]:
-                    #    post = f1_subreddit.postToSubreddit(weekend, "Media Hub")
-                    #else:
-                    #    post = f1exp_subreddit.postToSubreddit(weekend, "Media Hub")
+                    print("Posting a post-race media hub")
+                    if not settings["testingMode"]:
+                        post = f1_subreddit.postToSubreddit(weekend, "Media Hub")
+                    else:
+                        post = f1exp_subreddit.postToSubreddit(weekend, "Media Hub")
                         
                     return True
         return False

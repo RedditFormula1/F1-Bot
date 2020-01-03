@@ -13,8 +13,8 @@ import datetime
 import sys
 
 
-prevYear = 2018
-currYear = 2019
+prevYear = 2019
+currYear = 2020
 
 #Defines time for DD thread (UTC)
 ddPostTime = 7
@@ -64,19 +64,25 @@ class Weekend:
     
     def __init__(self, location):
         self.country = location
+        
+class Testing:
+    """Contains all the parameters beloning to a testing event"""
+    
+    def __init__(self, location_weekend):
+        self.base = location_weekend
 
 #Add properties to the Australia weekend
 Australia = Weekend("Australia")
 Australia.fullTitle = "FORMULA 1 ROLEX AUSTRALIAN GRAND PRIX 2020"
 Australia.round = 1
 Australia.racenr = 1021
-Australia.hubTime = datetime.datetime(currYear+1, 3, 12, 9, 00)
-Australia.fp1Time = datetime.datetime(currYear+1, 3, 13, 1, 00)
-Australia.fp2Time = datetime.datetime(currYear+1, 3, 13, 5, 00)
-Australia.fp3Time = datetime.datetime(currYear+1, 3, 14, 3, 00)
-Australia.qualiTime = datetime.datetime(currYear+1, 3, 14, 6, 00)
-Australia.raceTime = datetime.datetime(currYear+1, 3, 15, 5, 10)
-Australia.dadTime = datetime.datetime(currYear+1, 3, 16, 5, 00)
+Australia.hubTime = datetime.datetime(currYear, 3, 12, 9, 00)
+Australia.fp1Time = datetime.datetime(currYear, 3, 13, 1, 00)
+Australia.fp2Time = datetime.datetime(currYear, 3, 13, 5, 00)
+Australia.fp3Time = datetime.datetime(currYear, 3, 14, 3, 00)
+Australia.qualiTime = datetime.datetime(currYear, 3, 14, 6, 00)
+Australia.raceTime = datetime.datetime(currYear, 3, 15, 5, 10)
+Australia.dadTime = datetime.datetime(currYear, 3, 16, 5, 00)
 Australia.namean = "Australian"
 Australia.flag = "#au"
 Australia.circuit = "Melbourne Grand Prix Circuit"
@@ -1036,7 +1042,7 @@ Brazil.linkWikiRace = "https://en.wikipedia.org/wiki/Brazilian_Grand_Prix"
 
 #Add properties to the Abu Dhabi weekend
 AbuDhabi = Weekend("United Arab Emirates")
-AbuDhabi.fullTitle = "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019"
+AbuDhabi.fullTitle = "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2020"
 AbuDhabi.round = 21
 AbuDhabi.racenr = 1020
 AbuDhabi.hubTime = datetime.datetime(currYear, 11, 28, 8, 00)
@@ -1057,31 +1063,31 @@ AbuDhabi.laps = 55
 AbuDhabi.distance = 305.470
 AbuDhabi.poleLeft = False
 AbuDhabi.lastYear = prevYear
-AbuDhabi.lapRecordTime = "1:40.279"
-AbuDhabi.lapRecordFlag = "#de"
-AbuDhabi.lapRecordHolder = "Sebastian Vettel"
-AbuDhabi.lapRecordTeam = "Red Bull Racing"
-AbuDhabi.lapRecordYear = 2009
+AbuDhabi.lapRecordTime = "1:39.283"
+AbuDhabi.lapRecordFlag = "#gb"
+AbuDhabi.lapRecordHolder = "Lewis Hamilton"
+AbuDhabi.lapRecordTeam = "Mercedes"
+AbuDhabi.lapRecordYear = 2019
 AbuDhabi.prevYearPoleFlag = "#gb"
 AbuDhabi.prevYearPoleHolder = "Lewis Hamilton"
 AbuDhabi.prevYearPoleTeam = "Mercedes"
-AbuDhabi.prevYearPoleTime = "1:34.794"
-AbuDhabi.prevYearFastestFlag = "#de"
-AbuDhabi.prevYearFastestHolder = "Sebastian Vettel"
-AbuDhabi.prevYearFastestTeam = "Ferrari"
-AbuDhabi.prevYearFastestTime = "1:40.867"
+AbuDhabi.prevYearPoleTime = "1:34.779"
+AbuDhabi.prevYearFastestFlag = "#gb"
+AbuDhabi.prevYearFastestHolder = "Lewis Hamilton"
+AbuDhabi.prevYearFastestTeam = "Mercedes"
+AbuDhabi.prevYearFastestTime = "1:39.779"
 AbuDhabi.prevYearWinnerFlag = "#gb"
 AbuDhabi.prevYearWinner = "Lewis Hamilton"
 AbuDhabi.prevYearWinnerTeam = "Mercedes"
-AbuDhabi.prevYearSecondFlag = "#de"
-AbuDhabi.prevYearSecond = "Sebastian Vettel"
-AbuDhabi.prevYearSecondTeam = "Ferrari"
-AbuDhabi.prevYearSecondDelta = "+2.581"
-AbuDhabi.prevYearThirdFlag = "#nl"
-AbuDhabi.prevYearThird = "Max Verstappen"
-AbuDhabi.prevYearThirdTeam = "Red Bull Racing-TAG Heuer"
-AbuDhabi.prevYearThirdDelta = "+12.706"
-AbuDhabi.linkF1 = "https://www.formula1.com/en/racing/2019/Abu_Dhabi.html"
+AbuDhabi.prevYearSecondFlag = "#nl"
+AbuDhabi.prevYearSecond = "Max Verstappen"
+AbuDhabi.prevYearSecondTeam = "Red Bull Racing-Honda"
+AbuDhabi.prevYearSecondDelta = "+16.772"
+AbuDhabi.prevYearThirdFlag = "#mc"
+AbuDhabi.prevYearThird = "Charles Leclerc"
+AbuDhabi.prevYearThirdTeam = "Ferrari"
+AbuDhabi.prevYearThirdDelta = "+43.435"
+AbuDhabi.linkF1 = "https://www.formula1.com/en/racing/2020/Abu_Dhabi.html"
 AbuDhabi.linkWikiCircuit = "https://en.wikipedia.org/wiki/Yas_Marina_Circuit"
 AbuDhabi.linkWikiRace = "https://en.wikipedia.org/wiki/Abu_Dhabi_Grand_Prix"
 
@@ -1190,4 +1196,49 @@ Germany.linkWikiCircuit = "https://en.wikipedia.org/wiki/Hockenheimring"
 Germany.linkWikiRace = "https://en.wikipedia.org/wiki/German_Grand_Prix"
 
 #Add all weekends together (N.B.: Weekends must be added in CHRONOLOGICAL order)
-allWeekends = [Bahrain, China, Azerbaijan, Spain, Monaco, Canada, France, Austria, Britain, Germany, Hungary, Belgium, Italy, Singapore, Russia, Japan, Mexico, US, Brazil, AbuDhabi, Australia]
+allWeekends = [Australia, Bahrain, China, Azerbaijan, Spain, Monaco, Canada, France, Austria, Britain, Germany, Hungary, Belgium, Italy, Singapore, Russia, Japan, Mexico, US, Brazil, AbuDhabi]
+
+#Testing
+PreSeasonW1D1 = Testing(Spain)
+PreSeasonW1D1.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 1 DAY 1"
+PreSeasonW1D1.postTitle = "{} Pre-season Testing Week 1 Day 1".format(currYear)
+PreSeasonW1D1.postTime = datetime.datetime(currYear, 2, 19, 7, 00)
+PreSeasonW1D1.startDate = "19 Feb {}".format(currYear)
+PreSeasonW1D1.endDate = "28 Feb {}".format(currYear)
+
+PreSeasonW1D2 = Testing(Spain)
+PreSeasonW1D2.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 1 DAY 2"
+PreSeasonW1D2.postTitle = "{} Pre-season Testing Week 1 Day 2".format(currYear)
+PreSeasonW1D2.postTime = datetime.datetime(currYear, 2, 20, 7, 00)
+PreSeasonW1D2.startDate = "19 Feb {}".format(currYear)
+PreSeasonW1D2.endDate = "28 Feb {}".format(currYear)
+
+PreSeasonW1D3 = Testing(Spain)
+PreSeasonW1D3.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 1 DAY 3"
+PreSeasonW1D3.postTitle = "{} Pre-season Testing Week 1 Day 3".format(currYear)
+PreSeasonW1D3.postTime = datetime.datetime(currYear, 2, 21, 7, 00)
+PreSeasonW1D3.startDate = "19 Feb {}".format(currYear)
+PreSeasonW1D3.endDate = "28 Feb {}".format(currYear)
+
+PreSeasonW2D1 = Testing(Spain)
+PreSeasonW2D1.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 2 DAY 1"
+PreSeasonW2D1.postTitle = "{} Pre-season Testing Week 2 Day 1".format(currYear)
+PreSeasonW2D1.postTime = datetime.datetime(currYear, 2, 26, 7, 00)
+PreSeasonW2D1.startDate = "19 Feb {}".format(currYear)
+PreSeasonW2D1.endDate = "28 Feb {}".format(currYear)
+
+PreSeasonW2D2 = Testing(Spain)
+PreSeasonW2D2.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 2 DAY 2"
+PreSeasonW2D2.postTitle = "{} Pre-season Testing Week 2 Day 2".format(currYear)
+PreSeasonW2D2.postTime = datetime.datetime(currYear, 2, 27, 7, 00)
+PreSeasonW2D2.startDate = "19 Feb {}".format(currYear)
+PreSeasonW2D2.endDate = "28 Feb {}".format(currYear)
+
+PreSeasonW2D3 = Testing(Spain)
+PreSeasonW2D3.fullTitle = "FORMULA 1 PRE-SEASON TESTING WEEK 2 DAY 3"
+PreSeasonW2D3.postTitle = "{} Pre-season Testing Week 2 Day 3".format(currYear)
+PreSeasonW2D3.postTime = datetime.datetime(currYear, 2, 28, 7, 00)
+PreSeasonW2D3.startDate = "19 Feb {}".format(currYear)
+PreSeasonW2D3.endDate = "28 Feb {}".format(currYear)
+
+tests = [PreSeasonW1D1, PreSeasonW1D2, PreSeasonW1D3, PreSeasonW2D1, PreSeasonW2D2, PreSeasonW2D3]

@@ -20,8 +20,8 @@ import auxiliary as aux
 import templates as tp
 
 
-currentYear = 2019
-prevYear = 2018
+currentYear = 2020
+prevYear = 2019
 
 class Sidebar():
 

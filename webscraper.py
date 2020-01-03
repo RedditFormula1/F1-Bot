@@ -19,7 +19,7 @@ from pyvirtualdisplay import Display
 from selenium.webdriver.firefox.options import Options
 import datetime
 
-currentYear = 2019
+currentYear = 2020
 
 flagDriverDict = {"Lewis Hamilton": "gb",
     "Sebastian Vettel": "de",

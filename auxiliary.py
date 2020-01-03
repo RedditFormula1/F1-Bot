@@ -15,8 +15,8 @@ import time
 import weekends
 
 
-currentYear = 2019
-prevYear = 2018
+currentYear = 2020
+prevYear = 2019
 
 def weekdayToWord(i):
     #Turns the number of day of the week into a three-letter string

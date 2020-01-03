@@ -24,8 +24,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from psaw import PushshiftAPI
 
 
-currentYear = 2019
-prevYear = 2018
+currentYear = 2020
+prevYear = 2019
 
 class Subreddit():
 
@@ -338,7 +338,7 @@ class Subreddit():
         """
         try:
             #Set amount of posts to look back in
-            OCdistance = 200
+            OCdistance = 1000
             
             #Load previous post data
             data = np.loadtxt("data/postTitles.tsv", delimiter="\t", comments="#", dtype="str")
@@ -359,10 +359,10 @@ class Subreddit():
                         cosine_similarities = linear_kernel(X, search_query).flatten()[-OCdistance:]
                         most_related_docs = cosine_similarities.argsort()[-10:][::-1]
                         if cosine_similarities[most_related_docs[0]] > 0.8:
-                            OrigPost = r.submission(id=IDs[-OCdistance:][most_related_docs[0]])
-                            if not OrigPost.removed and not OrigPost.selftext == "[deleted]":
+                            orig_post = self.r.submission(id=IDs[-OCdistance:][most_related_docs[0]])
+                            if not orig_post.removed and not orig_post.selftext == "[deleted]":
                                 #Report the post to the moderators
-                                submission.report("Possible repost ({0}%): https://redd.it/{1}".format(int(100*cosine_similarities[most_related_docs[0]]), OrigPost.id))
+                                submission.report("Possible repost ({0}%): https://redd.it/{1}".format(int(100*cosine_similarities[most_related_docs[0]]), orig_post.id))
                                 #redbiertje.message("Possible repost", "Hi there,\n\nI've found the following post:\n\n[{0}]({1})\n\nwhich looks a lot like\n\n[{2}](https://redd.it/{3})\n\nPlease check if it's a repost.\n\n(Similarity: {4:4f})".format(submission.title, submission.permalink, OrigPost.title, OrigPost.id, cosine_similarities[most_related_docs[0]]))
                 else:
                     break
@@ -374,7 +374,7 @@ class Subreddit():
         Uses Pushshift search to find race highlights in past 3 hours
         Written by: BottasWMR
         """
-        giffers = ['BottasWMR','Mark4211','exiledtie', 'buschjp', 'overspeeed']
+        giffers = ['BottasWMR','Mark4211','exiledtie', 'buschjp', 'overspeeed', 'gamekarma86']
         highlights = []
         race_timestamp = datetime.datetime.timestamp(raceTime)
         bodyText = 'Highlight|Thread\n:--|:--\n'
