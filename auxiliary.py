@@ -13,6 +13,8 @@ import datetime
 import sys
 import time
 import weekends
+import os
+import numpy as np
 
 
 currentYear = 2020
@@ -80,12 +82,41 @@ def prevDate():
     
 def getForecast(owm):
     #Retrieves a weather forecast from the weather API
-    print("Retrieving weather prediction")
     nextWeekend = nextDate()
     try:
         fc = owm.three_hours_forecast_at_id(nextWeekend.weatherID)
-        print("Successfully retrieved weather forecast for {}".format(nextWeekend.city))
         return fc
     except Exception as e:
         print("Error in getForecast: {}".format(e))
         return False
+
+def readlines_reverse(filename):
+        """
+        Generator for lines of a files reading from the end (for memory purposes)
+        """
+        with open(filename, errors='ignore') as qfile:
+            qfile.seek(0, os.SEEK_END)
+            position = qfile.tell()
+            line = ''
+            while position >= 0:
+                qfile.seek(position)
+                next_char = qfile.read(1)
+                if next_char == "\n":
+                    yield line[::-1]
+                    line = ''
+                else:
+                    line += next_char
+                position -= 1
+            yield line[::-1]
+
+def similarity(d1, d2):
+    total = 0
+    l1 = np.sqrt(np.sum(np.array(list(d1.values()))**2))
+    l2 = np.sqrt(np.sum(np.array(list(d2.values()))**2))
+    all_keys = list(set(d1.keys()) | set(d2.keys()))
+    for key in all_keys:
+        v1 = d1[key]/l1 if key in d1 else 0
+        v2 = d2[key]/l2 if key in d2 else 0
+        total += v1*v2
+    return total
+        

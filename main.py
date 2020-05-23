@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -18,6 +18,8 @@ import pyowm
 import os
 import tweepy
 import sys
+from skynet import Skynet
+#from slackclient import SlackClient
 
 #Set correct filepath
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -39,6 +41,12 @@ auth = tweepy.OAuthHandler(bd.consumer_key, bd.consumer_secret)
 auth.set_access_token(bd.access_token, bd.access_token_secret)
 twitter = tweepy.API(auth)
 
+#Open Slack API
+#slack_client = SlackClient(bd.slack_token)
+
+#Initiate Skynet
+skynet = Skynet()
+
 #Set start states
 global prevTime
 global currentTime
@@ -56,8 +64,12 @@ trackedComments = np.array([["Blank", None, None, None, None, None, None, None, 
 #Keep the bot alive
 while True:
     try:
+        ratelimits = r.auth.limits
+        resetTime = datetime.datetime.fromtimestamp(ratelimits['reset_timestamp'])
         currentTime = datetime.datetime.utcnow()
+        resetDelta = resetTime - currentTime
         print("----------[{0:02d}:{1:02d}:{2:02d}]-----------".format(currentTime.hour, currentTime.minute, currentTime.second))
+        print("    Rate limits: {} remaining. Reset in {:.1f} minutes".format(int(ratelimits['remaining']), (resetDelta.total_seconds()/60)%60))
         exec(open("injected.py").read())
     except Exception as e:
         print("Major error in loop: {}".format(e))

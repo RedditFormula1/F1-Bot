@@ -12,6 +12,7 @@ from __future__ import division
 import traceback
 from importlib import reload
 import datetime
+import multiprocessing
 import sys
 import time
 import numpy as np
@@ -24,6 +25,7 @@ import templates as tp
 from PIL import Image
 import praw
 import botData as bd
+import modnotes
 
 
 #Reload modules to prevent using cached versions
@@ -32,6 +34,7 @@ reload(aux)
 reload(tp)
 reload(ws)
 reload(weekends)
+reload(modnotes)
 
 #Define important stuff
 currentYear = 2020
@@ -84,18 +87,18 @@ def scheduleChecker(subreddit, fc):
         dailyUnstickyTime = weekend.fp1Time - datetime.timedelta(hours=1)
         dadUnstickyTime = weekend.dadTime + datetime.timedelta(hours=24)
         
-        #Post the Weekend Hub if required
+        #Post the Fan Hub if required
         try:
             if weekend.hubTime < currentTime and (prevTime < weekend.hubTime or prevTime == weekend.hubTime):
-                print("Posting a weekend hub")
-                post = subreddit.postToSubreddit(weekend, "Weekend Hub", owm=owm, fc=fc)
+                print("Posting a fan hub")
+                post = subreddit.postToSubreddit(weekend, "Fan Hub", owm=owm, fc=fc)
                 if settings["newFormat"]:
                     post.mod.sticky(bottom=False)
-                print("Successfully posted a weekend hub")
+                print("Successfully posted a fan hub")
                 print("Updating top bar")
                 subreddit.sidebar.updateTopBar(post, weekend, "Hub")
                 print("Successfully updated the top bar")
-                post.mod.flair(text="Weekend Hub", css_class="hub")
+                post.mod.flair(text="Fan Hub", css_class="hub")
         except Exception as e:
             print("Error in scheduleChecker (flag 1): {}".format(e))
         
@@ -208,7 +211,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "FP1")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Free Practice 1", css_class="practice")
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.1): {}".format(e))
@@ -220,7 +223,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "FP2")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Free Practice 2", css_class="practice")
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.2): {}".format(e))
@@ -232,7 +235,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "FP3")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Free Practice 3", css_class="practice")
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.3): {}".format(e))
@@ -244,7 +247,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "Q")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Qualifying", css_class="qualifying")
                     if settings["suggestedNew"]:
                         post.mod.suggested_sort(sort="new")
@@ -258,7 +261,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "PR")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Pre Race", css_class="race")
             except Exception as e:
                 print("Error in scheduleChecker (flag 3.5): {}".format(e))
@@ -270,7 +273,7 @@ def scheduleChecker(subreddit, fc):
                     print("Updating top bar")
                     subreddit.sidebar.updateTopBar(post, weekend, "R")
                     print("Successfully updated the top bar")
-                    addToHub(post, weekend)
+                    #addToHub(post, weekend)
                     post.mod.flair(text="Race", css_class="race")
                     if settings["suggestedNew"]:
                         post.mod.suggested_sort(sort="new")
@@ -391,16 +394,24 @@ def scheduleChecker(subreddit, fc):
             print("Successfully posted a daily discussion")
             try:
                 s1 = subreddit.sub.sticky(number=1)
-                if "Daily Discussion" in s1.title or "Weekend Hub" in s1.title:
+                if "Daily Discussion" in s1.title or "On-track Fan Hub" in s1.title:
                     post.mod.sticky(bottom=False)
+                    print("Successfully stickied a daily discussion")
                 else:
-                    post.mod.sticky(bottom=True)
+                    try:
+                        s2 = subreddit.sub.sticky(number=2)
+                        if "Daily Discussion" in s2.title or "On-track Fan Hub" in s2.title:
+                            post.mod.sticky(bottom=True)
+                            print("Successfully stickied a daily discussion")
+                    except Exception as e:
+                        pass
             except Exception as e:
                 print("No top sticky found: {}".format(e))
                 post.mod.sticky()
-            print("Successfully stickied a daily discussion")
+                print("Successfully stickied a daily discussion")
             post.mod.suggested_sort(sort="new")
             post.mod.flair(text="Daily Discussion", css_class="feature")
+            subreddit.sidebar.insertText("[Daily Discussion thread]({})".format(post.shortlink), "[](/ddBegin)", "[](/ddEnd)")
     except Exception as e:
         print("Error in scheduleChecker (flag 8): {}".format(e))
     
@@ -433,7 +444,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
     global currentTime
     global owm
     
-    print("Checking mail")
+    print("[ ] Checking mail", end="\r")
     
     #Obtain new messages
     messages = r.inbox.unread()
@@ -443,7 +454,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
     try:
         #Iterate over messages
         for message in messages:
-            print("Reading a message from {0}: {1}".format(message.author, message.body))
+            print("    Reading a message from {0}: ( {1} | {2} )".format(message.author, message.subject, message.body))
             
             #Mark message as read
             message.mark_read()
@@ -463,7 +474,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                         
                             #If the failsafe allows it
                             if lastCommand != [weekend.country, "quali"]:
-                                print("Posting a post-quali discussion")
+                                print("[ ] Posting a post-quali discussion", end="\r")
                                 
                                 #Check if we're not in testing mode
                                 if not settings["testingMode"]:
@@ -476,20 +487,20 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                                 
                                 #Schedule a check for the quali results in one minute
                                 qualiResultTime = currentTime+datetime.timedelta(minutes=1)
-                                print("Successfully posted a post-qualifying discussion")
+                                print("[x] Posting a post-quali discussion")
                                 
                                 #Update top bar if not in testing mode
-                                print("Updating top bar")
+                                print("[ ] Updating top bar", end="\r")
                                 if not settings["testingMode"]:
                                     f1_subreddit.updateTopBar(post, weekend, "PQ")
                                 else:
                                     f1exp_subreddit.updateTopBar(post, weekend, "PQ")
-                                print("Successfully updated the top bar")
+                                print("[x] Updating top bar")
                                 
                                 #Sticky it and add it to the Weekend Hub if not in testing mode
                                 if not settings["testingMode"]:
                                     post.mod.sticky(bottom=True)
-                                    addToHub(post, weekend)
+                                    #addToHub(post, weekend)
                                     
                                 #Inform the moderator of this splendid success
                                 message.reply("Successfully posted a post-qualifying discussion\n\n{}".format(post.shortlink))
@@ -511,7 +522,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                             
                             #If the failsafe allows it
                             if lastCommand != [weekend.country, "race"]:
-                                print("Posting a post-race discussion")
+                                print("[ ] Posting a post-race discussion", end="\r")
                                 
                                 #Check if we're not in testing mode
                                 if not settings["testingMode"]:
@@ -524,20 +535,20 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                                 
                                 #Schedule a check for the race results in one minute
                                 raceResultTime = currentTime+datetime.timedelta(minutes=1)
-                                print("Successfully posted a post-race discussion")
+                                print("[x] Posting a post-race discussion")
                                 
                                 #Update top bar if not in testing mode
-                                print("Updating top bar")
+                                print("[ ] Updating top bar", end="\r")
                                 if not settings["testingMode"]:
                                     f1_subreddit.updateTopBar(post, weekend, "PR")
                                 else:
                                     f1exp_subreddit.updateTopBar(post, weekend, "PR")
-                                print("Successfully updated the top bar")
+                                print("[x] Updating top bar")
                                 
                                 #Sticky it and add it to the Weekend Hub if not in testing mode
                                 if not settings["testingMode"]:
                                     post.mod.sticky(bottom=True)
-                                    addToHub(post, weekend)
+                                    #addToHub(post, weekend)
                                 
                                 #Inform the moderator of this splendid success
                                 message.reply("Successfully posted a post-race discussion\n\n{}".format(post.shortlink))
@@ -655,7 +666,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                 else:
                     message.reply("F1-Bot is currently occupied with the current qualifying/race. Please try again later.")
                     
-            #It told to retrieve the traffic stats
+            #If told to retrieve the traffic stats
             if (message.author in moderators or message.author in authorized) and message.body.lower() == "traffic":
                 
                 #Obtain traffic stats report
@@ -669,9 +680,33 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                 else:
                     message.reply("Something went wrong while generating a traffic report. Please contact /u/Redbiertje.")
             
+            #If told to (re)calibrate the AI
+            if message.author in moderators and message.body.lower() == "calibrate skynet":
+                
+                if skynet.calibrate():
+                    message.reply("Successfully recalibrated")
+                else:
+                    message.reply("Error: could not recalibrate")
+            
+            #If told to evaluate a comment
+            if message.author in moderators and message.subject.lower() == "evaluate":
+                
+                evaluation = skynet.predict(message.body.replace("\n", ""))
+                
+                message.reply("F1-Bot has evaluated the following comment:\n\n`{}`\n\nPercentage towards approval: {:.1f}\n\nPercentage towards removal: {:.1f}".format(message.body.replace("\n", ""), 100*evaluation[0], 100*evaluation[1]))
+            
+            #If told to restore flairs from virus prank
+            if message.author in moderators and message.subject.lower() == "unvirus":
+                success = virus.restoreFlairs(f1_subreddit)
+                
+                if success:
+                    message.reply("All flairs have been successfully restored")
+                else:
+                    message.reply("Oops! Something went wrong. Please contact /u/Redbiertje")
+            
             #If told to update the tribute
             if (message.author in moderators or message.author in authorized) and message.subject.lower() == "tribute":
-                
+            
                 #Use webscraper to download image
                 filename = ws.downloadImage(message.body)
                 
@@ -724,7 +759,26 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                             message.reply("Thanks! Added that one to the Media Hub.\n\nxoxo,\n\nF1-Bot")
                     except Exception as e:
                         print("Error editing Media Hub: {}".format(e))
-                        
+            
+            #If told to get the starting grid for an old race
+            if message.author in moderators and message.subject.lower() == "starting grid":
+                
+                message.reply("    {}".format(ws.old_startingGrid(*message.body.split(" ")).replace("\n", "\n    ")))
+               
+            #If told to print the last error
+            if message.author in moderators and message.body.lower() == "traceback":
+                
+                message.reply("    {}".format(traceback.format_exc().replace("\n", "\n    ")))
+                
+            #If told to check for ban evasion
+            if message.author in moderators and message.subject.lower() == "evader":
+                
+                similarities = f1_subreddit.checkBanEvasion(message.body.strip())
+                reply = "**Similarity report for /u/{}**\n\n|Username|Similarity|\n|:--|:--|".format(message.body.strip())
+                for username, sim in similarities[:10]:
+                    reply += "\n|/u/{}|{:.1f}|".format(username, 100*sim)
+                message.reply(reply)
+                
             #Testing code
             if message.author in moderators and message.body.lower() == "test":
                 weekend = aux.prevDate()
@@ -740,14 +794,14 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
         print("Error in checkMail: {}".format(e))
     #Not going to comment this bit. It's for if Reddit's mailbox system fails
     if settings["readRobust"]:
-        print("Reading /r/formula1bot posts as mail")
+        print("    Reading /r/formula1bot posts as mail")
         try:
             posts = f1bot_subreddit.new(limit=5)
             for post in posts:
                 if post.title.lower() == "command":
                     postTime = datetime.datetime(1970, 1, 1)+datetime.timedelta(seconds = post.created_utc)
                     postMessage = post.selftext
-                    print("Reading a message from {0}: {1}".format(post.author, post.selftext))
+                    print("    Reading a message from {0}: {1}".format(post.author, post.selftext))
                     post.mod.remove()
                     if postMessage.lower() == "post":
                         for weekend in weekends.allWeekends:
@@ -808,7 +862,7 @@ def checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast):
                             post.reply("Updating the information in the F1 sidebar for the {}".format(race))
         except Exception as e:
             print("Error in robust checkMail: {}".format(e))
-    print("Finished checking mail")
+    print("[x] Checking mail")
     
 def checkSessionFinished(subreddit, session):
     """
@@ -824,7 +878,7 @@ def checkSessionFinished(subreddit, session):
     global owm
     
     try:
-        print("Checking if the session is finished")
+        print("[ ] Checking if the session is finished", end="\r")
         
         #Check which session should be finished
         if session == "quali":
@@ -864,12 +918,12 @@ def checkSessionFinished(subreddit, session):
                     print("Successfully updated the top bar")
                     
                     #Set correct flair
-                    post.mod.flair(text="Post Qualifying", css_class="post-qualifying")
+                    post.mod.flair(text="Post Qualifying", css_class="qualifying")
                     
                     #Sticky new thread and add it to the hub
                     if not settings["testingMode"]:
                         post.mod.sticky(bottom=True)
-                        addToHub(post, weekend)
+                        #addToHub(post, weekend)
                         
                     #Set suggested sorting
                     if settings["suggestedNew"]:
@@ -904,12 +958,12 @@ def checkSessionFinished(subreddit, session):
                     print("Successfully updated the top bar")
                     
                     #Set correct flair
-                    post.mod.flair(text="Post Race", css_class="post-race")
+                    post.mod.flair(text="Post Race", css_class="race")
                     
                     #Sticky new thread and add it to the hub
                     if not settings["testingMode"]:
                         post.mod.sticky(bottom=True)
-                        addToHub(post, weekend)
+                        #addToHub(post, weekend)
                     
                     #Set suggested sorting
                     if settings["suggestedNew"]:
@@ -1136,6 +1190,44 @@ def setSuggestedSort(session, sorting):
     except Exception as e:
         print("Error in setSuggestedSort: {}".format(e))
         
+def evaluateReports(subreddit):
+    """
+    Uses Skynet module to evaluate reports
+    """
+    try:
+        print("[ ] Evaluating newly reported comments", end="\r")
+        
+        #Retrieve recently evaluated comment IDs
+        IDs = []
+        for line in aux.readlines_reverse("data/{}_evaluatedreports.tsv".format(subreddit.sub.display_name)):
+            IDs.append(line)
+            if len(IDs) >= 1000:
+                break
+        IDs = np.array(IDs)
+        
+        #Open data file
+        data_file = open("data/{}_evaluatedreports.tsv".format(subreddit.sub.display_name), "a")
+                        
+        #Go through all new modqueue items
+        for item in subreddit.sub.mod.modqueue(only='comments'):
+            if item.id not in IDs:
+                #Let Skynet evaluate the comment
+                evaluation = skynet.predict(item.body.replace("\n", ""))
+                
+                #Notify humans of evaluation through an additional report
+                comment = r.comment(item.id)
+                comment.report("Automatic evaluation: {:.1f}% towards removal.".format(evaluation[1]*100))
+                
+                #Store ID in file to prevent repeat evaluation
+                data_file.write("\n{}".format(item.id))
+        
+        #Close the data file again
+        data_file.close()
+        
+        print("[x] Evaluating newly reported comments")
+    except Exception as e:
+        print("Error in evaluateReports: {}".format(e))
+        
 def getSettings(subreddit):
     """
     Pulls the bot settings from the wiki
@@ -1148,7 +1240,7 @@ def getSettings(subreddit):
         defaultSettings = {"replaceSticky": True, "testingMode": False, "readRobust": False, "suggestedNew": True, "newFormat": False, "dailyTweet": True, "scoreThreshold": 1000, "autoPost": True, "trackComments": False, "techTalkThread": False}
         
         #Pull data from the wiki page
-        print("Pulling bot settings from the wiki")
+        print("[ ] Pulling bot settings from the wiki", end="\r")
         wikiContent = subreddit.wiki['botsettings'].content_md
         wikiRows = wikiContent.split("\r\n")
         
@@ -1169,11 +1261,12 @@ def getSettings(subreddit):
                     
         #If all settings have been obtained, return obtained settings
         if sorted(settings.keys()) == sorted(defaultSettings.keys()):
+            print("[x] Pulling bot settings from the wiki")
             return settings
         
         #Else return defaults
         else:
-            print("Using default settings.")
+            print("[x] Pulling bot settings from the wiki (default settings)")
             return defaultSettings
     except Exception as e:
         print("Error in pullSettings: {}".format(e))
@@ -1181,6 +1274,7 @@ def getSettings(subreddit):
 
  
 #Setup the loop
+threads = []
 alertState = botState()
 settings = getSettings(subreddit)
 
@@ -1189,8 +1283,8 @@ f1_subreddit = sub.Subreddit(r, subreddit, settings)
 f1bot_subreddit = sub.Subreddit(r, private_subreddit, settings)
 f1exp_subreddit = sub.Subreddit(r, formula1exp, settings)
 
-print("Current bot state: {}".format(alertState))
-print("Failsafe: {}".format(lastCommand))
+print("    Current bot state: {}".format(alertState))
+print("    Failsafe: {}".format(lastCommand))
 
 #On boot, get the weather forecast
 if boot == True:
@@ -1223,9 +1317,33 @@ if qualiResultTime < currentTime and (prevTime < qualiResultTime or prevTime == 
         qualiResultTime += datetime.timedelta(minutes=1)
 
 #Check /new for reposts
-print("Checking for reposts")
-f1_subreddit.checkReposts()
-f1_subreddit.storePostTitles()
+print("[ ] Checking for reposts", end="\r")
+t_checkReposts = multiprocessing.Process(target=f1_subreddit.checkReposts)
+t_checkReposts.start()
+threads.append(t_checkReposts)
+t_storePostTitles = multiprocessing.Process(target=f1_subreddit.storePostTitles)
+t_storePostTitles.start()
+threads.append(t_storePostTitles)
+print("[x] Checking for reposts")
+
+#Log comments
+print("[ ] Storing the latest comments", end="\r")
+t_commentLogger = multiprocessing.Process(target=f1_subreddit.logger)
+t_commentLogger.start()
+threads.append(t_commentLogger)
+print("[x] Storing the latest comments")
+
+#Log approved and removed comments
+f1_subreddit.modlogger()
+
+#Evaluate reports using Skynet module
+evaluateReports(f1_subreddit)
+
+#Check for DD removals and update modnotes
+if currentTime.hour == 20 and prevTime.hour == 19:
+    print("[ ] Updating modnotes", end="\r")
+    modnotes.update_modnotes_DD(r)
+    print("[x] Updating modnotes")
 
 #Alert state-dependent schedule
 if alertState == "normal":
@@ -1246,8 +1364,14 @@ if alertState == "normal":
     
     #Finish loop
     prevTime = currentTime
-    print("Waiting for 10 seconds...")
-    time.sleep(10)
+    
+    print("    Waiting for 30 seconds...")
+    time.sleep(30)
+    
+    #Wait for threads to finish
+    for t in threads:
+        t.join()
+        
 elif alertState == "quali" or alertState == "race":
     #Update the countdown
     f1_subreddit.sidebar.updateCountdown(currentTime)
@@ -1274,3 +1398,7 @@ elif alertState == "quali" or alertState == "race":
     for i in range(3):
         checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast)
         checkSessionFinished(f1_subreddit, alertState)
+    
+    #Wait for threads to finish
+    for t in threads:
+        t.join()

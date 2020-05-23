@@ -16,7 +16,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 from selenium import webdriver
 from pyvirtualdisplay import Display
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 import datetime
 
 currentYear = 2020
@@ -51,14 +51,15 @@ flagDriverDict = {"Lewis Hamilton": "gb",
     "Sergey Sirotkin": "ru",
     "George Russell": "gb",
     "Alexander Albon": "th",
-    "Lando Norris": "gb"}
+    "Lando Norris": "gb",
+    "Nicholas Latifi": "ca"}
 
 flagTeamDict = {"Mercedes": "rt_merc",
     "Ferrari": "rt_fer",
     "Red Bull Racing Honda": "rt_rb",
     "Racing Point BWT Mercedes": "rt_fi",
     "Williams Mercedes": "rt_wil",
-    "Scuderia Toro Rosso Honda": "rt_tor",
+    "Scuderia AlphaTauri": "rt_tor",
     "Renault": "rt_ren",
     "Haas Ferrari": "rt_haas",
     "McLaren Renault": "rt_mcl",
@@ -69,7 +70,7 @@ flagTeamDictNat = {"Mercedes": "de",
     "Red Bull Racing Honda": "at",
     "Racing Point BWT Mercedes": "gb",
     "Williams Mercedes": "gb",
-    "Scuderia Toro Rosso Honda": "it",
+    "Scuderia AlphaTauri": "it",
     "Renault": "fr",
     "Haas Ferrari": "us",
     "McLaren Renault": "gb",
@@ -80,7 +81,7 @@ barTeamDict = {"Mercedes": "merc",
     "Red Bull Racing Honda": "rbr",
     "Racing Point BWT Mercedes": "rpt",
     "Williams Mercedes": "wil",
-    "Scuderia Toro Rosso Honda": "str",
+    "Scuderia AlphaTauri": "alp",
     "Renault": "ren",
     "Haas Ferrari": "has",
     "McLaren Renault": "mcl",
@@ -91,7 +92,7 @@ teamShortNameDict = {"Mercedes": "Mercedes",
     "Red Bull Racing Honda": "Red Bull Racing",
     "Racing Point BWT Mercedes": "Racing Point",
     "Williams Mercedes": "Williams",
-    "Scuderia Toro Rosso Honda": "Toro Rosso",
+    "Scuderia AlphaTauri": "AlphaTauri",
     "Renault": "Renault",
     "Haas Ferrari": "Haas",
     "McLaren Renault": "McLaren",
@@ -102,7 +103,7 @@ teamSubredditDict = {"Mercedes": "[Mercedes](/r/MercedesAMGF1)",
     "Red Bull Racing Honda": "Red Bull",
     "Racing Point BWT Mercedes": "[Racing Point](/r/SaharaForceIndia)",
     "Williams Mercedes": "[Williams](/r/WilliamsF1)",
-    "Scuderia Toro Rosso Honda": "[Toro Rosso](/r/ScuderiaToroRosso)",
+    "Scuderia AlphaTauri": "AlphaTauri",
     "Renault": "Renault",
     "Haas Ferrari": "[Haas](/r/HaasF1Team)",
     "McLaren Renault": "[McLaren](/r/McLarenFormula1)",
@@ -139,7 +140,8 @@ driverSubredditDict = {"Hamilton": "[Hamilton](/r/lewishamilton)",
     "Norris": "Norris",
     "Giovinazzi": "Giovinazzi",
     "Albon": "Albon",
-    "Russell": "Russell"}
+    "Russell": "Russell",
+    "Latifi": "Latifi"}
 
 def raceResults(weekend):
     try:
@@ -382,7 +384,11 @@ def sessionFinished(session):
     try:
         display = Display(visible=0, size=(800, 600))
         display.start()
-        driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", options=chrome_options)
         driver.get("https://www.formula1.com/en/f1-live.html")
         session_name = driver.find_element_by_class_name("SP_chevron").text
         flag = time_left = driver.find_element_by_id("notification").text
@@ -406,7 +412,11 @@ def downloadImage(address):
         #Initiate webdriver
         display = Display(visible=0, size=(800, 600))
         display.start()
-        driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", options=chrome_options)
         driver.get(address)
         
         #Locate image and pull data
@@ -425,4 +435,50 @@ def downloadImage(address):
         return "img/tribute.{}".format(src[-3:])
     except Exception as e:
         print("Error in downloadImage: {}".format(e))
+        return False
+    
+def old_startingGrid(year, racenr, country, poleLeftStr="Left"):
+    try:
+        poleLeft = True if poleLeftStr.lower() == "left" else False
+        leftAdd = 0 if poleLeft else 1
+        rightAdd = 1 if poleLeft else 0
+        address = "https://www.formula1.com/en/results.html/{0}/races/{1}/{2}/starting-grid.html".format(year, racenr, country.lower())
+        page = urllib.request.urlopen(address)
+        soup = BeautifulSoup(page, "html.parser")
+        HTMLtable = soup.find("table", class_="resultsarchive-table").find_all("tr")
+        HTMLtitle = soup.find("h1", class_="ResultsArchiveTitle").string
+        if not "STARTING GRID" in HTMLtitle:
+            return False
+        try:
+            HTMLnote = "\n\n" + soup.find("p", class_="note").string
+        except Exception as e:
+            HTMLnote = ""
+        position = []
+        racenumber = []
+        driver = []
+        team = []
+        time = []
+
+        for idx, line in enumerate(HTMLtable[1:]):
+            data = line.find_all(["td", "span"])
+            position.append(str(data[1].string))
+            racenumber.append(str(data[2].string))
+            driver.append("{0} {1}".format(data[4].string, data[5].string).replace("  ", " "))
+            team.append(str(data[7].string))
+            time.append(str(data[8].string))
+
+        resultTable = "####Starting grid\n\n|Row|Lane {0}|Lane {1}|\n|-|-|-|".format(1+leftAdd, 1+rightAdd)
+        for i in range(int(ceil(len(position)/2))):
+            try:
+                resultTable += "\n|{0}|**{1}.** **[](#aa) {2}** **{3}** **{5}**|**{6}.** **[](#aa) {7}** **{8}** **{10}**|".format(i+1, position[2*i+leftAdd], driver[2*i+leftAdd], time[2*i+leftAdd], team[2*i+leftAdd], team[2*i+leftAdd], position[2*i+rightAdd], driver[2*i+rightAdd], time[2*i+rightAdd], team[2*i+rightAdd], team[2*i+rightAdd])
+            except IndexError:
+                if poleLeft:
+                    resultTable += "\n|{0}|**{1}.** **[](#aa) {2}** **{3}** **{5}**||".format(i+1, position[2*i+leftAdd], driver[2*i+leftAdd], time[2*i+leftAdd], team[2*i+leftAdd], team[2*i+leftAdd])
+                else:
+                    resultTable += "\n|{0}||**{1}.** **[](#aa) {2}** **{3}** **{5}**||".format(i+1, position[2*i+rightAdd], driver[2*i+rightAdd], time[2*i+rightAdd], team[2*i+rightAdd], team[2*i+rightAdd])
+        resultTable += HTMLnote
+
+        return resultTable
+    except Exception as e:
+        print("Error in startingGrid: {}".format(e))
         return False

@@ -21,11 +21,12 @@ import auxiliary as aux
 import sidebar
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction.text import TfidfVectorizer
-from psaw import PushshiftAPI
+import os
 
 
 currentYear = 2020
 prevYear = 2019
+moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "Effulgency", "Blanchimont", "elusive_username"]
 
 class Subreddit():
 
@@ -86,8 +87,13 @@ class Subreddit():
             fp2UTC = "{0} {1:02d}:{2:02d}".format(aux.weekdayToWord(w.fp2Time.weekday()), w.fp2Time.hour, w.fp2Time.minute)
             fp3UTC = "{0} {1:02d}:{2:02d}".format(aux.weekdayToWord(w.fp3Time.weekday()), w.fp3Time.hour, w.fp3Time.minute)
             
-            #Weekend Hub post
-            if thread == "Weekend Hub":
+            if w.lastYear:
+                lastyear = tp.lastyear_template.format(w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam)
+            else:
+                lastyear = ""
+            
+            #Fan Hub post
+            if thread == "Fan Hub":
                 try:
                     #Get weather report for the coming sessions based on existing weather forecast
                     fp1Status = fc.get_weather_at(w.fp1Time)
@@ -104,11 +110,11 @@ class Subreddit():
                     fp3Status = fc.get_weather_at(w.fp3Time)
                     qualiStatus = fc.get_weather_at(w.qualiTime)
                     raceStatus = fc.get_weather_at(w.raceTime)
-                #Format the title of the weekend hub
-                title = "{0} {1} Grand Prix - {2}".format(currentYear, w.namean, thread)
+                #Format the title of the fan hub
+                title = "/r/formula1 goes to the {0} {1} Grand Prix - On-track Fan Hub".format(currentYear, w.namean)
                 
-                #Format the content of the weekend hub
-                content = tp.hub_template.format(w.round, w.country, w.flag, fp1UTC, aux.weatherIcon(fp1Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp1Status.get_detailed_status())), int(fp1Status.get_temperature(unit="celsius")["temp"]), int(fp1Status.get_temperature(unit="fahrenheit")["temp"]), fp2UTC, aux.weatherIcon(fp2Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp2Status.get_detailed_status())), int(fp2Status.get_temperature(unit="celsius")["temp"]), int(fp2Status.get_temperature(unit="fahrenheit")["temp"]), fp3UTC, aux.weatherIcon(fp3Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp3Status.get_detailed_status())), int(fp3Status.get_temperature(unit="celsius")["temp"]), int(fp3Status.get_temperature(unit="fahrenheit")["temp"]), qualiUTC, aux.weatherIcon(qualiStatus.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(qualiStatus.get_detailed_status())), int(qualiStatus.get_temperature(unit="celsius")["temp"]), int(qualiStatus.get_temperature(unit="fahrenheit")["temp"]), raceUTC, aux.weatherIcon(raceStatus.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(raceStatus.get_detailed_status())), int(raceStatus.get_temperature(unit="celsius")["temp"]), int(raceStatus.get_temperature(unit="fahrenheit")["temp"]))
+                #Format the content of the fan hub
+                content = tp.hub_template.format(w.round, w.country, w.flag, fp1UTC, aux.weatherIcon(fp1Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp1Status.get_detailed_status())), int(fp1Status.get_temperature(unit="celsius")["temp"]), int(fp1Status.get_temperature(unit="fahrenheit")["temp"]), fp2UTC, aux.weatherIcon(fp2Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp2Status.get_detailed_status())), int(fp2Status.get_temperature(unit="celsius")["temp"]), int(fp2Status.get_temperature(unit="fahrenheit")["temp"]), fp3UTC, aux.weatherIcon(fp3Status.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(fp3Status.get_detailed_status())), int(fp3Status.get_temperature(unit="celsius")["temp"]), int(fp3Status.get_temperature(unit="fahrenheit")["temp"]), qualiUTC, aux.weatherIcon(qualiStatus.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(qualiStatus.get_detailed_status())), int(qualiStatus.get_temperature(unit="celsius")["temp"]), int(qualiStatus.get_temperature(unit="fahrenheit")["temp"]), raceUTC, aux.weatherIcon(raceStatus.get_weather_icon_name()), aux.weatherChange(aux.firstCaps(raceStatus.get_detailed_status())), int(raceStatus.get_temperature(unit="celsius")["temp"]), int(raceStatus.get_temperature(unit="fahrenheit")["temp"]), currentYear, w.namean)
             
             #Day after Debrief thread
             elif thread == "Day after Debrief":
@@ -144,8 +150,8 @@ class Subreddit():
                 title = "{0} {1} Grand Prix - {2} Discussion".format(currentYear, w.namean, thread)
                 
                 #Format the content of the thread
-                #                                         0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23           24              25                   26                  27                  28             29              30                       31                       32                    33              34              35                  36                  37               38          39            40             41            42      43       44
-                content = tp.post_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC)
+                #                                         0        1          2       3            4                                       5              6                                 7                                        8               9                                  10      11      12      13      14        15       16         17        18                19      20          21                  22        23        24              25         26
+                content = tp.post_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, fp1UTC, fp2UTC, fp3UTC, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, lastyear, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit)
             
             #Else it is a regular session thread
             else:
@@ -166,14 +172,14 @@ class Subreddit():
                 #Format the content of the thread
                 if self.settings["newFormat"]:
                     if live:
-                        #                                          0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
-                        content = tp.new_session_template_live.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC, grid)
+                        #                                        0        1          2       3            4                                       5              6                                 7                                        8               9                                  10      11      12      13      14        15       16         17        18                19      20          21                  22        23    24        25              26         27
+                        content = tp.new_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, fp1UTC, fp2UTC, fp3UTC, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, lastyear, grid, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit)
                     else:
-                        #                                          0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
-                        content = tp.new_session_template_disc.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC, grid)
+                        #                                        0        1          2       3            4                                       5              6                                 7                                        8               9                                  10      11      12      13      14        15       16         17        18                19      20          21                  22        23    24        25              26         27
+                        content = tp.new_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, fp1UTC, fp2UTC, fp3UTC, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, lastyear, grid, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit)
                 else:
-                    #                                          0          1        2         3                        4                        5                    6                                 7                           8                        9                 10       11      12         13        14            15           16        17              18                  19               20                 21               22              23            24              25                   26                  27                  28             29              30                       31                       32                    33                  34              35                  36                  37               38          39            40             41            42      43      44    45
-                    content = tp.old_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, w.lapRecordFlag, w.lapRecordHolder, w.lapRecordTeam, w.lapRecordYear, w.lapRecordTime, w.lastYear, w.prevYearPoleFlag, w.prevYearPoleHolder, w.prevYearPoleTeam, w.prevYearPoleTime, w.lastYear, w.prevYearFastestFlag, w.prevYearFastestHolder, w.prevYearFastestTeam, w.prevYearFastestTime, w.lastYear, w.prevYearWinnerFlag, w.prevYearWinner, w.prevYearWinnerTeam, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit, fp1UTC, fp2UTC, fp3UTC, grid)
+                    #                                        0        1          2       3            4                                       5              6                                 7                                        8               9                                  10      11      12      13      14        15       16         17        18                19      20          21                  22        23    24        25              26         27
+                    content = tp.old_session_template.format(w.round, w.country, w.flag, w.fullTitle, aux.weekdayToWord(w.fp1Time.weekday()), w.fp1Time.day, aux.monthToWord(w.fp1Time.month), aux.weekdayToWord(w.raceTime.weekday()), w.raceTime.day, aux.monthToWord(w.raceTime.month), w.city, fp1UTC, fp2UTC, fp3UTC, qualiUTC, raceUTC, w.circuit, w.length, w.length*0.62137, w.laps, w.distance, w.distance*0.62137, lastyear, grid, w.linkF1, w.linkWikiRace, w.circuit, w.linkWikiCircuit)
             
             #Submit the post
             post = self.sub.submit(title, content, send_replies=False)
@@ -218,7 +224,7 @@ class Subreddit():
         """
         Posts the top tweet from the subreddit to Twitter.
         """
-        print("Tweeting top post of the day")
+        print("[ ] Tweeting top post of the day", end="\r")
         
         try:
             #Retrieve top post from the last day
@@ -250,7 +256,7 @@ class Subreddit():
                 try:
                     if not self.settings["testingMode"]:
                         tweet = twitter.update_status(tweetText)
-                        print("Successfully posted a tweet")
+                        print("[x] Tweeting top post of the day")
                 except Exception as e:
                     print("Error in tweetTopPost (Twitter section): {}".format(e))
         except Exception as e:
@@ -339,6 +345,7 @@ class Subreddit():
         try:
             #Set amount of posts to look back in
             OCdistance = 1000
+            sim_thres = 0.6
             
             #Load previous post data
             data = np.loadtxt("data/postTitles.tsv", delimiter="\t", comments="#", dtype="str")
@@ -358,12 +365,13 @@ class Subreddit():
                         search_query =  tf.transform([testingString])
                         cosine_similarities = linear_kernel(X, search_query).flatten()[-OCdistance:]
                         most_related_docs = cosine_similarities.argsort()[-10:][::-1]
-                        if cosine_similarities[most_related_docs[0]] > 0.8:
-                            orig_post = self.r.submission(id=IDs[-OCdistance:][most_related_docs[0]])
-                            if not orig_post.removed and not orig_post.selftext == "[deleted]":
-                                #Report the post to the moderators
-                                submission.report("Possible repost ({0}%): https://redd.it/{1}".format(int(100*cosine_similarities[most_related_docs[0]]), orig_post.id))
-                                #redbiertje.message("Possible repost", "Hi there,\n\nI've found the following post:\n\n[{0}]({1})\n\nwhich looks a lot like\n\n[{2}](https://redd.it/{3})\n\nPlease check if it's a repost.\n\n(Similarity: {4:4f})".format(submission.title, submission.permalink, OrigPost.title, OrigPost.id, cosine_similarities[most_related_docs[0]]))
+                        for doc in most_related_docs:
+                            if cosine_similarities[doc] > 0.6:
+                                orig_post = self.r.submission(id=IDs[-OCdistance:][doc])
+                                if not orig_post.removed and not orig_post.selftext == "[deleted]":
+                                    #Report the post to the moderators
+                                    submission.report("Possible repost ({0}%): https://redd.it/{1}".format(int(100*cosine_similarities[most_related_docs[0]]), orig_post.id))
+                                    break
                 else:
                     break
         except Exception as e:
@@ -391,3 +399,145 @@ class Subreddit():
             bodyText = bodyText + f'[{highlight[0]}]({highlight[1]}) | [Link]({highlight[2]}) \n'\
 
         return bodyText
+        
+    def logger(self, mode="comments"):
+        """
+        Log all new comments or posts
+        """
+        try:
+            if mode == "comments":
+                #Load previous post data
+                IDs = []
+                for line in aux.readlines_reverse("data/{}_comments.tsv".format(self.sub.display_name)):
+                    values = line.split("\t")
+                    IDs.append(values[0])
+                    if len(IDs) >= 120:
+                        break
+                IDs = np.array(IDs)
+                                
+                #Open data file
+                data_file = open("data/{}_comments.tsv".format(self.sub.display_name), "a")
+                
+                #Go through all new posts, and add them if necessary
+                for comment in self.sub.comments(limit=25):
+                    if comment.id not in IDs:
+                        body = comment.body.replace("\n", " ").replace("\t", " ").strip()
+                        if len(body) > 4000:
+                            body = body[:4000]
+                        data_file.write("\n{0}\t{1}\t{2}\t{3}".format(comment.id, comment.created_utc, comment.author.name, body))
+                    else:
+                        break
+                    
+                #Close the data file again
+                data_file.close()
+            
+        except Exception as e:
+            print("Error in subreddit.logger: {}".format(e))
+            
+    def modlogger(self):
+        """
+        Log modlog actions
+        """
+        try:
+            print("[ ] Storing approved and removed comments", end="\r")
+            
+            IDs = []
+            for line in aux.readlines_reverse("data/{}_modlogcomments.tsv".format(self.sub.display_name)):
+                values = line.split("\t")
+                IDs.append(values[0])
+                if len(IDs) >= 120:
+                    break
+            for line in aux.readlines_reverse("data/{}_redditlegal.tsv".format(self.sub.display_name)):
+                values = line.split("\t")
+                IDs.append(values[0])
+                if len(IDs) >= 240:
+                    break
+                
+            IDs = np.array(IDs)
+            
+            #Open data file
+            data_file = open("data/{}_modlogcomments.tsv".format(self.sub.display_name), "a")
+            legal_file = open("data/{}_redditlegal.tsv".format(self.sub.display_name), "a")
+            
+            #Go through all new actions, and add them if necessary
+            for action in self.sub.mod.log(limit=100):
+                if action.id not in IDs:
+                    if action.mod in moderators and (action.action == "removecomment" or action.action == "approvecomment"):
+                        body = action.target_body.replace("\n", " ").replace("\t", " ").strip()
+                        if len(body) > 4000:
+                            body = body[:4000]
+                        flag = 1 if action.action == "removecomment" else 0
+                        data_file.write("\n{0}\t{1}\t{2}\t{3}\t{4}".format(action.id, action.created_utc, action.target_author, flag, body))
+                    if action.mod == "Reddit Legal":
+                        legal_file.write("\n{}\t{}\t{}\t{}".format(action.id, action.created_utc, action.target_author, action.target_permalink))
+                        jeppe = self.r.redditor("jeppe96")
+                        jeppe.message("Notification: Reddit Legal action", "Reddit Legal performed an action on /r/{} against the following post by /u/{}:\n\n{}\n\n".format(self.sub.display_name, action.target_author, action.target_permalink))
+                        red = self.r.redditor("Redbiertje")
+                        red.message("Notification: Reddit Legal action", "Reddit Legal performed an action on /r/{} against the following post by /u/{}:\n\n{}\n\n".format(self.sub.display_name, action.target_author, action.target_permalink))
+                else:
+                    break
+            
+            #Close the data file again
+            data_file.close()
+            legal_file.close()
+            
+            print("[x] Storing approved and removed comments")
+            
+        except Exception as e:
+            print("Error in subreddit.modlogger: {}".format(e))
+            
+    def checkBanEvasion(self, username):
+        """
+        Checks activity against activity of ban list
+        """
+        try:
+            checked_list = []
+            user_activity = self.getUserActivity(username)
+            user_activity.pop('formula1', None)
+            for user in self.sub.banned():
+                try:
+                    activity = self.getUserActivity(user.name)
+                    activity.pop('formula1', None)
+                    checked_list.append((user.name, aux.similarity(user_activity, activity)))
+                except Exception as e:
+                    pass
+            return sorted(checked_list, key=lambda x: x[1])[::-1]
+            
+        except Exception as e:
+            print("Error in subreddit.checkBanEvasion: {}".format(e))
+            return False
+    
+    def getUserActivity(self, username, comments=True, submissions=True):
+        """
+        Obtains list of subreddits in which the user has been active
+        """
+        try:
+            #Prepare output dictionary
+            output = {}
+            
+            #Get user object
+            user = self.r.redditor(username)
+            
+            #If we want to count comment activity
+            if comments:
+                for comment in user.comments.new(limit=None):
+                    subname = comment.subreddit.display_name
+                    try:
+                        output[subname] += 1
+                    except KeyError:
+                        output[subname] = 1
+            
+            #If we want to count submission activity
+            if submissions:
+                for submission in user.submissions.new(limit=None):
+                    subname = submission.subreddit.display_name
+                    try:
+                        output[subname] += 1
+                    except KeyError:
+                        output[subname] = 1
+                        
+            return output
+        
+        except Exception as e:
+            print("Error in subreddit.getUserActivity: {}".format(e))
+            return False

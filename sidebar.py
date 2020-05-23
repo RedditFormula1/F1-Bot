@@ -86,7 +86,7 @@ class Sidebar():
         """
         Updates the countdown in the sidebar of the subreddit
         """
-        print("Updating the countdown in the F1 sidebar")
+        print("[ ] Updating the countdown in the F1 sidebar", end="\r")
         
         #Figure out the relevant races
         nextRace = aux.nextDate().raceTime
@@ -114,7 +114,7 @@ class Sidebar():
             
             #Inform human of result
             if success:
-                print("Successfully updated the countdown")
+                print("[x] Updating the countdown in the F1 sidebar")
             else:
                 print("Encountered a problem while updating the countdown")
         except Exception as e:
@@ -125,7 +125,7 @@ class Sidebar():
         Updates all the race-related information in the sidebar
         """
         
-        print("Updating the info in the F1 sidebar")
+        print("[ ] Updating the info in the F1 sidebar", end="\r")
         
         try:
             #Define all the markers
@@ -222,7 +222,7 @@ class Sidebar():
             except Exception as e:
                 print("Failed to update driver and team standings: {}".format(e))
             
-            print("Successfully updated the info in the sidebar")
+            print("[x] Updating the info in the F1 sidebar ({} Grand Prix)".format(w.namean))
             return "{} Grand Prix".format(w.namean)
         except Exception as e:
             print("Error in updateSidebarInfo: {}".format(e))
@@ -232,7 +232,7 @@ class Sidebar():
         """
         Updates the weather prediction in the sidebar of the subreddit
         """
-        print("Updating the weather prediction")
+        print("[ ] Updating the weather prediction", end="\r")
         
         #Get current time
         currentTime = datetime.datetime.utcnow()
@@ -298,7 +298,7 @@ class Sidebar():
             else:
                 #Upload the placeholder to sidebar
                 self.insertText("Weather Prediction\n> The weather prediction is not yet available.", beginMarker, endMarker)
-            print("Sucessfully updated the sidebar")
+            print("[x] Updating the weather prediction ({})".format(nextWeekend.city))
             return fc
         except Exception as e:
             print("Error in updateWeatherPrediction: {}".format(e))
@@ -346,6 +346,8 @@ class Sidebar():
         mods_list = ["Mulsanne", "HeikkiKovalainen", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "elusive_username", "Effulgency", "Blanchimont"]
         
         try:
+            print("[ ] Updating header quote: ...", end="\r")
+            
             #Retrieve templates from subreddit wiki
             wikiContent = self.sub.wiki['headertemplates'].content_md
             templates = [line[1:].lstrip() for line in wikiContent.split("---")[1].lstrip().rstrip().split("\r\n")]
@@ -370,7 +372,7 @@ class Sidebar():
             headerQuote = selectedTemplate.replace("<mod>", rand_mod).replace("<driver>", rand_driver).replace("<olddriver>", rand_old).replace("<shittydriver>", rand_shitty).replace("<team>", rand_team).replace("<country>", rand_country).replace("<city>", rand_city).replace("<nextcountry>", next_country).replace("<nextcity>", next_city).replace("<prevcountry>", prev_country).replace("<prevcity>", prev_city)
             
             #Report the selected quote
-            print("Updating header quote: {}".format(headerQuote))
+            print("[x] Updating header quote: {}".format(headerQuote))
             
             #Upload new quote to sidebar
             self.insertText(headerQuote, beginMarker, endMarker)

@@ -20,43 +20,45 @@ currYear = 2020
 ddPostTime = 7
 
 #Define list of Tech Talk Threads
-techTalks = [datetime.datetime(currYear, 3, 14, 2, 00),
-            datetime.datetime(currYear, 3, 21, 8, 00),
-            datetime.datetime(currYear, 3, 28, 14, 00),
-            datetime.datetime(currYear, 4, 4, 20, 00),
-            datetime.datetime(currYear, 4, 11, 2, 00),
-            datetime.datetime(currYear, 4, 18, 8, 00),
-            datetime.datetime(currYear, 4, 25, 14, 00),
-            datetime.datetime(currYear, 5, 2, 20, 00),
-            datetime.datetime(currYear, 5, 9, 2, 00),
-            datetime.datetime(currYear, 5, 16, 21, 45),
-            datetime.datetime(currYear, 5, 22, 14, 00),
-            datetime.datetime(currYear, 5, 30, 20, 00),
-            datetime.datetime(currYear, 6, 6, 2, 00),
-            datetime.datetime(currYear, 6, 13, 8, 00),
-            datetime.datetime(currYear, 6, 20, 14, 00),
-            datetime.datetime(currYear, 6, 27, 20, 00),
-            datetime.datetime(currYear, 7, 4, 2, 00),
-            datetime.datetime(currYear, 7, 11, 8, 00),
-            datetime.datetime(currYear, 7, 18, 14, 00),
-            datetime.datetime(currYear, 7, 25, 20, 00),
-            datetime.datetime(currYear, 8, 1, 2, 00),
-            datetime.datetime(currYear, 8, 8, 8, 00),
-            datetime.datetime(currYear, 8, 15, 14, 00),
-            datetime.datetime(currYear, 8, 22, 20, 00),
-            datetime.datetime(currYear, 8, 29, 2, 00),
-            datetime.datetime(currYear, 9, 5, 8, 00),
-            datetime.datetime(currYear, 9, 12, 14, 00),
-            datetime.datetime(currYear, 9, 19, 20, 00),
-            datetime.datetime(currYear, 9, 26, 2, 00),
-            datetime.datetime(currYear, 10, 3, 8, 00),
-            datetime.datetime(currYear, 10, 10, 14, 00),
-            datetime.datetime(currYear, 10, 17, 20, 00),
-            datetime.datetime(currYear, 10, 24, 2, 00),
-            datetime.datetime(currYear, 10, 31, 8, 00),
-            datetime.datetime(currYear, 11, 7, 14, 00),
-            datetime.datetime(currYear, 11, 14, 20, 00),
-            datetime.datetime(currYear, 11, 21, 8, 00)]
+techTalks = [datetime.datetime(currYear, 3, 5, 2, 00),
+            datetime.datetime(currYear, 3, 12, 2, 00),
+            datetime.datetime(currYear, 3, 19, 8, 00),
+            datetime.datetime(currYear, 3, 26, 14, 00),
+            datetime.datetime(currYear, 4, 2, 20, 00),
+            datetime.datetime(currYear, 4, 9, 2, 00),
+            datetime.datetime(currYear, 4, 16, 8, 00),
+            datetime.datetime(currYear, 4, 23, 14, 00),
+            datetime.datetime(currYear, 4, 30, 20, 00),
+            datetime.datetime(currYear, 5, 7, 2, 00),
+            datetime.datetime(currYear, 5, 14, 21, 45),
+            datetime.datetime(currYear, 5, 20, 14, 00),
+            datetime.datetime(currYear, 5, 28, 20, 00),
+            datetime.datetime(currYear, 6, 4, 2, 00),
+            datetime.datetime(currYear, 6, 11, 8, 00),
+            datetime.datetime(currYear, 6, 18, 14, 00),
+            datetime.datetime(currYear, 6, 25, 20, 00),
+            datetime.datetime(currYear, 7, 2, 2, 00),
+            datetime.datetime(currYear, 7, 9, 8, 00),
+            datetime.datetime(currYear, 7, 16, 14, 00),
+            datetime.datetime(currYear, 7, 23, 20, 00),
+            datetime.datetime(currYear, 7, 30, 2, 00),
+            datetime.datetime(currYear, 8, 6, 8, 00),
+            datetime.datetime(currYear, 8, 13, 14, 00),
+            datetime.datetime(currYear, 8, 20, 20, 00),
+            datetime.datetime(currYear, 8, 27, 2, 00),
+            datetime.datetime(currYear, 9, 3, 8, 00),
+            datetime.datetime(currYear, 9, 10, 14, 00),
+            datetime.datetime(currYear, 9, 17, 20, 00),
+            datetime.datetime(currYear, 9, 24, 2, 00),
+            datetime.datetime(currYear, 10, 1, 8, 00),
+            datetime.datetime(currYear, 10, 8, 14, 00),
+            datetime.datetime(currYear, 10, 15, 20, 00),
+            datetime.datetime(currYear, 10, 22, 2, 00),
+            datetime.datetime(currYear, 10, 29, 8, 00),
+            datetime.datetime(currYear, 11, 5, 14, 00),
+            datetime.datetime(currYear, 11, 12, 20, 00),
+            datetime.datetime(currYear, 11, 19, 8, 00),
+            datetime.datetime(currYear, 11, 26, 8, 00)]
 
 #Define a nice object
 class Weekend:
@@ -125,15 +127,15 @@ Australia.linkWikiRace = "https://en.wikipedia.org/wiki/Australian_Grand_Prix"
 #Add properties to the Bahrain weekend
 Bahrain = Weekend("Bahrain")
 Bahrain.fullTitle = "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2020"
-Bahrain.round = 2
-Bahrain.racenr = 1022
-Bahrain.hubTime = datetime.datetime(currYear, 3, 28, 20, 00)
-Bahrain.fp1Time = datetime.datetime(currYear, 3, 29, 11, 00)
-Bahrain.fp2Time = datetime.datetime(currYear, 3, 29, 15, 00)
-Bahrain.fp3Time = datetime.datetime(currYear, 3, 30, 12, 00)
-Bahrain.qualiTime = datetime.datetime(currYear, 3, 30, 15, 00)
-Bahrain.raceTime = datetime.datetime(currYear, 3, 31, 15, 10)
-Bahrain.dadTime = datetime.datetime(currYear, 4, 1, 15, 00)
+Bahrain.round = 1
+Bahrain.racenr = 1021
+Bahrain.hubTime = datetime.datetime(currYear, 3, 19, 20, 00)
+Bahrain.fp1Time = datetime.datetime(currYear, 3, 20, 11, 00)
+Bahrain.fp2Time = datetime.datetime(currYear, 3, 20, 15, 00)
+Bahrain.fp3Time = datetime.datetime(currYear, 3, 21, 12, 00)
+Bahrain.qualiTime = datetime.datetime(currYear, 3, 21, 15, 00)
+Bahrain.raceTime = datetime.datetime(currYear, 3, 22, 15, 10)
+Bahrain.dadTime = datetime.datetime(currYear, 3, 23, 15, 00)
 Bahrain.namean = "Bahrain"
 Bahrain.flag = "#bh"
 Bahrain.circuit = "Bahrain International Circuit"
@@ -173,120 +175,120 @@ Bahrain.linkF1 = "https://www.formula1.com/en/racing/2020/Bahrain.html"
 Bahrain.linkWikiCircuit = "https://en.wikipedia.org/wiki/Bahrain_International_Circuit"
 Bahrain.linkWikiRace = "https://en.wikipedia.org/wiki/Bahrain_Grand_Prix"
 
-#Add properties to the China weekend
-China = Weekend("China")
-China.fullTitle = "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2020"
-China.round = 3
-China.racenr = 1023
-China.hubTime = datetime.datetime(currYear, 4, 11, 14, 00)
-China.fp1Time = datetime.datetime(currYear, 4, 12, 2, 00)
-China.fp2Time = datetime.datetime(currYear, 4, 12, 6, 00)
-China.fp3Time = datetime.datetime(currYear, 4, 13, 3, 00)
-China.qualiTime = datetime.datetime(currYear, 4, 13, 6, 00)
-China.raceTime = datetime.datetime(currYear, 4, 14, 6, 10)
-China.dadTime = datetime.datetime(currYear, 4, 15, 6, 00)
-China.namean = "Chinese"
-China.flag = "#cn"
-China.circuit = "Shanghai International Circuit"
-China.city = "Shanghai"
-China.weatherID = 1796236
-China.firstHeld = 2004
-China.length = 5.451
-China.laps = 56
-China.distance = 305.066
-China.poleLeft = True
-China.lastYear = prevYear
-China.lapRecordTime = "1:32.238"
-China.lapRecordFlag = "#de"
-China.lapRecordHolder = "Michael Schumacher"
-China.lapRecordTeam = "Ferrari"
-China.lapRecordYear = 2004
-China.prevYearPoleFlag = "#fi"
-China.prevYearPoleHolder = "Valtteri Bottas"
-China.prevYearPoleTeam = "Mercedes"
-China.prevYearPoleTime = "1:31.547"
-China.prevYearFastestFlag = "#fr"
-China.prevYearFastestHolder = "Pierre Gasly"
-China.prevYearFastestTeam = "Red Bull Racing-Honda"
-China.prevYearFastestTime = "1:34.742"
-China.prevYearWinnerFlag = "#gb"
-China.prevYearWinner = "Lewis Hamilton"
-China.prevYearWinnerTeam = "Mercedes"
-China.prevYearSecondFlag = "#fi"
-China.prevYearSecond = "Valtteri Bottas"
-China.prevYearSecondTeam = "Mercedes"
-China.prevYearSecondDelta = "+6.552"
-China.prevYearThirdFlag = "#de"
-China.prevYearThird = "Sebastian Vettel"
-China.prevYearThirdTeam = "Ferrari"
-China.prevYearThirdDelta = "+13.744"
-China.linkF1 = "https://www.formula1.com/en/racing/2020/China.html"
-China.linkWikiCircuit = "https://en.wikipedia.org/wiki/Shanghai_International_Circuit"
-China.linkWikiRace = "https://en.wikipedia.org/wiki/Chinese_Grand_Prix"
+#Add properties to the Vietnam weekend
+Vietnam = Weekend("Vietnam")
+Vietnam.fullTitle = "FORMULA 1 VINFAST VIETNAMESE GRAND PRIX 2020"
+Vietnam.round = 2
+Vietnam.racenr = 1022
+Vietnam.hubTime = datetime.datetime(currYear, 4, 2, 14, 00)
+Vietnam.fp1Time = datetime.datetime(currYear, 4, 3, 4, 00)
+Vietnam.fp2Time = datetime.datetime(currYear, 4, 3, 8, 00)
+Vietnam.fp3Time = datetime.datetime(currYear, 4, 4, 5, 00)
+Vietnam.qualiTime = datetime.datetime(currYear, 4, 4, 8, 00)
+Vietnam.raceTime = datetime.datetime(currYear, 4, 5, 7, 10)
+Vietnam.dadTime = datetime.datetime(currYear, 4, 6, 7, 00)
+Vietnam.namean = "Vietnamese"
+Vietnam.flag = "#vn"
+Vietnam.circuit = "Hanoi Street Circuit"
+Vietnam.city = "Hanoi"
+Vietnam.weatherID = 1581130
+Vietnam.firstHeld = 2020
+Vietnam.length = 5.607
+Vietnam.laps = 55
+Vietnam.distance = 308.385
+Vietnam.poleLeft = False
+Vietnam.lastYear = False
+Vietnam.lapRecordTime = ""
+Vietnam.lapRecordFlag = ""
+Vietnam.lapRecordHolder = ""
+Vietnam.lapRecordTeam = ""
+Vietnam.lapRecordYear = 0000
+Vietnam.prevYearPoleFlag = ""
+Vietnam.prevYearPoleHolder = ""
+Vietnam.prevYearPoleTeam = ""
+Vietnam.prevYearPoleTime = ""
+Vietnam.prevYearFastestFlag = ""
+Vietnam.prevYearFastestHolder = ""
+Vietnam.prevYearFastestTeam = ""
+Vietnam.prevYearFastestTime = ""
+Vietnam.prevYearWinnerFlag = ""
+Vietnam.prevYearWinner = ""
+Vietnam.prevYearWinnerTeam = ""
+Vietnam.prevYearSecondFlag = ""
+Vietnam.prevYearSecond = ""
+Vietnam.prevYearSecondTeam = ""
+Vietnam.prevYearSecondDelta = ""
+Vietnam.prevYearThirdFlag = ""
+Vietnam.prevYearThird = ""
+Vietnam.prevYearThirdTeam = ""
+Vietnam.prevYearThirdDelta = ""
+Vietnam.linkF1 = "https://www.formula1.com/en/racing/2020/Vietnam.html"
+Vietnam.linkWikiCircuit = "https://en.wikipedia.org/wiki/Hanoi_Street_Circuit"
+Vietnam.linkWikiRace = "https://en.wikipedia.org/wiki/Vietnamese_Grand_Prix"
 
-#Add properties to the Azerbaijan weekend
-Azerbaijan = Weekend("Azerbaijan")
-Azerbaijan.fullTitle = "FORMULA 1 AZERBAIJAN GRAND PRIX 2020"
-Azerbaijan.round = 4
-Azerbaijan.racenr = 1024
-Azerbaijan.hubTime = datetime.datetime(currYear, 4, 25, 2, 00)
-Azerbaijan.fp1Time = datetime.datetime(currYear, 4, 26, 9, 00)
-Azerbaijan.fp2Time = datetime.datetime(currYear, 4, 26, 13, 00)
-Azerbaijan.fp3Time = datetime.datetime(currYear, 4, 27, 10, 00)
-Azerbaijan.qualiTime = datetime.datetime(currYear, 4, 27, 13, 00)
-Azerbaijan.raceTime = datetime.datetime(currYear, 4, 28, 12, 10)
-Azerbaijan.dadTime = datetime.datetime(currYear, 4, 29, 12, 10)
-Azerbaijan.namean = "Azerbaijan"
-Azerbaijan.flag = "#az"
-Azerbaijan.circuit = "Baku City Circuit"
-Azerbaijan.city = "Baku"
-Azerbaijan.weatherID = 587084
-Azerbaijan.firstHeld = 2016
-Azerbaijan.length = 6.003
-Azerbaijan.laps = 51
-Azerbaijan.distance = 306.049
-Azerbaijan.poleLeft = False
-Azerbaijan.lastYear = prevYear
-Azerbaijan.lapRecordTime = "1:43.009"
-Azerbaijan.lapRecordFlag = "#mc"
-Azerbaijan.lapRecordHolder = "Charles Leclerc"
-Azerbaijan.lapRecordTeam = "Ferrari"
-Azerbaijan.lapRecordYear = 2019
-Azerbaijan.prevYearPoleFlag = "#fi"
-Azerbaijan.prevYearPoleHolder = "Valtteri Bottas"
-Azerbaijan.prevYearPoleTeam = "Mercedes"
-Azerbaijan.prevYearPoleTime = "1:40.495"
-Azerbaijan.prevYearFastestFlag = "#mc"
-Azerbaijan.prevYearFastestHolder = "Charles Leclerc"
-Azerbaijan.prevYearFastestTeam = "Ferrari"
-Azerbaijan.prevYearFastestTime = "1:43.009"
-Azerbaijan.prevYearWinnerFlag = "#fi"
-Azerbaijan.prevYearWinner = "Valtteri Bottas"
-Azerbaijan.prevYearWinnerTeam = "Mercedes"
-Azerbaijan.prevYearSecondFlag = "#gb"
-Azerbaijan.prevYearSecond = "Lewis Hamilton"
-Azerbaijan.prevYearSecondTeam = "Mercedes"
-Azerbaijan.prevYearSecondDelta = "+1.524"
-Azerbaijan.prevYearThirdFlag = "#de"
-Azerbaijan.prevYearThird = "Sebastian Vettel"
-Azerbaijan.prevYearThirdTeam = "Ferrari"
-Azerbaijan.prevYearThirdDelta = "+11.739"
-Azerbaijan.linkF1 = "https://www.formula1.com/en/racing/2020/Azerbaijan.html"
-Azerbaijan.linkWikiCircuit = "https://en.wikipedia.org/wiki/Baku_City_Circuit"
-Azerbaijan.linkWikiRace = "https://en.wikipedia.org/wiki/Azerbaijan_Grand_Prix"
+#Add properties to the Spain weekend
+Netherlands = Weekend("Netherlands")
+Netherlands.fullTitle = "FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2020"
+Netherlands.round = 3
+Netherlands.racenr = 1023
+Netherlands.hubTime = datetime.datetime(currYear, 4, 30, 8, 00)
+Netherlands.fp1Time = datetime.datetime(currYear, 5, 1, 9, 00)
+Netherlands.fp2Time = datetime.datetime(currYear, 5, 1, 13, 00)
+Netherlands.fp3Time = datetime.datetime(currYear, 5, 2, 10, 00)
+Netherlands.qualiTime = datetime.datetime(currYear, 5, 2, 13, 00)
+Netherlands.raceTime = datetime.datetime(currYear, 5, 3, 13, 10)
+Netherlands.dadTime = datetime.datetime(currYear, 5, 4, 13, 00)
+Netherlands.namean = "Dutch"
+Netherlands.flag = "#nl"
+Netherlands.circuit = "Circuit Zandvoort"
+Netherlands.city = "Zandvoort"
+Netherlands.weatherID = 2744042
+Netherlands.firstHeld = 1948
+Netherlands.length = 4.252
+Netherlands.laps = 72
+Netherlands.distance = 306.144
+Netherlands.poleLeft = True
+Netherlands.lastYear = 1985
+Netherlands.lapRecordTime = "1:16.538"
+Netherlands.lapRecordFlag = "#fr"
+Netherlands.lapRecordHolder = "Alain Prost"
+Netherlands.lapRecordTeam = "McLaren-TAG"
+Netherlands.lapRecordYear = 1985
+Netherlands.prevYearPoleFlag = "#br"
+Netherlands.prevYearPoleHolder = "Nelson Piquet"
+Netherlands.prevYearPoleTeam = "Brabham-BMW"
+Netherlands.prevYearPoleTime = "1:11.074"
+Netherlands.prevYearFastestFlag = "#fr"
+Netherlands.prevYearFastestHolder = "Alain Prost"
+Netherlands.prevYearFastestTeam = "McLaren-TAG"
+Netherlands.prevYearFastestTime = "1:16.538"
+Netherlands.prevYearWinnerFlag = "#at"
+Netherlands.prevYearWinner = "Niki Lauda"
+Netherlands.prevYearWinnerTeam = "McLaren-TAG"
+Netherlands.prevYearSecondFlag = "#fr"
+Netherlands.prevYearSecond = "Alain Prost"
+Netherlands.prevYearSecondTeam = "McLaren-TAG"
+Netherlands.prevYearSecondDelta = "+0.232"
+Netherlands.prevYearThirdFlag = "#br"
+Netherlands.prevYearThird = "Ayrton Senna"
+Netherlands.prevYearThirdTeam = "Lotus-Renault"
+Netherlands.prevYearThirdDelta = "+43.491"
+Netherlands.linkF1 = "https://www.formula1.com/en/racing/2020/Netherlands.html"
+Netherlands.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_Zandvoort"
+Netherlands.linkWikiRace = "https://en.wikipedia.org/wiki/Dutch_Grand_Prix"
 
 #Add properties to the Spain weekend
 Spain = Weekend("Spain")
 Spain.fullTitle = "FORMULA 1 EMIRATES GRAN PREMIO DE ESPAÑA 2020"
-Spain.round = 5
-Spain.racenr = 1004
-Spain.hubTime = datetime.datetime(currYear, 5, 9, 8, 00)
-Spain.fp1Time = datetime.datetime(currYear, 5, 10, 9, 00)
-Spain.fp2Time = datetime.datetime(currYear, 5, 10, 13, 00)
-Spain.fp3Time = datetime.datetime(currYear, 5, 11, 10, 00)
-Spain.qualiTime = datetime.datetime(currYear, 5, 11, 13, 00)
-Spain.raceTime = datetime.datetime(currYear, 5, 12, 13, 10)
-Spain.dadTime = datetime.datetime(currYear, 5, 13, 13, 00)
+Spain.round = 4
+Spain.racenr = 1024
+Spain.hubTime = datetime.datetime(currYear, 5, 7, 8, 00)
+Spain.fp1Time = datetime.datetime(currYear, 5, 8, 9, 00)
+Spain.fp2Time = datetime.datetime(currYear, 5, 8, 13, 00)
+Spain.fp3Time = datetime.datetime(currYear, 5, 9, 10, 00)
+Spain.qualiTime = datetime.datetime(currYear, 5, 9, 13, 00)
+Spain.raceTime = datetime.datetime(currYear, 5, 10, 13, 10)
+Spain.dadTime = datetime.datetime(currYear, 5, 11, 13, 00)
 Spain.namean = "Spanish"
 Spain.flag = "#es"
 Spain.circuit = "Circuit de Barcelona-Catalunya"
@@ -329,15 +331,15 @@ Spain.linkWikiRace = "https://en.wikipedia.org/wiki/Spanish_Grand_Prix"
 #Add properties to the Monaco weekend
 Monaco = Weekend("Monaco")
 Monaco.fullTitle = "FORMULA 1 GRAND PRIX DE MONACO 2020"
-Monaco.round = 6
-Monaco.racenr = 1005
-Monaco.hubTime = datetime.datetime(currYear, 5, 22, 14, 00)
-Monaco.fp1Time = datetime.datetime(currYear, 5, 23, 9, 00)
-Monaco.fp2Time = datetime.datetime(currYear, 5, 23, 13, 00)
-Monaco.fp3Time = datetime.datetime(currYear, 5, 25, 10, 00)
-Monaco.qualiTime = datetime.datetime(currYear, 5, 25, 13, 00)
-Monaco.raceTime = datetime.datetime(currYear, 5, 26, 13, 10)
-Monaco.dadTime = datetime.datetime(currYear, 5, 27, 13, 00)
+Monaco.round = 5
+Monaco.racenr = 1025
+Monaco.hubTime = datetime.datetime(currYear, 5, 20, 14, 00)
+Monaco.fp1Time = datetime.datetime(currYear, 5, 21, 9, 00)
+Monaco.fp2Time = datetime.datetime(currYear, 5, 21, 13, 00)
+Monaco.fp3Time = datetime.datetime(currYear, 5, 23, 10, 00)
+Monaco.qualiTime = datetime.datetime(currYear, 5, 23, 13, 00)
+Monaco.raceTime = datetime.datetime(currYear, 5, 24, 13, 10)
+Monaco.dadTime = datetime.datetime(currYear, 5, 25, 13, 00)
 Monaco.namean = "Monaco"
 Monaco.flag = "#mc"
 Monaco.circuit = "Circuit de Monaco"
@@ -377,18 +379,69 @@ Monaco.linkF1 = "https://www.formula1.com/en/racing/2020/Monaco.html"
 Monaco.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_de_Monaco"
 Monaco.linkWikiRace = "https://en.wikipedia.org/wiki/Monaco_Grand_Prix"
 
+#Add properties to the Azerbaijan weekend
+Azerbaijan = Weekend("Azerbaijan")
+Azerbaijan.fullTitle = "FORMULA 1 AZERBAIJAN GRAND PRIX 2020"
+Azerbaijan.round = 6
+Azerbaijan.racenr = 1026
+Azerbaijan.hubTime = datetime.datetime(currYear, 6, 4, 2, 00)
+Azerbaijan.fp1Time = datetime.datetime(currYear, 6, 5, 9, 00)
+Azerbaijan.fp2Time = datetime.datetime(currYear, 6, 5, 13, 00)
+Azerbaijan.fp3Time = datetime.datetime(currYear, 6, 6, 10, 00)
+Azerbaijan.qualiTime = datetime.datetime(currYear, 6, 6, 13, 00)
+Azerbaijan.raceTime = datetime.datetime(currYear, 6, 7, 12, 10)
+Azerbaijan.dadTime = datetime.datetime(currYear, 6, 8, 12, 10)
+Azerbaijan.namean = "Azerbaijan"
+Azerbaijan.flag = "#az"
+Azerbaijan.circuit = "Baku City Circuit"
+Azerbaijan.city = "Baku"
+Azerbaijan.weatherID = 587084
+Azerbaijan.firstHeld = 2016
+Azerbaijan.length = 6.003
+Azerbaijan.laps = 51
+Azerbaijan.distance = 306.049
+Azerbaijan.poleLeft = False
+Azerbaijan.lastYear = prevYear
+Azerbaijan.lapRecordTime = "1:43.009"
+Azerbaijan.lapRecordFlag = "#mc"
+Azerbaijan.lapRecordHolder = "Charles Leclerc"
+Azerbaijan.lapRecordTeam = "Ferrari"
+Azerbaijan.lapRecordYear = 2019
+Azerbaijan.prevYearPoleFlag = "#fi"
+Azerbaijan.prevYearPoleHolder = "Valtteri Bottas"
+Azerbaijan.prevYearPoleTeam = "Mercedes"
+Azerbaijan.prevYearPoleTime = "1:40.495"
+Azerbaijan.prevYearFastestFlag = "#mc"
+Azerbaijan.prevYearFastestHolder = "Charles Leclerc"
+Azerbaijan.prevYearFastestTeam = "Ferrari"
+Azerbaijan.prevYearFastestTime = "1:43.009"
+Azerbaijan.prevYearWinnerFlag = "#fi"
+Azerbaijan.prevYearWinner = "Valtteri Bottas"
+Azerbaijan.prevYearWinnerTeam = "Mercedes"
+Azerbaijan.prevYearSecondFlag = "#gb"
+Azerbaijan.prevYearSecond = "Lewis Hamilton"
+Azerbaijan.prevYearSecondTeam = "Mercedes"
+Azerbaijan.prevYearSecondDelta = "+1.524"
+Azerbaijan.prevYearThirdFlag = "#de"
+Azerbaijan.prevYearThird = "Sebastian Vettel"
+Azerbaijan.prevYearThirdTeam = "Ferrari"
+Azerbaijan.prevYearThirdDelta = "+11.739"
+Azerbaijan.linkF1 = "https://www.formula1.com/en/racing/2020/Azerbaijan.html"
+Azerbaijan.linkWikiCircuit = "https://en.wikipedia.org/wiki/Baku_City_Circuit"
+Azerbaijan.linkWikiRace = "https://en.wikipedia.org/wiki/Azerbaijan_Grand_Prix"
+
 #Add properties to the Canada weekend
 Canada = Weekend("Canada")
-Canada.fullTitle = "FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2020"
+Canada.fullTitle = "FORMULA 1 GRAND PRIX DU CANADA 2020"
 Canada.round = 7
-Canada.racenr = 1006
-Canada.hubTime = datetime.datetime(currYear, 6, 6, 20, 00)
-Canada.fp1Time = datetime.datetime(currYear, 6, 7, 14, 00)
-Canada.fp2Time = datetime.datetime(currYear, 6, 7, 18, 00)
-Canada.fp3Time = datetime.datetime(currYear, 6, 8, 15, 00)
-Canada.qualiTime = datetime.datetime(currYear, 6, 8, 18, 00)
-Canada.raceTime = datetime.datetime(currYear, 6, 9, 18, 10)
-Canada.dadTime = datetime.datetime(currYear, 6, 10, 12, 45)
+Canada.racenr = 1027
+Canada.hubTime = datetime.datetime(currYear, 6, 11, 20, 00)
+Canada.fp1Time = datetime.datetime(currYear, 6, 12, 15, 00)
+Canada.fp2Time = datetime.datetime(currYear, 6, 12, 19, 00)
+Canada.fp3Time = datetime.datetime(currYear, 6, 13, 15, 00)
+Canada.qualiTime = datetime.datetime(currYear, 6, 13, 18, 00)
+Canada.raceTime = datetime.datetime(currYear, 6, 14, 18, 10)
+Canada.dadTime = datetime.datetime(currYear, 6, 15, 18, 00)
 Canada.namean = "Canadian"
 Canada.flag = "#ca"
 Canada.circuit = "Circuit Gilles Villeneuve"
@@ -432,14 +485,14 @@ Canada.linkWikiRace = "https://en.wikipedia.org/wiki/Canadian_Grand_Prix"
 France = Weekend("France")
 France.fullTitle = "FORMULA 1 GRAND PRIX DE FRANCE 2020"
 France.round = 8
-France.racenr = 1007
-France.hubTime = datetime.datetime(currYear, 6, 20, 20, 00)
-France.fp1Time = datetime.datetime(currYear, 6, 21, 9, 00)
-France.fp2Time = datetime.datetime(currYear, 6, 21, 13, 00)
-France.fp3Time = datetime.datetime(currYear, 6, 22, 10, 00)
-France.qualiTime = datetime.datetime(currYear, 6, 22, 13, 00)
-France.raceTime = datetime.datetime(currYear, 6, 23, 13, 10)
-France.dadTime = datetime.datetime(currYear, 6, 24, 13, 00)
+France.racenr = 1028
+France.hubTime = datetime.datetime(currYear, 6, 25, 20, 00)
+France.fp1Time = datetime.datetime(currYear, 6, 26, 9, 00)
+France.fp2Time = datetime.datetime(currYear, 6, 26, 13, 00)
+France.fp3Time = datetime.datetime(currYear, 6, 27, 10, 00)
+France.qualiTime = datetime.datetime(currYear, 6, 27, 13, 00)
+France.raceTime = datetime.datetime(currYear, 6, 28, 13, 10)
+France.dadTime = datetime.datetime(currYear, 6, 29, 13, 00)
 France.namean = "French"
 France.flag = "#fr"
 France.circuit = "Circuit Paul Ricard"
@@ -483,14 +536,14 @@ France.linkWikiRace = "https://en.wikipedia.org/wiki/French_Grand_Prix"
 Austria = Weekend("Austria")
 Austria.fullTitle = "FORMULA 1 MYWORLD GROSSER PREIS VON ÖSTERREICH 2020"
 Austria.round = 9
-Austria.racenr = 1008
-Austria.hubTime = datetime.datetime(currYear, 6, 27, 8, 00)
-Austria.fp1Time = datetime.datetime(currYear, 6, 28, 9, 00)
-Austria.fp2Time = datetime.datetime(currYear, 6, 28, 13, 00)
-Austria.fp3Time = datetime.datetime(currYear, 6, 29, 10, 00)
-Austria.qualiTime = datetime.datetime(currYear, 6, 29, 13, 00)
-Austria.raceTime = datetime.datetime(currYear, 6, 30, 13, 10)
-Austria.dadTime = datetime.datetime(currYear, 7, 1, 13, 00)
+Austria.racenr = 1029
+Austria.hubTime = datetime.datetime(currYear, 7, 2, 8, 00)
+Austria.fp1Time = datetime.datetime(currYear, 7, 3, 9, 00)
+Austria.fp2Time = datetime.datetime(currYear, 7, 3, 13, 00)
+Austria.fp3Time = datetime.datetime(currYear, 7, 4, 10, 00)
+Austria.qualiTime = datetime.datetime(currYear, 7, 4, 13, 00)
+Austria.raceTime = datetime.datetime(currYear, 7, 5, 13, 10)
+Austria.dadTime = datetime.datetime(currYear, 7, 6, 13, 00)
 Austria.namean = "Austrian"
 Austria.flag = "#at"
 Austria.circuit = "Red Bull Ring"
@@ -532,16 +585,16 @@ Austria.linkWikiRace = "https://en.wikipedia.org/wiki/Austrian_Grand_Prix"
 
 #Add properties to the Britain weekend
 Britain = Weekend("Great Britain")
-Britain.fullTitle = "FORMULA 1 ROLEX BRITISH GRAND PRIX 2020"
+Britain.fullTitle = "FORMULA 1 PIRELLI BRITISH GRAND PRIX 2020"
 Britain.round = 10
-Britain.racenr = 1009
-Britain.hubTime = datetime.datetime(currYear, 7, 11, 22, 00)
-Britain.fp1Time = datetime.datetime(currYear, 7, 12, 9, 00)
-Britain.fp2Time = datetime.datetime(currYear, 7, 12, 13, 00)
-Britain.fp3Time = datetime.datetime(currYear, 7, 13, 10, 00)
-Britain.qualiTime = datetime.datetime(currYear, 7, 13, 13, 00)
-Britain.raceTime = datetime.datetime(currYear, 7, 14, 13, 10)
-Britain.dadTime = datetime.datetime(currYear, 7, 15, 13, 00)
+Britain.racenr = 1030
+Britain.hubTime = datetime.datetime(currYear, 7, 16, 22, 00)
+Britain.fp1Time = datetime.datetime(currYear, 7, 17, 10, 00)
+Britain.fp2Time = datetime.datetime(currYear, 7, 17, 14, 00)
+Britain.fp3Time = datetime.datetime(currYear, 7, 18, 11, 00)
+Britain.qualiTime = datetime.datetime(currYear, 7, 18, 14, 00)
+Britain.raceTime = datetime.datetime(currYear, 7, 19, 14, 10)
+Britain.dadTime = datetime.datetime(currYear, 7, 20, 14, 00)
 Britain.namean = "British"
 Britain.flag = "#gb"
 Britain.circuit = "Silverstone Circuit"
@@ -583,16 +636,16 @@ Britain.linkWikiRace = "https://en.wikipedia.org/wiki/British_Grand_Prix"
 
 #Add properties to the Hungary weekend
 Hungary = Weekend("Hungary")
-Hungary.fullTitle = "FORMULA 1 PIRELLI MAGYAR NAGYDÍJ 2020"
-Hungary.round = 12
-Hungary.racenr = 1011
-Hungary.hubTime = datetime.datetime(currYear, 8, 1, 20, 00)
-Hungary.fp1Time = datetime.datetime(currYear, 8, 2, 9, 00)
-Hungary.fp2Time = datetime.datetime(currYear, 8, 2, 13, 00)
-Hungary.fp3Time = datetime.datetime(currYear, 8, 3, 10, 00)
-Hungary.qualiTime = datetime.datetime(currYear, 8, 3, 13, 00)
-Hungary.raceTime = datetime.datetime(currYear, 8, 4, 13, 10)
-Hungary.dadTime = datetime.datetime(currYear, 8, 5, 13, 00)
+Hungary.fullTitle = "FORMULA 1 MAGYAR NAGYDÍJ 2020"
+Hungary.round = 11
+Hungary.racenr = 1031
+Hungary.hubTime = datetime.datetime(currYear, 7, 30, 20, 00)
+Hungary.fp1Time = datetime.datetime(currYear, 7, 31, 9, 00)
+Hungary.fp2Time = datetime.datetime(currYear, 7, 31, 13, 00)
+Hungary.fp3Time = datetime.datetime(currYear, 8, 1, 10, 00)
+Hungary.qualiTime = datetime.datetime(currYear, 8, 1, 13, 00)
+Hungary.raceTime = datetime.datetime(currYear, 8, 2, 13, 10)
+Hungary.dadTime = datetime.datetime(currYear, 8, 3, 13, 00)
 Hungary.namean = "Hungarian"
 Hungary.flag = "#hu"
 Hungary.circuit = "Hungaroring"
@@ -634,16 +687,16 @@ Hungary.linkWikiRace = "https://en.wikipedia.org/wiki/Hungarian_Grand_Prix"
 
 #Add properties to the Belgium weekend
 Belgium = Weekend("Belgium")
-Belgium.fullTitle = "FORMULA 1 JOHNNIE WALKER BELGIAN GRAND PRIX 2020"
-Belgium.round = 13
-Belgium.racenr = 1012
-Belgium.hubTime = datetime.datetime(currYear, 8, 29, 2, 00)
-Belgium.fp1Time = datetime.datetime(currYear, 8, 30, 9, 00)
-Belgium.fp2Time = datetime.datetime(currYear, 8, 30, 13, 00)
-Belgium.fp3Time = datetime.datetime(currYear, 8, 31, 10, 00)
-Belgium.qualiTime = datetime.datetime(currYear, 8, 31, 13, 00)
-Belgium.raceTime = datetime.datetime(currYear, 9, 1, 13, 10)
-Belgium.dadTime = datetime.datetime(currYear, 9, 2, 13, 00)
+Belgium.fullTitle = "FORMULA 1 ROLEX BELGIAN GRAND PRIX 2020"
+Belgium.round = 12
+Belgium.racenr = 1032
+Belgium.hubTime = datetime.datetime(currYear, 8, 27, 2, 00)
+Belgium.fp1Time = datetime.datetime(currYear, 8, 28, 9, 00)
+Belgium.fp2Time = datetime.datetime(currYear, 8, 28, 13, 00)
+Belgium.fp3Time = datetime.datetime(currYear, 8, 29, 10, 00)
+Belgium.qualiTime = datetime.datetime(currYear, 8, 29, 13, 00)
+Belgium.raceTime = datetime.datetime(currYear, 8, 30, 13, 10)
+Belgium.dadTime = datetime.datetime(currYear, 8, 31, 13, 00)
 Belgium.namean = "Belgian"
 Belgium.flag = "#be"
 Belgium.circuit = "Circuit de Spa-Francorchamps"
@@ -686,15 +739,15 @@ Belgium.linkWikiRace = "https://en.wikipedia.org/wiki/Belgian_Grand_Prix"
 #Add properties to the Italy weekend
 Italy = Weekend("Italy")
 Italy.fullTitle = "FORMULA 1 GRAN PREMIO HEINEKEN D'ITALIA 2020"
-Italy.round = 14
-Italy.racenr = 1013
-Italy.hubTime = datetime.datetime(currYear, 9, 5, 8, 00)
-Italy.fp1Time = datetime.datetime(currYear, 9, 6, 9, 00)
-Italy.fp2Time = datetime.datetime(currYear, 9, 6, 13, 00)
-Italy.fp3Time = datetime.datetime(currYear, 9, 7, 10, 00)
-Italy.qualiTime = datetime.datetime(currYear, 9, 7, 13, 00)
-Italy.raceTime = datetime.datetime(currYear, 9, 8, 13, 10)
-Italy.dadTime = datetime.datetime(currYear, 9, 9, 13, 00)
+Italy.round = 13
+Italy.racenr = 1033
+Italy.hubTime = datetime.datetime(currYear, 9, 3, 8, 00)
+Italy.fp1Time = datetime.datetime(currYear, 9, 4, 9, 00)
+Italy.fp2Time = datetime.datetime(currYear, 9, 4, 13, 00)
+Italy.fp3Time = datetime.datetime(currYear, 9, 5, 10, 00)
+Italy.qualiTime = datetime.datetime(currYear, 9, 5, 13, 00)
+Italy.raceTime = datetime.datetime(currYear, 9, 6, 13, 10)
+Italy.dadTime = datetime.datetime(currYear, 9, 7, 13, 00)
 Italy.namean = "Italian"
 Italy.flag = "#it"
 Italy.circuit = "Autodromo Nazionale Monza"
@@ -737,15 +790,15 @@ Italy.linkWikiRace = "https://en.wikipedia.org/wiki/Italian_Grand_Prix"
 #Add properties to the Singapore weekend
 Singapore = Weekend("Singapore")
 Singapore.fullTitle = "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2020"
-Singapore.round = 15
-Singapore.racenr = 1014
-Singapore.hubTime = datetime.datetime(currYear, 9, 19, 14, 00)
-Singapore.fp1Time = datetime.datetime(currYear, 9, 20, 8, 30)
-Singapore.fp2Time = datetime.datetime(currYear, 9, 20, 12, 30)
-Singapore.fp3Time = datetime.datetime(currYear, 9, 21, 10, 00)
-Singapore.qualiTime = datetime.datetime(currYear, 9, 21, 13, 00)
-Singapore.raceTime = datetime.datetime(currYear, 9, 22, 12, 10)
-Singapore.dadTime = datetime.datetime(currYear, 9, 23, 12, 00)
+Singapore.round = 14
+Singapore.racenr = 1034
+Singapore.hubTime = datetime.datetime(currYear, 9, 17, 14, 00)
+Singapore.fp1Time = datetime.datetime(currYear, 9, 18, 8, 30)
+Singapore.fp2Time = datetime.datetime(currYear, 9, 18, 12, 30)
+Singapore.fp3Time = datetime.datetime(currYear, 9, 19, 10, 00)
+Singapore.qualiTime = datetime.datetime(currYear, 9, 19, 13, 00)
+Singapore.raceTime = datetime.datetime(currYear, 9, 20, 12, 10)
+Singapore.dadTime = datetime.datetime(currYear, 9, 21, 12, 00)
 Singapore.namean = "Singapore"
 Singapore.flag = "#sg"
 Singapore.circuit = "Marina Bay Street Circuit"
@@ -788,15 +841,15 @@ Singapore.linkWikiRace = "https://en.wikipedia.org/wiki/Singapore_Grand_Prix"
 #Add properties to the Russia weekend
 Russia = Weekend("Russia")
 Russia.fullTitle = "FORMULA 1 VTB RUSSIAN GRAND PRIX 2020"
-Russia.round = 16
-Russia.racenr = 1015
-Russia.hubTime = datetime.datetime(currYear, 9, 26, 20, 00)
-Russia.fp1Time = datetime.datetime(currYear, 9, 27, 8, 00)
-Russia.fp2Time = datetime.datetime(currYear, 9, 27, 12, 00)
-Russia.fp3Time = datetime.datetime(currYear, 9, 28, 9, 00)
-Russia.qualiTime = datetime.datetime(currYear, 9, 28, 12, 00)
-Russia.raceTime = datetime.datetime(currYear, 9, 29, 11, 10)
-Russia.dadTime = datetime.datetime(currYear, 9, 30, 11, 00)
+Russia.round = 15
+Russia.racenr = 1035
+Russia.hubTime = datetime.datetime(currYear, 9, 24, 20, 00)
+Russia.fp1Time = datetime.datetime(currYear, 9, 25, 8, 00)
+Russia.fp2Time = datetime.datetime(currYear, 9, 25, 12, 00)
+Russia.fp3Time = datetime.datetime(currYear, 9, 26, 9, 00)
+Russia.qualiTime = datetime.datetime(currYear, 9, 26, 12, 00)
+Russia.raceTime = datetime.datetime(currYear, 9, 27, 11, 10)
+Russia.dadTime = datetime.datetime(currYear, 9, 28, 11, 00)
 Russia.namean = "Russian"
 Russia.flag = "#ru"
 Russia.circuit = "Sochi Autodrom"
@@ -838,16 +891,16 @@ Russia.linkWikiRace = "https://en.wikipedia.org/wiki/Russian_Grand_Prix"
 
 #Add properties to the Japan weekend
 Japan = Weekend("Japan")
-Japan.fullTitle = "FORMULA 1 JAPANESE GRAND PRIX 2020"
-Japan.round = 17
-Japan.racenr = 1016
-Japan.hubTime = datetime.datetime(currYear, 10, 10, 8, 00)
-Japan.fp1Time = datetime.datetime(currYear, 10, 11, 1, 00)
-Japan.fp2Time = datetime.datetime(currYear, 10, 11, 5, 00)
-Japan.fp3Time = datetime.datetime(currYear, 10, 12, 3, 00)
-Japan.qualiTime = datetime.datetime(currYear, 10, 13, 1, 00) #Edited due to hurricane
-Japan.raceTime = datetime.datetime(currYear, 10, 13, 5, 10)
-Japan.dadTime = datetime.datetime(currYear, 10, 14, 5, 00)
+Japan.fullTitle = "FORMULA 1 PIRELLI JAPANESE GRAND PRIX 2020"
+Japan.round = 16
+Japan.racenr = 1036
+Japan.hubTime = datetime.datetime(currYear, 10, 8, 8, 00)
+Japan.fp1Time = datetime.datetime(currYear, 10, 9, 2, 00)
+Japan.fp2Time = datetime.datetime(currYear, 10, 9, 6, 00)
+Japan.fp3Time = datetime.datetime(currYear, 10, 10, 3, 00)
+Japan.qualiTime = datetime.datetime(currYear, 10, 10, 6, 00)
+Japan.raceTime = datetime.datetime(currYear, 10, 11, 4, 10)
+Japan.dadTime = datetime.datetime(currYear, 10, 12, 4, 00)
 Japan.namean = "Japanese"
 Japan.flag = "#jp"
 Japan.circuit = "Suzuka International Racing Course"
@@ -887,69 +940,18 @@ Japan.linkF1 = "https://www.formula1.com/en/racing/2020/Japan.html"
 Japan.linkWikiCircuit = "https://en.wikipedia.org/wiki/Suzuka_Circuit"
 Japan.linkWikiRace = "https://en.wikipedia.org/wiki/Japanese_Grand_Prix"
 
-#Add properties to the Mexico weekend
-Mexico = Weekend("Mexico")
-Mexico.fullTitle = "FORMULA 1 GRAN PREMIO DE MÉXICO 2020"
-Mexico.round = 18
-Mexico.racenr = 1017
-Mexico.hubTime = datetime.datetime(currYear, 10, 24, 20, 00)
-Mexico.fp1Time = datetime.datetime(currYear, 10, 25, 15, 00)
-Mexico.fp2Time = datetime.datetime(currYear, 10, 25, 19, 00)
-Mexico.fp3Time = datetime.datetime(currYear, 10, 26, 15, 00)
-Mexico.qualiTime = datetime.datetime(currYear, 10, 26, 18, 00)
-Mexico.raceTime = datetime.datetime(currYear, 10, 27, 19, 10)
-Mexico.dadTime = datetime.datetime(currYear, 10, 28, 19, 00)
-Mexico.namean = "Mexican"
-Mexico.flag = "#mx"
-Mexico.circuit = "Autódromo Hermanos Rodríguez"
-Mexico.city = "Mexico City"
-Mexico.weatherID = 3530597
-Mexico.firstHeld = 1962
-Mexico.length = 4.304
-Mexico.laps = 71
-Mexico.distance = 305.541
-Mexico.poleLeft = True
-Mexico.lastYear = prevYear
-Mexico.lapRecordTime = "1:18.741"
-Mexico.lapRecordFlag = "#fi"
-Mexico.lapRecordHolder = "Valtteri Bottas"
-Mexico.lapRecordTeam = "Mercedes"
-Mexico.lapRecordYear = 2018
-Mexico.prevYearPoleFlag = "#mc"
-Mexico.prevYearPoleHolder = "Charles Leclerc"
-Mexico.prevYearPoleTeam = "Ferrari"
-Mexico.prevYearPoleTime = "1:15.024"
-Mexico.prevYearFastestFlag = "#mc"
-Mexico.prevYearFastestHolder = "Charles Leclerc"
-Mexico.prevYearFastestTeam = "Ferrari"
-Mexico.prevYearFastestTime = "1:19.232"
-Mexico.prevYearWinnerFlag = "#gb"
-Mexico.prevYearWinner = "Lewis Hamilton"
-Mexico.prevYearWinnerTeam = "Mercedes"
-Mexico.prevYearSecondFlag = "#de"
-Mexico.prevYearSecond = "Sebastian Vettel"
-Mexico.prevYearSecondTeam = "Ferrari"
-Mexico.prevYearSecondDelta = "+1.766"
-Mexico.prevYearThirdFlag = "#fi"
-Mexico.prevYearThird = "Valtteri Bottas"
-Mexico.prevYearThirdTeam = "Mercedes"
-Mexico.prevYearThirdDelta = "+3.553"
-Mexico.linkF1 = "https://www.formula1.com/en/racing/2020/Mexico.html"
-Mexico.linkWikiCircuit = "https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez"
-Mexico.linkWikiRace = "https://en.wikipedia.org/wiki/Mexican_Grand_Prix"
-
 #Add properties to the United States weekend
 US = Weekend("United States")
 US.fullTitle = "FORMULA 1 UNITED STATES GRAND PRIX 2020"
-US.round = 19
-US.racenr = 1018
-US.hubTime = datetime.datetime(currYear, 10, 31, 14, 00)
-US.fp1Time = datetime.datetime(currYear, 11, 1, 16, 00)
-US.fp2Time = datetime.datetime(currYear, 11, 1, 20, 00)
-US.fp3Time = datetime.datetime(currYear, 11, 2, 18, 00)
-US.qualiTime = datetime.datetime(currYear, 11, 2, 21, 00)
-US.raceTime = datetime.datetime(currYear, 11, 3, 19, 10)
-US.dadTime = datetime.datetime(currYear, 11, 4, 19, 00)
+US.round = 17
+US.racenr = 1037
+US.hubTime = datetime.datetime(currYear, 10, 22, 14, 00)
+US.fp1Time = datetime.datetime(currYear, 10, 23, 16, 00)
+US.fp2Time = datetime.datetime(currYear, 10, 23, 20, 00)
+US.fp3Time = datetime.datetime(currYear, 10, 24, 18, 00)
+US.qualiTime = datetime.datetime(currYear, 10, 24, 21, 00)
+US.raceTime = datetime.datetime(currYear, 10, 25, 19, 10)
+US.dadTime = datetime.datetime(currYear, 10, 26, 19, 00)
 US.namean = "United States"
 US.flag = "#us"
 US.circuit = "Circuit of the Americas"
@@ -989,18 +991,69 @@ US.linkF1 = "https://www.formula1.com/en/racing/2020/United_States.html"
 US.linkWikiCircuit = "https://en.wikipedia.org/wiki/Circuit_of_the_Americas"
 US.linkWikiRace = "https://en.wikipedia.org/wiki/United_States_Grand_Prix"
 
+#Add properties to the Mexico weekend
+Mexico = Weekend("Mexico")
+Mexico.fullTitle = "FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2020"
+Mexico.round = 18
+Mexico.racenr = 1038
+Mexico.hubTime = datetime.datetime(currYear, 10, 29, 20, 00)
+Mexico.fp1Time = datetime.datetime(currYear, 10, 30, 17, 00)
+Mexico.fp2Time = datetime.datetime(currYear, 10, 30, 21, 00)
+Mexico.fp3Time = datetime.datetime(currYear, 10, 31, 16, 00)
+Mexico.qualiTime = datetime.datetime(currYear, 10, 31, 19, 00)
+Mexico.raceTime = datetime.datetime(currYear, 11, 1, 19, 10)
+Mexico.dadTime = datetime.datetime(currYear, 11, 2, 19, 00)
+Mexico.namean = "Mexican"
+Mexico.flag = "#mx"
+Mexico.circuit = "Autódromo Hermanos Rodríguez"
+Mexico.city = "Mexico City"
+Mexico.weatherID = 3530597
+Mexico.firstHeld = 1962
+Mexico.length = 4.304
+Mexico.laps = 71
+Mexico.distance = 305.541
+Mexico.poleLeft = True
+Mexico.lastYear = prevYear
+Mexico.lapRecordTime = "1:18.741"
+Mexico.lapRecordFlag = "#fi"
+Mexico.lapRecordHolder = "Valtteri Bottas"
+Mexico.lapRecordTeam = "Mercedes"
+Mexico.lapRecordYear = 2018
+Mexico.prevYearPoleFlag = "#mc"
+Mexico.prevYearPoleHolder = "Charles Leclerc"
+Mexico.prevYearPoleTeam = "Ferrari"
+Mexico.prevYearPoleTime = "1:15.024"
+Mexico.prevYearFastestFlag = "#mc"
+Mexico.prevYearFastestHolder = "Charles Leclerc"
+Mexico.prevYearFastestTeam = "Ferrari"
+Mexico.prevYearFastestTime = "1:19.232"
+Mexico.prevYearWinnerFlag = "#gb"
+Mexico.prevYearWinner = "Lewis Hamilton"
+Mexico.prevYearWinnerTeam = "Mercedes"
+Mexico.prevYearSecondFlag = "#de"
+Mexico.prevYearSecond = "Sebastian Vettel"
+Mexico.prevYearSecondTeam = "Ferrari"
+Mexico.prevYearSecondDelta = "+1.766"
+Mexico.prevYearThirdFlag = "#fi"
+Mexico.prevYearThird = "Valtteri Bottas"
+Mexico.prevYearThirdTeam = "Mercedes"
+Mexico.prevYearThirdDelta = "+3.553"
+Mexico.linkF1 = "https://www.formula1.com/en/racing/2020/Mexico.html"
+Mexico.linkWikiCircuit = "https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez"
+Mexico.linkWikiRace = "https://en.wikipedia.org/wiki/Mexican_Grand_Prix"
+
 #Add properties to the Brazil weekend
 Brazil = Weekend("Brazil")
 Brazil.fullTitle = "FORMULA 1 GRANDE PRÊMIO DO BRASIL 2020"
-Brazil.round = 20
-Brazil.racenr = 1019
-Brazil.hubTime = datetime.datetime(currYear, 11, 14, 2, 00)
-Brazil.fp1Time = datetime.datetime(currYear, 11, 15, 14, 00)
-Brazil.fp2Time = datetime.datetime(currYear, 11, 15, 18, 00)
-Brazil.fp3Time = datetime.datetime(currYear, 11, 16, 15, 00)
-Brazil.qualiTime = datetime.datetime(currYear, 11, 16, 18, 00)
-Brazil.raceTime = datetime.datetime(currYear, 11, 17, 17, 10)
-Brazil.dadTime = datetime.datetime(currYear, 11, 18, 17, 00)
+Brazil.round = 19
+Brazil.racenr = 1039
+Brazil.hubTime = datetime.datetime(currYear, 11, 12, 2, 00)
+Brazil.fp1Time = datetime.datetime(currYear, 11, 13, 14, 00)
+Brazil.fp2Time = datetime.datetime(currYear, 11, 13, 18, 00)
+Brazil.fp3Time = datetime.datetime(currYear, 11, 14, 15, 00)
+Brazil.qualiTime = datetime.datetime(currYear, 11, 14, 18, 00)
+Brazil.raceTime = datetime.datetime(currYear, 11, 15, 17, 10)
+Brazil.dadTime = datetime.datetime(currYear, 11, 16, 17, 00)
 Brazil.namean = "Brazilian"
 Brazil.flag = "#br"
 Brazil.circuit = "Autódromo José Carlos Pace"
@@ -1043,15 +1096,15 @@ Brazil.linkWikiRace = "https://en.wikipedia.org/wiki/Brazilian_Grand_Prix"
 #Add properties to the Abu Dhabi weekend
 AbuDhabi = Weekend("United Arab Emirates")
 AbuDhabi.fullTitle = "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2020"
-AbuDhabi.round = 21
-AbuDhabi.racenr = 1020
-AbuDhabi.hubTime = datetime.datetime(currYear, 11, 28, 8, 00)
-AbuDhabi.fp1Time = datetime.datetime(currYear, 11, 29, 9, 00)
-AbuDhabi.fp2Time = datetime.datetime(currYear, 11, 29, 13, 00)
-AbuDhabi.fp3Time = datetime.datetime(currYear, 11, 30, 10, 00)
-AbuDhabi.qualiTime = datetime.datetime(currYear, 11, 30, 13, 00)
-AbuDhabi.raceTime = datetime.datetime(currYear, 12, 1, 13, 10)
-AbuDhabi.dadTime = datetime.datetime(currYear, 12, 2, 13, 00)
+AbuDhabi.round = 20
+AbuDhabi.racenr = 1040
+AbuDhabi.hubTime = datetime.datetime(currYear, 11, 26, 8, 00)
+AbuDhabi.fp1Time = datetime.datetime(currYear, 11, 27, 9, 00)
+AbuDhabi.fp2Time = datetime.datetime(currYear, 11, 27, 13, 00)
+AbuDhabi.fp3Time = datetime.datetime(currYear, 11, 28, 10, 00)
+AbuDhabi.qualiTime = datetime.datetime(currYear, 11, 28, 13, 00)
+AbuDhabi.raceTime = datetime.datetime(currYear, 11, 29, 13, 10)
+AbuDhabi.dadTime = datetime.datetime(currYear, 11, 30, 13, 00)
 AbuDhabi.namean = "Abu Dhabi"
 AbuDhabi.flag = "#ae"
 AbuDhabi.circuit = "Yas Marina Circuit"
@@ -1087,11 +1140,62 @@ AbuDhabi.prevYearThirdFlag = "#mc"
 AbuDhabi.prevYearThird = "Charles Leclerc"
 AbuDhabi.prevYearThirdTeam = "Ferrari"
 AbuDhabi.prevYearThirdDelta = "+43.435"
-AbuDhabi.linkF1 = "https://www.formula1.com/en/racing/2020/Abu_Dhabi.html"
+AbuDhabi.linkF1 = "https://www.formula1.com/en/racing/2020/United_Arab_Emirates.html"
 AbuDhabi.linkWikiCircuit = "https://en.wikipedia.org/wiki/Yas_Marina_Circuit"
 AbuDhabi.linkWikiRace = "https://en.wikipedia.org/wiki/Abu_Dhabi_Grand_Prix"
 
 # RETIRED RACES
+
+#Add properties to the China weekend
+China = Weekend("China")
+China.fullTitle = "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2020"
+China.round = 4
+China.racenr = 1024
+China.hubTime = datetime.datetime(currYear, 4, 16, 14, 00)
+China.fp1Time = datetime.datetime(currYear, 4, 17, 3, 00)
+China.fp2Time = datetime.datetime(currYear, 4, 17, 7, 00)
+China.fp3Time = datetime.datetime(currYear, 4, 18, 4, 00)
+China.qualiTime = datetime.datetime(currYear, 4, 18, 7, 00)
+China.raceTime = datetime.datetime(currYear, 4, 19, 6, 10)
+China.dadTime = datetime.datetime(currYear, 4, 20, 6, 00)
+China.namean = "Chinese"
+China.flag = "#cn"
+China.circuit = "Shanghai International Circuit"
+China.city = "Shanghai"
+China.weatherID = 1796236
+China.firstHeld = 2004
+China.length = 5.451
+China.laps = 56
+China.distance = 305.066
+China.poleLeft = True
+China.lastYear = prevYear
+China.lapRecordTime = "1:32.238"
+China.lapRecordFlag = "#de"
+China.lapRecordHolder = "Michael Schumacher"
+China.lapRecordTeam = "Ferrari"
+China.lapRecordYear = 2004
+China.prevYearPoleFlag = "#fi"
+China.prevYearPoleHolder = "Valtteri Bottas"
+China.prevYearPoleTeam = "Mercedes"
+China.prevYearPoleTime = "1:31.547"
+China.prevYearFastestFlag = "#fr"
+China.prevYearFastestHolder = "Pierre Gasly"
+China.prevYearFastestTeam = "Red Bull Racing-Honda"
+China.prevYearFastestTime = "1:34.742"
+China.prevYearWinnerFlag = "#gb"
+China.prevYearWinner = "Lewis Hamilton"
+China.prevYearWinnerTeam = "Mercedes"
+China.prevYearSecondFlag = "#fi"
+China.prevYearSecond = "Valtteri Bottas"
+China.prevYearSecondTeam = "Mercedes"
+China.prevYearSecondDelta = "+6.552"
+China.prevYearThirdFlag = "#de"
+China.prevYearThird = "Sebastian Vettel"
+China.prevYearThirdTeam = "Ferrari"
+China.prevYearThirdDelta = "+13.744"
+China.linkF1 = "https://www.formula1.com/en/racing/2020/China.html"
+China.linkWikiCircuit = "https://en.wikipedia.org/wiki/Shanghai_International_Circuit"
+China.linkWikiRace = "https://en.wikipedia.org/wiki/Chinese_Grand_Prix"
 
 #Add properties to the Malaysia weekend
 Malaysia = Weekend("Malaysia")
@@ -1196,7 +1300,7 @@ Germany.linkWikiCircuit = "https://en.wikipedia.org/wiki/Hockenheimring"
 Germany.linkWikiRace = "https://en.wikipedia.org/wiki/German_Grand_Prix"
 
 #Add all weekends together (N.B.: Weekends must be added in CHRONOLOGICAL order)
-allWeekends = [Australia, Bahrain, China, Azerbaijan, Spain, Monaco, Canada, France, Austria, Britain, Germany, Hungary, Belgium, Italy, Singapore, Russia, Japan, Mexico, US, Brazil, AbuDhabi]
+allWeekends = [Austria, Britain, Hungary, Belgium, Italy, Singapore, Russia, Japan, US, Mexico, Brazil, AbuDhabi]
 
 #Testing
 PreSeasonW1D1 = Testing(Spain)
