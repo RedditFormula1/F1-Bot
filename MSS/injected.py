@@ -17,7 +17,7 @@ import bottaswmr
 
 
 #Define important stuff
-moderators = ["_Kierz_", "BottasWMR", "Thatoneguyone", "rubennaatje", "Maxnl9", "Redbiertje", "MSS-Bot"]
+moderators = ["_Kierz_", "BottasWMR", "Thatoneguyone", "rubennaatje", "Maxnl9", "Redbiertje", "MSS-Bot", "wirelessflyingcord", "johnnyracer24", "5trid3r", "Tramunzenegger", "okaythistimeitsnotme"]
 
 class Event:
     #Contains all data important to an event
