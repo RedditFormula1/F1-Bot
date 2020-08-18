@@ -241,7 +241,7 @@ def check_for_submission(title):
         return False
 
 def get_games():
-
+    print("Managing Sportsurge")
     utc = arrow.utcnow()
     eastern = utc.to("US/Eastern")
     current_time = arrow.utcnow()
