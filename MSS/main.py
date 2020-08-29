@@ -30,6 +30,7 @@ MSSBot = r.subreddit("mssbot")
 prevTime = datetime.datetime.utcnow()
 lastAlert = prevTime-datetime.timedelta(minutes=11)
 events = []
+iter_idx = -1
 
 #Keep the bot alive
 while True:
