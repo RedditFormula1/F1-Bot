@@ -4,7 +4,7 @@ import time
 import math
 from urllib.parse import urlencode
 
-version = "0.5"
+version = "0.6"
 
 # All times in US/New-York
 # Be precise with session title formatting. 
@@ -115,7 +115,30 @@ sessions = {
     'F3 Qualifying - Belgium': ['2020-08-28 08:05', 'F3', '30'],
     'F3 Qualifying - Italy': ['2020-09-04 08:05', 'F3', '30'],
     'F3 Feature Race - Spain': ['2020-08-15 04:25', 'F3', '40'],
-    'F3 Feature Race - Tuscany': ['2020-09-12 04:25', 'F3', '40']
+    'F3 Feature Race - Tuscany': ['2020-09-12 04:25', 'F3', '40'],
+    'FP1 - Emilia Romagna Grand Prix': ['2020-10-31 05:00', 'F1', '90'],
+    'Qualifying - Emilia Romagna Grand Prix': ['2020-10-31 09:00', 'F1', '60'],
+    'Race - Emilia Romagna Grand Prix': ['2020-11-01 07:10', 'F1', '120'],
+    'FP1 - Turkish Grand Prix': ['2020-11-13 03:00', 'F1', '90'],
+    'FP2 - Turkish Grand Prix': ['2020-11-13 07:00', 'F1', '90'],
+    'FP3 - Turkish Grand Prix': ['2020-11-14 04:00', 'F1', '60'],
+    'Qualifying - Turkish Grand Prix': ['2020-11-14 07:00', 'F1', '60'],
+    'Race - Turkish Grand Prix': ['2020-11-15 05:10', 'F1', '120'],
+    'FP1 - Bahrain Grand Prix': ['2020-11-27 06:00', 'F1', '90'],
+    'FP2 - Bahrain Grand Prix': ['2020-11-27 10:00', 'F1', '90'],
+    'FP3 - Bahrain Grand Prix': ['2020-11-28 07:00', 'F1', '60'],
+    'Qualifying - Bahrain Grand Prix': ['2020-11-28 10:00', 'F1', '60'],
+    'Race - Bahrain Grand Prix': ['2020-11-29 10:10', 'F1', '120'],
+    'FP1 - Sakhir Grand Prix': ['2020-12-04 08:30', 'F1', '90'],
+    'FP2 - Sakhir Grand Prix': ['2020-12-04 12:30', 'F1', '90'],
+    'FP3 - Sakhir Grand Prix': ['2020-12-05 10:00', 'F1', '60'],
+    'Qualifying - Sakhir Grand Prix': ['2020-12-05 13:00', 'F1', '60'],
+    'Race - Sakhir Grand Prix': ['2020-12-06 12:10', 'F1', '120'],
+    'FP1 - Abu Dhabi Grand Prix': ['2020-12-11 04:00', 'F1', '90'],
+    'FP2 - Abu Dhabi Grand Prix': ['2020-12-11 08:00', 'F1', '90'],
+    'FP3 - Abu Dhabi Grand Prix': ['2020-12-12 05:00', 'F1', '60'],
+    'Qualifying - Abu Dhabi Grand Prix': ['2020-12-12 08:00', 'F1', '60'],
+    'Race - Abu Dhabi Grand Prix': ['2020-12-13 08:10', 'F1', '120']
     
 }
 
@@ -132,7 +155,7 @@ cover_images = {
     "F3 Free Practice": "https://i.imgur.com/hnHko8q.png",
     "F3 Qualifying": "https://i.imgur.com/1jmj9DO.png",
     "F3 Sprint Race": "https://i.imgur.com/ndcVdZu.png",
-    "F3 Feature Race": "https://i.imgur.com/ndcVdZu.png",
+    "F3 Feature Race": "https://i.imgur.com/PwwcFiW.png",
 }
 
 groups = {
@@ -270,3 +293,4 @@ def get_games():
     get_games()
 
  #print("Starting MotorsportStreams bot v" + version + "!")
+get_games()
