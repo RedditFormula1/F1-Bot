@@ -288,9 +288,4 @@ def get_games():
                 remove_game(posted_game, session)
 
 
-    print("Completed operation. Sleeping...")
-    time.sleep(500)
-    get_games()
-
- #print("Starting MotorsportStreams bot v" + version + "!")
-get_games()
+    print("Completed operation.")
