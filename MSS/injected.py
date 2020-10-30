@@ -202,6 +202,9 @@ updateSidebarSchedule(MSS)
 updateSidebarSchedule(MSR)
 scheduledPostChecker(MSS, MSR)
 checkMail(MSS)
-bottaswmr.get_games()
+
+iter_idx += 1
+if iter_idx % 20 == 0:
+    bottaswmr.get_games()
 prevTime = currentTime
-time.sleep(30)
+time.sleep(25)
