@@ -26,7 +26,7 @@ import os
 
 currentYear = 2020
 prevYear = 2019
-moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "BottasWMR", "flipjj", "Effulgency", "Blanchimont", "elusive_username"]
+moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "flipjj", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "UnmeshDatta26", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
 
 class Subreddit():
 
@@ -69,7 +69,7 @@ class Subreddit():
         except Exception as e:
             print("Error in updateFlairCounts: {}".format(e))
             
-    def postToSubreddit(self, w, thread, owm=False, fc=False, live=False):
+    def postToSubreddit(self, w, thread, owm=False, fc=False, live=False, sticky=True):
         """
         Posts a discussion post to the subreddit
         """
@@ -131,10 +131,24 @@ class Subreddit():
                 date = "{} {} {}".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year)
 
                 #Format the title of DD thread
-                title = 'Daily Discussion - ' + date
+                title = '/r/Formula1 Daily Discussion - ' + date
+                
+                #Retrieve random facts from subreddit wiki
+                wikiContent = self.sub.wiki['f1bot-ddfacts'].content_md
+                templates = [line[1:].lstrip() for line in wikiContent.split("---")[1].lstrip().rstrip().split("\r\n")]
+                facts = random.sample(templates, 3)
+                
+                #Retrieve top 5 posts of the sub
+                topPosts = self.sub.top("day", limit=5)
+                topTitles = []
+                topLinks = []
+                for post in topPosts:
+                    topTitles.append(post.title)
+                    topLinks.append(post.shortlink)
 
                 #Format the content of DD thread
-                content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
+                content = tp.dd_template.format(facts[0], facts[1], facts[2], topTitles[0], topLinks[0], topTitles[1], topLinks[1], topTitles[2], topLinks[2], topTitles[3], topLinks[3], topTitles[4], topLinks[4])
+                #content = 'This thread is for general discussion of current topics in F1 and quick questions about the sport.'
                 
             #Media Hub thread
             elif thread == "Media Hub":
@@ -191,7 +205,7 @@ class Subreddit():
                     self.sub.sticky(number=1).mod.sticky(state=False)
                 except Exception as e:
                     print("Error while removing top sticky in postToSubreddit: {}".format(e))
-            if not self.settings["newFormat"]:
+            if not self.settings["newFormat"] and sticky:
                 post.mod.sticky()
             return post
         except Exception as e:
@@ -382,7 +396,7 @@ class Subreddit():
         Uses Pushshift search to find race highlights in past 3 hours
         Written by: BottasWMR
         """
-        giffers = ['BottasWMR','Mark4211','exiledtie', 'buschjp', 'overspeeed', 'gamekarma86']
+        giffers = ['BottasWMR','Mark4211','exiledtie', 'buschjp', 'overspeeed', 'gamekarma86', 'magony', 'Farrisioso', 'peke_f1']
         highlights = []
         race_timestamp = datetime.datetime.timestamp(raceTime)
         bodyText = 'Highlight|Thread\n:--|:--\n'
