@@ -26,7 +26,7 @@ import os
 
 currentYear = 2020
 prevYear = 2019
-moderators = ["ddigger", "Mulsanne", "HeikkiKovalainen", "halfslapper", "empw", "whatthefat", "Redbiertje", "jeppe96", "flipjj", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "UnmeshDatta26", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
+moderators = ["Mulsanne", "empw", "Redbiertje", "jeppe96", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
 
 class Subreddit():
 

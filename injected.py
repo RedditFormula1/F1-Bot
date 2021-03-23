@@ -40,7 +40,7 @@ reload(modnotes)
 #Define important stuff
 currentYear = 2020
 prevYear = 2019
-moderators = ["Mulsanne", "empw", "Redbiertje", "jeppe96", "flipjj", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "UnmeshDatta26", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
+moderators = ["Mulsanne", "empw", "Redbiertje", "jeppe96", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
 authorized = ["F1-Official", "F1_Research", "Greenbiertje", "sbnufc", "SBOpC_VR23"]
 
 def scheduleChecker(subreddit, fc):
