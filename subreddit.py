@@ -52,7 +52,7 @@ class Subreddit():
             for flair in self.sub.flair(limit=None):
                 
                 #Add flair to dictionary
-                flairName = flair['flair_css_class']
+                flairName = flair['flair_text']
                 if flairName not in flairs:
                     flairs[flairName] = 0
                 flairs[flairName] += 1
@@ -62,7 +62,7 @@ class Subreddit():
             
             #Update wiki page
             wikiPage = self.sub.wiki['flaircounts']
-            content = "# Formula 1 flair counts\n\n**[Click here to update the flair counts](https://www.reddit.com/message/compose?to=F1-Bot&subject=command&message=flairs)**\n\nLast update: {0} {1} {2}, {3:02d}:{4:02d}\n\n---\n\n## Flair counts\n\n|CSS class|Count|\n|--:|:--|".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year, currentTime.hour, currentTime.minute)
+            content = "# Formula 1 flair counts\n\n**[Click here to update the flair counts](https://www.reddit.com/message/compose?to=F1-Bot&subject=command&message=flairs)**\n\nLast update: {0} {1} {2}, {3:02d}:{4:02d}\n\n---\n\n## Flair counts\n\n|Flair|Count|\n|--:|:--|".format(currentTime.day, aux.monthToWord(currentTime.month), currentTime.year, currentTime.hour, currentTime.minute)
             for CSS, count in sorted_flairs:
                 content += "\n|{0}|{1}|".format(CSS, count)
             wikiPage.edit(content, reason="{} requested an update.".format(redditor))
