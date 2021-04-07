@@ -38,8 +38,6 @@ reload(weekends)
 reload(modnotes)
 
 #Define important stuff
-currentYear = 2020
-prevYear = 2019
 moderators = ["Mulsanne", "empw", "Redbiertje", "jeppe96", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
 authorized = ["F1-Official", "F1_Research", "Greenbiertje", "sbnufc", "SBOpC_VR23"]
 
@@ -102,6 +100,32 @@ def scheduleChecker(subreddit, fc):
                 post.mod.flair(text="Fan Hub", css_class="hub")
         except Exception as e:
             print("Error in scheduleChecker (flag 1): {}".format(e))
+            
+        #Do pre-weekend things
+        try:
+            if raceWeekendBeginTime < currentTime and (prevTime < raceWeekendBeginTime or prevTime == raceWeekendBeginTime):
+                print("Doing pre-weekend preparations")
+                try:
+                    subreddit.sub.stylesheet.upload("f1-logo", "img/{}-banner.png".format(weekend.id_name.lower().replace(" ", "")))
+                    subreddit.sub.stylesheet.update(subreddit.sub.stylesheet().stylesheet, reason="Updating banner")
+                except Exception as e:
+                    print("Failed to upload race banner: {}".format(e))
+                
+        except Exception as e:
+            print("Error in scheduleChecker (flag pre-weekend): {}".format(e))
+        
+        #Do post-weekend things
+        try:
+            if raceWeekendEndTime < currentTime and (prevTime < raceWeekendEndTime or prevTime == raceWeekendEndTime):
+                print("Doing post-weekend stuff")
+                try:
+                    subreddit.sub.stylesheet.upload("f1-logo", "img/f1-logo.png")
+                    subreddit.sub.stylesheet.update(subreddit.sub.stylesheet().stylesheet, reason="Updating banner")
+                except Exception as e:
+                    print("Failed to upload race banner: {}".format(e))
+                
+        except Exception as e:
+            print("Error in scheduleChecker (flag pre-weekend): {}".format(e))
         
         #If the new format is requested
         if settings["newFormat"]:
@@ -1028,9 +1052,9 @@ def botState():
     
     #Defines the state of the bot
     for weekend in weekends.allWeekends:
-        if weekend.qualiTime < currentTime and currentTime < weekend.qualiTime + datetime.timedelta(hours=2, minutes=30) and lastCommand != [weekend.country, "quali"]:
+        if weekend.qualiTime < currentTime and currentTime < weekend.qualiTime + datetime.timedelta(hours=3) and lastCommand != [weekend.country, "quali"]:
             return "quali"
-        elif weekend.raceTime < currentTime and currentTime < weekend.raceTime + datetime.timedelta(hours=4, minutes=30) and lastCommand != [weekend.country, "race"]:
+        elif weekend.raceTime < currentTime and currentTime < weekend.raceTime + datetime.timedelta(hours=5) and lastCommand != [weekend.country, "race"]:
             return "race"
     return "normal"
         
@@ -1252,7 +1276,7 @@ def evaluateReports(subreddit):
                 
                 #Notify humans of evaluation through an additional report
                 comment = r.comment(item.id)
-                comment.report("Automatic evaluation: {:.1f}% towards removal.".format(evaluation[1]*100))
+                #comment.report("Automatic evaluation: {:.1f}% towards removal.".format(evaluation[1]*100))
                 
                 #Store ID in file to prevent repeat evaluation
                 data_file.write("\n{}".format(item.id))
@@ -1310,9 +1334,11 @@ def getSettings(subreddit):
 
  
 #Setup the loop
-threads = []
 alertState = botState()
 settings = getSettings(subreddit)
+global currentTime
+global prevTime
+currentYear = currentTime.year
 
 #Create custom subreddit objects
 f1_subreddit = sub.Subreddit(r, subreddit, settings)
@@ -1354,26 +1380,34 @@ if qualiResultTime < currentTime and (prevTime < qualiResultTime or prevTime == 
 
 #Check /new for reposts
 print("[ ] Checking for reposts", end="\r")
-t_checkReposts = multiprocessing.Process(target=f1_subreddit.checkReposts)
-t_checkReposts.start()
-threads.append(t_checkReposts)
-t_storePostTitles = multiprocessing.Process(target=f1_subreddit.storePostTitles)
-t_storePostTitles.start()
-threads.append(t_storePostTitles)
+f1_subreddit.checkReposts()
+f1_subreddit.storePostTitles()
 print("[x] Checking for reposts")
 
 #Log comments
 print("[ ] Storing the latest comments", end="\r")
-t_commentLogger = multiprocessing.Process(target=f1_subreddit.logger)
-t_commentLogger.start()
-threads.append(t_commentLogger)
+f1_subreddit.logger()
 print("[x] Storing the latest comments")
+
+#Log post statistics
+print("[ ] Storing post statistics", end="\r")
+f1_subreddit.logPostStatistics(prevTime, currentTime)
+print("[x] Storing post statistics")
+
+if int(currentTime.hour/6) != int(prevTime.hour/6) and settings["trackComments"]:
+   old_mins = str(f1_subreddit.sub.mod.settings()["comment_score_hide_mins"])
+   new_mins = ct.switchHidingTime(f1_subreddit.sub)
+   print("Switching the comment hiding time from {0} minutes to {1} minutes".format(old_mins, new_mins))
+
+if settings["trackComments"]:
+    print("Tracking comments...")
+    trackedComments = ct.trackComments(r, f1_subreddit.sub, trackedComments, currentTime, prevTime)
 
 #Log approved and removed comments
 f1_subreddit.modlogger()
 
 #Evaluate reports using Skynet module
-evaluateReports(f1_subreddit)
+#evaluateReports(f1_subreddit)
 
 #Check for DD removals and update modnotes
 if currentTime.hour == 20 and prevTime.hour == 19:
@@ -1401,12 +1435,8 @@ if alertState == "normal":
     #Finish loop
     prevTime = currentTime
     
-    print("    Waiting for 30 seconds...")
-    time.sleep(30)
-    
-    #Wait for threads to finish
-    for t in threads:
-        t.join()
+    print("    Waiting for 20 seconds...")
+    time.sleep(20)
         
 elif alertState == "quali" or alertState == "race":
     #Update the countdown
@@ -1434,7 +1464,3 @@ elif alertState == "quali" or alertState == "race":
     for i in range(3):
         checkMail(f1_subreddit, f1bot_subreddit, f1exp_subreddit, forecast)
         checkSessionFinished(f1_subreddit, alertState)
-    
-    #Wait for threads to finish
-    for t in threads:
-        t.join()

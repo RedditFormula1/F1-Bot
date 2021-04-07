@@ -24,8 +24,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import os
 
 
-currentYear = 2020
-prevYear = 2019
+currentYear = 2021
+prevYear = 2020
 moderators = ["Mulsanne", "empw", "Redbiertje", "jeppe96", "Effulgency", "Blanchimont", "elusive_username", "AshKals", "AnilP228", "anneomoly", "balls2brakeLate44", "overspeeed"]
 
 class Subreddit():
@@ -554,4 +554,63 @@ class Subreddit():
         
         except Exception as e:
             print("Error in subreddit.getUserActivity: {}".format(e))
+            return False
+
+    def logPostStatistics(self, prevTime, currentTime):
+        """
+        Logs statistics about posts after 24 hours
+        """
+        try:
+            #Timestamps 24 hours ago
+            current_timestamp = currentTime.timestamp()-86400
+            previous_timestamp = prevTime.timestamp()-86400
+            
+            #Prepare lists
+            old_IDs = []
+            IDs_to_update = []
+            
+            #Read most recent IDs from file
+            for line in aux.readlines_reverse("data/{}_poststatistics_wip.csv".format(self.sub.display_name)):
+                values = line.split(",")
+                old_IDs.append(values[0])
+                if len(old_IDs) >= 100:
+                    break
+            
+            #Find IDs to update
+            for line in aux.readlines_reverse("data/{}_poststatistics_wip.csv".format(self.sub.display_name)):
+                values = line.split(",")
+                timestamp = float(values[1])
+                if timestamp < current_timestamp and timestamp >= previous_timestamp:
+                    IDs_to_update.append(values[0])
+                if timestamp < previous_timestamp:
+                    break
+            old_IDs = np.array(old_IDs)
+            
+            #Go through IDs to update
+            log_file = open("data/{}_poststatistics.csv".format(self.sub.display_name), "a")
+            for ID in IDs_to_update:
+                post = self.r.submission(id=ID)
+                log_file.write("\n{},{},{},{},{},{},{},{},{}".format(post.id, post.created_utc, post.author, post.domain, post.score, post.num_comments, post.link_flair_text, post.removed, post.num_reports))
+            
+            #Close log file
+            log_file.close()
+            
+            #Obtain new posts
+            new_posts = self.sub.new(limit=100)
+            
+            #Write new posts to file
+            string_to_write = ""
+            for post in new_posts:
+                if post.id not in old_IDs:
+                    string_to_write = "\n{},{}".format(post.id, post.created_utc) + string_to_write
+                else:
+                    break
+            
+            #Write results to file
+            log_file = open("data/{}_poststatistics_wip.csv".format(self.sub.display_name), "a")
+            log_file.write(string_to_write)
+            log_file.close()
+
+        except Exception as e:
+            print("Error in logPostStatistics: {}".format(e))
             return False
